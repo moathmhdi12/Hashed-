@@ -77,20 +77,7 @@ body.planner-open .wa-float{display:none!important}
 .why-card{background:var(--stone);padding:26px 20px;border:1px solid var(--line);border-radius:4px}
 
 /* planner styles */
-
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --ink:#1C1F1A;--ink2:#4A4F46;--stone:#F6F3EC;--stone2:#EBE4D4;--white:#FFFEFB;
-  --brass:#B4813F;--brass2:#8F6530;--brass3:#EFDDBB;--slate:#2E4247;
-  --line:rgba(28,31,26,.12);--line2:rgba(28,31,26,.2);
-  --sh:0 16px 40px -20px rgba(28,31,26,.3);
-  --fd:'Fraunces',Georgia,serif;--fb:'Inter',system-ui,sans-serif;--fl:'Space Mono',monospace;
-  --side:250px;--sum:290px;
-}
-
-body{font-family:var(--fb);color:var(--ink);background:var(--stone);line-height:1.5;-webkit-font-smoothing:antialiased;overflow:auto}
-button,input,select{font:inherit}button{cursor:pointer;border:none;background:none;color:inherit}
-a{color:inherit;text-decoration:none}
+:root{--side:250px;--sum:290px}
 input,select{border:1.5px solid var(--line2);border-radius:4px;padding:8px 10px;background:#fff;font-size:.84rem}
 input:focus,select:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0 3px rgba(180,129,63,.15)}
 .shell{display:grid;grid-template-rows:56px 48px 1fr;height:100%;min-height:100vh;min-height:100dvh}
@@ -172,15 +159,15 @@ input:focus,select:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0
 .color-row input[type=color]{width:42px;height:36px;border:1px solid var(--line2);border-radius:4px;padding:2px;cursor:pointer}
 .color-row input[type=text]{width:100px;font-family:var(--fl);font-size:.8rem}
 .nav{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;padding:12px 0 4px;border-top:1px solid var(--line);position:sticky;bottom:0;background:linear-gradient(transparent,#fff 20%);z-index:2}
-.nav .btn{min-width:110px;justify-content:center}
-.nav .btn.pri{min-width:130px}
-.btn{min-height:40px;padding:9px 18px;border-radius:6px;font-size:.8rem;font-weight:700;font-family:var(--fl);border:1.5px solid var(--line2);background:#fff;color:var(--ink);display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s,transform .12s;letter-spacing:.01em;line-height:1.2;user-select:none;-webkit-tap-highlight-color:transparent}
-.btn:hover:not(:disabled){border-color:var(--brass);background:rgba(180,129,63,.08)}
-.btn:active:not(:disabled){transform:translateY(1px)}
-.btn:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
-.btn.pri{background:var(--brass);border-color:var(--brass2);color:#fff;box-shadow:0 3px 12px rgba(180,129,63,.3)}
-.btn.pri:hover:not(:disabled){background:#c4924a;box-shadow:0 4px 14px rgba(180,129,63,.35)}
-.btn:disabled{opacity:.38;cursor:not-allowed;box-shadow:none;transform:none}
+#planner-view .nav .btn{min-width:110px;justify-content:center}
+#planner-view .nav .btn.pri{min-width:130px}
+#planner-view .btn{min-height:40px;padding:9px 18px;border-radius:6px;font-size:.8rem;font-weight:700;font-family:var(--fl);border:1.5px solid var(--line2);background:#fff;color:var(--ink);display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s,transform .12s;letter-spacing:.01em;line-height:1.2;user-select:none;-webkit-tap-highlight-color:transparent}
+#planner-view .btn:hover:not(:disabled){border-color:var(--brass);background:rgba(180,129,63,.08)}
+#planner-view .btn:active:not(:disabled){transform:translateY(1px)}
+#planner-view .btn:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+#planner-view .btn.pri{background:var(--brass);border-color:var(--brass2);color:#fff;box-shadow:0 3px 12px rgba(180,129,63,.3)}
+#planner-view .btn.pri:hover:not(:disabled){background:#c4924a;box-shadow:0 4px 14px rgba(180,129,63,.35)}
+#planner-view .btn:disabled{opacity:.38;cursor:not-allowed;box-shadow:none;transform:none}
 .qty-btn,.dim-btn,.tool{transition:background .12s,border-color .12s,color .12s;font-family:var(--fl);cursor:pointer;-webkit-tap-highlight-color:transparent}
 .qty-btn:hover,.dim-btn:hover,.tool:hover{border-color:var(--brass);color:var(--brass2)}
 .qty-btn:focus-visible,.dim-btn:focus-visible,.tool:focus-visible,.card:focus-visible,.tog:focus-visible,.mode:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
@@ -203,7 +190,7 @@ input:focus,select:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0
 .prods{font-size:.68rem;color:var(--ink2);line-height:1.5}
 .prods strong{color:var(--ink);font-weight:600}
 .sum-f{padding:10px 14px;border-top:1px solid var(--line);background:var(--stone)}
-.sum-f .btn{width:100%;justify-content:center}
+#planner-view .sum-f .btn{width:100%;justify-content:center}
 .sum-f .note{font-size:.58rem;color:var(--ink2);margin-top:6px;line-height:1.4;text-align:center}
 .overlay{position:fixed;inset:0;background:rgba(18,20,26,.6);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:16px;z-index:100}
 .overlay.open{display:flex}
@@ -239,9 +226,8 @@ input:focus,select:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0
 
 .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}.skip-link:focus{position:fixed;left:12px;top:12px;z-index:9999;width:auto;height:auto;padding:12px 16px;background:var(--ink);color:#fff;font-weight:600}
 
-/* Isolation: planner controls must not restyle website */
+/* Isolation: website button styles override any residual planner cascade */
 #website-view .btn{font-family:var(--fb);}
-#planner-view .btn{min-height:40px}
 #planner-view .card{cursor:pointer}
 #planner-view .shell{min-height:100vh;min-height:100dvh}
 #planner-view .app,#planner-view .side,#planner-view .canvas,#planner-view .sum{overflow:hidden}
@@ -419,7 +405,7 @@ footer .site-brand img.site-logo{height:34px;filter:brightness(0) invert(1)}
         <div class="body"><h3>Design Your Kitchen</h3><p style="margin-top:8px;font-size:.95rem;color:var(--ink2)">Layout, cabinetry, benchtop, finishes, hardware and appliances with a live estimate.</p><span class="go">Start Kitchen Design →</span></div>
       </a>
       <a href="#planner/bathroom" class="design-card" data-open-planner="bathroom">
-        <div class="img-wrap"><img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Design your bathroom with MIC NSW" width="640" height="400" loading="lazy" decoding="async" onerror="this.src=\'https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg\'"><span class="tag bath">Bathroom</span></div>
+        <div class="img-wrap"><img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Design your bathroom with MIC NSW" width="640" height="400" loading="lazy" decoding="async" onerror="this.src='https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg'"><span class="tag bath">Bathroom</span></div>
         <div class="body"><h3>Design Your Bathroom</h3><p style="margin-top:8px;font-size:.95rem;color:var(--ink2)">Layout, tiles, vanity, tapware, shower and fixtures with a live estimate.</p><span class="go">Start Bathroom Design →</span></div>
       </a>
     </div>
@@ -991,8 +977,8 @@ document.addEventListener('click', function(e){
 var mobileNav=document.getElementById('mobileNav');
 var menuOpen=document.getElementById('menuOpen');
 var menuClose=document.getElementById('menuClose');
-if(menuOpen) menuOpen.addEventListener('click',function(){mobileNav.classList.add('open');document.body.style.overflow='hidden';});
-function closeNav(){if(mobileNav){mobileNav.classList.remove('open');document.body.style.overflow='';}}
+if(menuOpen) menuOpen.addEventListener('click',function(){mobileNav.classList.add('open');mobileNav.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';});
+function closeNav(){if(mobileNav){mobileNav.classList.remove('open');mobileNav.setAttribute('aria-hidden','true');document.body.style.overflow='';}}
 if(menuClose) menuClose.addEventListener('click',closeNav);
 document.querySelectorAll('.mnav').forEach(function(a){a.addEventListener('click',closeNav);});
 var PKG={
