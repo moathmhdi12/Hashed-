@@ -1,17 +1,14 @@
-# Hashed-
+# MIC NSW website
 
-MIC NSW static website for GitHub Pages.
+Static single-file GitHub Pages site for MIC NSW.
 
-**Live site:** https://moathmhdi12.github.io/Hashed-/
+Repository status:
+- Repository: moathmhdi12/Hashed-
+- Default branch: main
+- Root file: index.html
+- Public: yes
 
-## About
+GitHub Pages URL for this repository:
+- https://moathmhdi12.github.io/Hashed-/
 
-Single-file static HTML website for MIC NSW kitchen and bathroom renovations.
-Includes an interactive 3D kitchen/bathroom planner powered by Three.js (loaded from CDN).
-No build step required — pure HTML, CSS, and JavaScript.
-
-## GitHub Pages setup
-
-- Source: Deploy from a branch
-- Branch: `main`
-- Folder: `/` (root)
+Note: the requested URL https://moathmhdi12.github.io/Hashed/ requires a repository named `Hashed` (not `Hashed-`). If you want that exact URL, the repository name must be changed to `Hashed` or a new public repository named `Hashed` must be created and populated with the same root `index.html` file.
