@@ -102,9 +102,16 @@ h3{font-family:var(--fd);font-size:1.15rem;font-weight:600}
 .cta-band{background:var(--ink);color:#fff;padding:52px 0;text-align:center}.cta-band h2{color:#fff}
 .contact-grid{display:grid;gap:24px;min-width:0}
 @media(min-width:800px){.contact-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}}
+.contact-actions{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 20px}
+.contact-action{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 16px;border-radius:999px;font-size:.92rem;font-weight:600;line-height:1.2;transition:transform .2s,box-shadow .2s,border-color .2s}
+.contact-action:hover{transform:translateY(-1px)}
+.contact-action--primary{background:var(--ink);color:#fff;box-shadow:0 10px 26px -16px rgba(25,28,23,.28)}
+.contact-action--outline{background:var(--stone-light);color:var(--ink);border:1px solid var(--line2)}
+.contact-action--wa{background:#25D366;color:#fff;box-shadow:0 10px 26px -16px rgba(37,211,102,.4)}
 .contact-form input,.contact-form select,.contact-form textarea{width:100%;min-width:0;min-height:48px;padding:12px 14px;border:1.5px solid var(--line2);border-radius:10px;margin-bottom:12px;font-size:16px;background:#fff}
 .contact-form textarea{min-height:110px;resize:vertical}
 .contact-form label{display:block;font-size:.78rem;font-weight:600;margin-bottom:6px}
+@media(max-width:480px){.contact-actions{flex-direction:column}.contact-action{width:100%}}
 footer{background:var(--slate);color:rgba(255,255,255,.82);padding:48px 0 0;padding-bottom:var(--safe-b)}
 .foot-grid{display:grid;gap:24px;padding-bottom:28px;min-width:0}
 @media(min-width:760px){.foot-grid{grid-template-columns:minmax(0,1.3fr) repeat(2,minmax(0,1fr)) minmax(0,1.1fr)}}
@@ -513,9 +520,11 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
       <span class="eyebrow">Contact</span>
       <h2 style="margin-top:10px">Tell us about your project</h2>
       <p style="margin:12px 0 18px;color:var(--ink2)">Our team will review your details and contact you about the next steps.</p>
-      <p><strong>Phone:</strong> <a href="tel:+61470640083" style="color:var(--brass2)">+61 470 640 083</a></p>
-      <p><strong>Email:</strong> <a href="mailto:info@mic-nsw.com.au" style="color:var(--brass2);overflow-wrap:anywhere">info@mic-nsw.com.au</a></p>
-      <p><strong>WhatsApp:</strong> <a href="https://wa.me/61470640083" target="_blank" rel="noopener" style="color:var(--brass2)">Message us</a></p>
+      <div class="contact-actions">
+        <a class="contact-action contact-action--primary" href="tel:+61470640083">Call now</a>
+        <a class="contact-action contact-action--outline" href="mailto:info@mic-nsw.com.au">Email us</a>
+        <a class="contact-action contact-action--wa" href="https://wa.me/61470640083" target="_blank" rel="noopener">WhatsApp us</a>
+      </div>
       <p style="margin-top:8px">Greater Sydney, NSW · Mon–Fri 8am–5pm</p>
       <p>Licence 393630C · ABN 51 665 533 282</p>
     </div>
