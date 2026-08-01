@@ -183,12 +183,18 @@ body.planner-open .site-header{display:none!important}
 #planner-view .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;min-width:0}
 @media(max-width:360px){#planner-view .grid{grid-template-columns:repeat(auto-fill,minmax(100%,1fr))}}
 #planner-view .grid.wide{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
-#planner-view .card{border:1.5px solid var(--line);border-radius:8px;background:var(--stone);padding:10px;cursor:pointer;transition:.15s;position:relative;display:flex;flex-direction:column;gap:2px;min-width:0}
-#planner-view .card:hover{border-color:var(--brass)}
-#planner-view .card.sel{border-color:var(--brass)!important;background:linear-gradient(160deg,#FFFEF9,#F8F1E0)!important;box-shadow:0 0 0 2px var(--brass),0 4px 12px rgba(180,129,63,.15)!important}
-#planner-view .card.sel::after{content:"✓";position:absolute;top:6px;left:6px;width:18px;height:18px;background:var(--brass);color:#fff;border-radius:50%;font-size:.65rem;font-weight:700;display:grid;place-items:center;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+#planner-view .card{border:1.5px solid var(--line);border-radius:10px;background:var(--stone);padding:12px 12px 12px 46px;cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s,transform .2s;position:relative;display:flex;flex-direction:column;gap:2px;min-width:0;min-height:44px}
+#planner-view .card:hover{border-color:var(--brass);transform:translateY(-1px)}
+#planner-view .card:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(180,129,63,.18)}
+#planner-view .card .card-check{position:absolute;top:10px;left:10px;width:24px;height:24px;border:2px solid var(--line2);border-radius:50%;display:grid;place-items:center;background:#fff;color:transparent;transition:all .2s ease;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+#planner-view .card .card-check::before{content:""}
+#planner-view .card .card-content{display:flex;flex-direction:column;gap:2px;min-width:0}
+#planner-view .card.sel{border-color:var(--brass)!important;background:linear-gradient(160deg,#FFFEF9,#F8F1E0)!important;box-shadow:0 0 0 2px var(--brass),0 8px 18px rgba(180,129,63,.18)!important}
+#planner-view .card.sel .card-check{background:var(--brass);border-color:var(--brass);color:#fff;box-shadow:0 8px 16px rgba(185,131,59,.24)}
+#planner-view .card.sel .card-check::before{content:"✓";font-size:.72rem;font-weight:700;line-height:1}
+#planner-view .card:hover .card-check{border-color:var(--brass)}
 #planner-view .swatch{width:100%;height:52px;border-radius:6px;border:1px solid rgba(0,0,0,.08);margin-bottom:4px;background-size:cover;background-position:center}
-#planner-view .card.style-card{text-align:center;padding:10px 6px}
+#planner-view .card.style-card{text-align:center;padding:12px 10px 12px 46px}
 #planner-view .card.style-card .swatch{height:64px}
 #planner-view .layout-icon{width:100%;height:52px;display:flex;align-items:center;justify-content:center;background:var(--stone);border-radius:6px;margin-bottom:4px;border:1px solid var(--line)}
 #planner-view .layout-icon svg{width:40px;height:40px;stroke:var(--ink);fill:none;stroke-width:1.6}
@@ -222,6 +228,8 @@ body.planner-open .site-header{display:none!important}
 #planner-view .btn:disabled{opacity:.38;cursor:not-allowed;box-shadow:none}
 #planner-view .sum{background:#fff}
 #planner-view .sum-h{padding:12px 14px;background:var(--ink);color:#fff}
+#planner-view .summary-head-row{display:flex;align-items:center;justify-content:flex-start;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+#planner-view .summary-pill{display:inline-flex;align-items:center;border-radius:999px;padding:3px 8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.14);color:#e7e0cf;font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-family:var(--fl)}
 #planner-view .sum-h h3{font-family:var(--fd);font-size:.82rem;font-weight:600}
 #planner-view .sum-h .big{font-size:1.35rem;font-weight:700;color:var(--brass3);margin-top:2px;font-family:var(--fd)}
 #planner-view .sum-h .sub{font-size:.58rem;color:rgba(255,255,255,.4);margin-top:1px;font-family:var(--fl)}
@@ -237,6 +245,19 @@ body.planner-open .site-header{display:none!important}
 #planner-view .sum-f{padding:10px 14px;border-top:1px solid var(--line);background:var(--stone);padding-bottom:max(12px,var(--safe-b))}
 #planner-view .sum-f .btn{width:100%;justify-content:center}
 #planner-view .sum-f .note{font-size:.56rem;color:var(--ink2);margin-top:6px;line-height:1.4;text-align:center}
+#planner-view .quote-card{background:linear-gradient(135deg,#1F2E24 0%,#13211A 100%);color:#fff;border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 24px rgba(0,0,0,.16)}
+#planner-view .quote-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.12);font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#dceadf;font-family:var(--fl)}
+#planner-view .quote-card h4{font-size:.95rem;font-weight:700;margin:8px 0 4px}
+#planner-view .quote-card p{font-size:.74rem;line-height:1.5;color:rgba(255,255,255,.78)}
+#planner-view .quote-list{display:grid;gap:6px;margin:10px 0 0;padding-left:16px;font-size:.72rem;color:rgba(255,255,255,.84)}
+#planner-view .quote-list li::marker{color:var(--brass3)}
+#planner-view .quote-info{margin-top:10px;padding:8px 10px;border-radius:8px;background:rgba(111,179,104,.15);color:#eaf8ea;border:1px solid rgba(111,179,104,.24);font-size:.68rem;line-height:1.5}
+#planner-view .quick-summary{position:sticky;top:12px;z-index:2;background:#0F1110;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;color:#fff;box-shadow:0 12px 24px rgba(0,0,0,.16)}
+#planner-view .quick-summary__head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#dcd8cd;font-family:var(--fl)}
+#planner-view .quick-summary__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+#planner-view .quick-summary__item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px;min-width:0}
+#planner-view .quick-summary__label{display:block;font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.62);font-family:var(--fl)}
+#planner-view .quick-summary__value{display:block;margin-top:4px;font-size:.78rem;font-weight:700;line-height:1.2;overflow-wrap:anywhere}
 #planner-view .overlay{position:fixed;inset:0;background:rgba(18,20,26,.6);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:16px;padding-top:max(16px,var(--safe-t));padding-bottom:max(16px,var(--safe-b));z-index:100}
 #planner-view .overlay.open{display:flex}
 #planner-view .modal{width:min(100%,400px);background:#fff;border-radius:10px;padding:20px;box-shadow:var(--sh);position:relative;max-height:min(90dvh,90vh);overflow-y:auto}
@@ -701,14 +722,18 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
     </main>
     <aside class="sum" id="sumCol">
       <div class="sum-h">
-        <h3>Indicative Renovation Estimate</h3>
+        <div class="summary-head-row">
+          <span class="summary-pill">Design Studio</span>
+          <span class="summary-pill">Live</span>
+        </div>
+        <h3>Smart Quote Summary</h3>
         <div class="big" id="sumPrice">$0</div>
-        <div class="sub">Package + selections · GST inclusive</div>
+        <div class="sub">Design is free · No pricing applied</div>
       </div>
       <div class="sum-b" id="sumBody"></div>
       <div class="sum-f">
-        <button type="button" class="btn pri" id="btnQuote">Request This Quote</button>
-        <div class="note">Preliminary estimate only — final price may increase or decrease based on exact measurements, site conditions and confirmed products.<br>Fixed quote after free site measure · Lead 4–8 wks · Install 2–4 wks</div>
+        <button type="button" class="btn pri" id="btnQuote">Submit Design for Quote</button>
+        <div class="note">Secure · No payment required</div>
       </div>
     </aside>
   </div>
@@ -717,7 +742,7 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
   <div class="modal">
     <button type="button" class="x" id="qClose">✕</button>
     <h3 id="qTitle">Request Your Quote</h3>
-    <p>MIC NSW will receive your design and itemised estimate.</p>
+    <p>MIC NSW will receive your design and quote request.</p>
     <form id="qForm">
       <label for="qName">Full Name</label>
       <input id="qName" type="text" autocomplete="name" required>
@@ -1212,13 +1237,13 @@ function calcKitchen() {
   else light = find(AppConfig.lights, k.light).mod;
   const allowLight = allow.light === 'led' ? P.lightLed * k.benchLm : find(AppConfig.lights, allow.light).mod;
   light = Math.max(0, light - allowLight);
-  const base = BASE_KITCHEN[k.pkg] || BASE_KITCHEN.essential;
-  const upgrades = cab + drawers + doorUp + handleUp + hingeUp + bench + sp + bulk + kick + sink + mixer + apps + light;
-  const total = base + upgrades;
+  const base = 0;
+  const upgrades = 0;
+  const total = 0;
   return { total, base, upgrades, cab, drawers, doorUp, handleUp, hingeUp, bench, sp, bulk, kick, sink, mixer, apps, light, nDoors };
 }
 function calcBathroom() {
-  const base = BASE_BATHROOM[bathroom.pkg] || BASE_BATHROOM.essential;
+  const base = 0;
   const allow = BATHROOM_ALLOWANCE[bathroom.pkg] || BATHROOM_ALLOWANCE.essential;
   let t = 0;
   const vanMod = find(AppConfig.vanS, bathroom.vanity).mod;
@@ -1536,7 +1561,7 @@ function card(item,sel,attrs){
   const br=item.brand?`<div class="brand">${item.brand}</div>`:'';
   const pr='mod' in item?`<div class="price">${item.mod?money(item.mod):'Included'}</div>`:'';
   const meta=item.mat?`<div class="meta">${item.mat}</div>`:item.desc?`<div class="meta">${item.desc}</div>`:'';
-  return `<article class="${cls}" ${attrs} role="button" tabindex="0">${visual}${br}<h4>${item.name||item.brand||''}</h4>${meta}${pr}</article>`;
+  return `<article class="${cls}" ${attrs} role="button" tabindex="0"><span class="card-check" aria-hidden="true"></span><div class="card-content">${visual}${br}<h4>${item.name||item.brand||''}</h4>${meta}${pr}</div></article>`;
 }
 function qtyHTML(label,key,val,min,max,unit){
   return `<div class="dim"><label>${label}</label><div class="dim-r">
@@ -1568,39 +1593,91 @@ function renderSide(){
   $('sideTitle').textContent=app.mode==='kitchen'?'Kitchen Project':'Bathroom Project';
 }
 
-function renderSummary(){
+function getDesignSummaryData(){
   if(app.mode==='kitchen'){
-    const t=calcKitchen(),k=kitchen;
-    $('sumPrice').textContent=money(t.total);
-    $('sumBody').innerHTML=`<div class="sec"><h5>Indicative renovation estimate</h5>
-      <div class="line"><span>${PKG_LABEL[k.pkg]||'Essential'} Kitchen — base scope</span><span>${money(t.base)}</span></div>
-      <div class="line"><span>Cabinetry upgrades</span><span>${money(t.cab)}</span></div>
-      <div class="line"><span>Drawers upgrades</span><span>${money(t.drawers)}</span></div>
-      <div class="line"><span>Doors & handles</span><span>${money(t.doorUp+t.handleUp)}</span></div>
-      <div class="line"><span>Hinges</span><span>${money(t.hingeUp)}</span></div>
-      <div class="line"><span>Benchtop ${k.benchLm}lm${k.waterfall?' +WF':''}</span><span>${money(t.bench)}</span></div>
-      <div class="line"><span>Splashback</span><span>${money(t.sp)}</span></div>
-      <div class="line"><span>Bulkhead</span><span>${money(t.bulk)}</span></div>
-      <div class="line"><span>Sink & mixer</span><span>${money(t.sink+t.mixer)}</span></div>
-      <div class="line"><span>Appliances</span><span>${money(t.apps)}</span></div>
-      <div class="line"><span>Lighting</span><span>${money(t.light)}</span></div>
-      <div class="line tot"><span>Estimated total</span><span>${money(t.total)}</span></div></div>
-      <div class="sec"><h5>Configuration</h5><div class="prods">
-        <strong>Package:</strong> ${PKG_LABEL[k.pkg]||'Essential'} Kitchen<br>
-        <strong>Layout:</strong> ${find(AppConfig.layoutsK,k.layout).name}<br>
-        <strong>Room:</strong> ${k.w}×${k.d}×${k.h}m<br>
-        <strong>Colour:</strong> ${k.color==='custom'?'Custom '+k.customHex:find(AppConfig.colors,k.color).name}<br>
-        <strong>Stone:</strong> ${find(AppConfig.benches,k.bench).brand} ${find(AppConfig.benches,k.bench).name}
-      </div></div>`;
-  } else {
-    const t=calcBathroom(),b=bathroom;
-    $('sumPrice').textContent=money(t.base+t.total);
-    $('sumBody').innerHTML=`<div class="sec"><h5>Indicative renovation estimate</h5>
-      <div class="line"><span>${PKG_LABEL[b.pkg]||'Essential'} Bathroom — base scope</span><span>${money(t.base)}</span></div>
-      <div class="line"><span>Upgrades above allowances</span><span>${money(t.upgrades)}</span></div>
-      <div class="line tot"><span>Estimated total</span><span>${money(t.base+t.total)}</span></div></div>
-      <div class="sec"><h5>Configuration</h5><div class="prods"><strong>Package:</strong> ${PKG_LABEL[b.pkg]||'Essential'} Bathroom</div></div>`;
+    const k=kitchen;
+    const selectedProducts=[];
+    if(k.door!=='flat') selectedProducts.push(find(AppConfig.doors,k.door).name);
+    if(k.bench!=='lam') selectedProducts.push(find(AppConfig.benches,k.bench).name);
+    if(k.splash!=='tile') selectedProducts.push(find(AppConfig.splash,k.splash).name);
+    if(k.sink!=='abey1') selectedProducts.push(find(AppConfig.sinks,k.sink).name);
+    if(k.mixer!=='caroma') selectedProducts.push(find(AppConfig.mixers,k.mixer).name);
+    if(k.oven!=='none') selectedProducts.push(find(AppConfig.ovens,k.oven).name);
+    if(k.cook!=='none') selectedProducts.push(find(AppConfig.cooks,k.cook).name);
+    if(k.hood!=='none') selectedProducts.push(find(AppConfig.hoods,k.hood).name);
+    if(k.mw!=='none') selectedProducts.push(find(AppConfig.mws,k.mw).name);
+    const colourLabel=k.color==='custom'?`Custom ${k.customHex}`:find(AppConfig.colors,k.color).name;
+    return {
+      packageLabel:PKG_LABEL[k.pkg]||'Essential',
+      layoutLabel:find(AppConfig.layoutsK,k.layout).name,
+      colourLabel,
+      selectedProductsLabel:selectedProducts.length?selectedProducts.slice(0,3).join(' · '):'No upgrades selected',
+      selectedProductsCount:selectedProducts.length,
+      quickSummary:[
+        {label:'Base Cabinets', value:k.base},
+        {label:'Wall Cabinets', value:k.wall},
+        {label:'Tall Cabinets', value:k.tall},
+        {label:'Pantry Cabinets', value:k.pantry},
+        {label:'Corner Cabinets', value:k.corner},
+        {label:'Benchtop Length', value:`${k.benchLm.toFixed(1)} lm`},
+        {label:'Selected Products', value:`${selectedProducts.length} saved`},
+        {label:'Selected Colours', value:colourLabel},
+        {label:'Selected Package', value:PKG_LABEL[k.pkg]||'Essential'}
+      ]
+    };
   }
+  const b=bathroom;
+  const selectedProducts=[];
+  if(b.vanity!=='wall') selectedProducts.push(find(AppConfig.vanS,b.vanity).name);
+  if(b.tap!=='caroma') selectedProducts.push(find(AppConfig.mixers,b.tap).name);
+  if(b.screen!=='semi') selectedProducts.push(find(AppConfig.screens,b.screen).name);
+  if(b.bath!=='none') selectedProducts.push(find(AppConfig.baths,b.bath).name);
+  const colourLabel=find(AppConfig.vanC,b.vColor).name;
+  return {
+    packageLabel:PKG_LABEL[b.pkg]||'Essential',
+    layoutLabel:find(AppConfig.layoutsB,b.layout).name,
+    colourLabel,
+    selectedProductsLabel:selectedProducts.length?selectedProducts.slice(0,3).join(' · '):'No upgrades selected',
+    selectedProductsCount:selectedProducts.length,
+    quickSummary:[
+      {label:'Layout', value:find(AppConfig.layoutsB,b.layout).name},
+      {label:'Vanity', value:find(AppConfig.vanS,b.vanity).name},
+      {label:'Tapware', value:find(AppConfig.mixers,b.tap).name},
+      {label:'Shower Screen', value:find(AppConfig.screens,b.screen).name},
+      {label:'Bath', value:find(AppConfig.baths,b.bath).name},
+      {label:'Tiles', value:`${find(AppConfig.wTiles,b.wTile).name}/${find(AppConfig.fTiles,b.fTile).name}`},
+      {label:'Selected Products', value:`${selectedProducts.length} saved`},
+      {label:'Selected Colours', value:colourLabel},
+      {label:'Selected Package', value:PKG_LABEL[b.pkg]||'Essential'}
+    ]
+  };
+}
+
+function renderSummary(){
+  const data=getDesignSummaryData();
+  $('sumPrice').textContent=money(0);
+  $('sumBody').innerHTML=`<div class="quote-card">
+    <div class="quote-chip">What happens next?</div>
+    <h4>Your design is ready</h4>
+    <p>We review your selections, assess plumbing and electrical requirements, then prepare your fixed quotation.</p>
+    <ul class="quote-list">
+      <li>We review your selections</li>
+      <li>Assess plumbing</li>
+      <li>Assess electrical</li>
+      <li>Assess site conditions</li>
+      <li>Prepare a fixed quotation</li>
+    </ul>
+    <div class="quote-info">Prices are not shown during the design process. Your final quotation is prepared after reviewing your design, measurements, plumbing, electrical requirements and site conditions.</div>
+  </div>
+  <div class="quick-summary">
+    <div class="quick-summary__head">
+      <span>Quick Design Summary</span>
+      <span>${data.packageLabel}</span>
+    </div>
+    <div class="quick-summary__grid">
+      ${data.quickSummary.map(item=>`<div class="quick-summary__item"><span class="quick-summary__label">${item.label}</span><span class="quick-summary__value">${item.value}</span></div>`).join('')}
+    </div>
+  </div>`;
 }
 
 function renderContent(){
@@ -1677,15 +1754,14 @@ function renderContent(){
       <div class="grid">${C.lights.map(x=>card(x,k.light===x.id,`data-k="light" data-v="${x.id}"`)).join('')}</div>`;
     }
     if(s.step===7){
-      const t=calcKitchen();
-      h=`<div class="tip"><strong>Your kitchen plan is ready.</strong></div>
+      h=`<div class="tip"><strong>Your kitchen design is ready.</strong></div>
         <div style="font-size:.78rem;line-height:1.7;margin-top:8px">
           ${find(C.layoutsK,k.layout).name} · ${k.w}×${k.d}m<br>
           ${k.base} base · ${k.wall} wall · ${k.tall} tall · ${k.pantry} pantry<br>
           ${k.color==='custom'?'Custom '+k.customHex:find(C.colors,k.color).name} · ${find(C.benches,k.bench).brand}<br>
-          <strong style="font-size:1.1rem">${money(t.total)}</strong>
+          <strong style="font-size:1.05rem">Design is free · No pricing applied</strong>
         </div>
-        <div class="tip" style="margin-top:10px">Preliminary estimate — final price after measure.</div>`;
+        <div class="tip" style="margin-top:10px">Submit your design for a fixed quotation after our review.</div>`;
     }
   } else {
     if(s.step===1) h=`<div class="grid">${C.layoutsB.map(l=>card(l,b.layout===l.id,`data-b="layout" data-v="${l.id}"`)).join('')}</div>`;
@@ -1696,7 +1772,7 @@ function renderContent(){
     if(s.step===6) h=`<div class="grid">${C.screens.map(x=>card(x,b.screen===x.id,`data-b="screen" data-v="${x.id}"`)).join('')}</div>`;
     if(s.step===7) h=`<div class="grid">${C.baths.map(x=>card(x,b.bath===x.id,`data-b="bath" data-v="${x.id}"`)).join('')}</div>`;
     if(s.step===8) h=`<div class="grid">${C.wTiles.map(x=>card(x,b.wTile===x.id,`data-b="wTile" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:8px">${C.fTiles.map(x=>card(x,b.fTile===x.id,`data-b="fTile" data-v="${x.id}"`)).join('')}</div>`;
-    if(s.step===9){const t=calcBathroom();h=`<div class="tip"><strong>Ready.</strong> Est. ${money(t.base+t.total)}</div>`;}
+    if(s.step===9){h=`<div class="tip"><strong>Your bathroom design is ready.</strong> Submit it for a fixed quotation after our review.</div>`;}
   }
   $('content').innerHTML=h;
   $('btnBack').disabled=s.step===1;
@@ -1795,11 +1871,16 @@ function bind(){
 
 function quoteMsg(){
   if(app.mode==='kitchen'){
-    const t=calcKitchen(),k=kitchen;
-    return ['Kitchen estimate — MIC NSW',`Total: ${money(t.total)}`,`Layout: ${find(AppConfig.layoutsK,k.layout).name}`,`Cabinets: ${k.base} base / ${k.wall} wall / ${k.tall} tall / ${k.pantry} pantry / ${k.corner} corner`].join('\n');
+    const k=kitchen;
+    const packageLabel=PKG_LABEL[k.pkg]||'Essential';
+    const colourLabel=k.color==='custom'?`Custom ${k.customHex}`:find(AppConfig.colors,k.color).name;
+    const selections=[find(AppConfig.layoutsK,k.layout).name,`${k.base} base / ${k.wall} wall / ${k.tall} tall / ${k.pantry} pantry / ${k.corner} corner`,`${k.benchLm.toFixed(1)} lm benchtop`,colourLabel,packageLabel].join(' · ');
+    return ['Kitchen design request — MIC NSW','Design total: $0','Package: '+packageLabel,'Selections: '+selections].join('\n');
   }
-  const t=calcBathroom();
-  return ['Bathroom estimate — MIC NSW',`Est. ${money(t.base+t.total)}`].join('\n');
+  const b=bathroom;
+  const packageLabel=PKG_LABEL[b.pkg]||'Essential';
+  const selections=[find(AppConfig.layoutsB,b.layout).name,find(AppConfig.vanS,b.vanity).name,find(AppConfig.mixers,b.tap).name,find(AppConfig.screens,b.screen).name,find(AppConfig.baths,b.bath).name,find(AppConfig.vanC,b.vColor).name].join(' · ');
+  return ['Bathroom design request — MIC NSW','Design total: $0','Package: '+packageLabel,'Selections: '+selections].join('\n');
 }
 
 function init(){
