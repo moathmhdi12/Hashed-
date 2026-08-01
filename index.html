@@ -1,2276 +1,991 @@
 <!DOCTYPE html>
 <html lang="en-AU">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Kitchen & Bathroom Renovations Sydney | MIC NSW Licensed Builders</title>
-<meta name="description" content="MIC NSW kitchen and bathroom renovations across Greater Sydney. Interactive design studio, packages and detailed quotations. Licence 393630C.">
-<meta name="theme-color" content="#1C1F1A">
-<link rel="canonical" href="https://mic-nsw.com.au/">
-<link rel="icon" href="https://mic-nsw.com.au/front/images/logo2.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Kitchen &amp; Bathroom Renovations Sydney | MIC NSW Licensed Builders</title>
+    <meta name="description" content="MIC NSW delivers kitchen renovations Sydney, bathroom renovations Sydney, kitchen remodel Greater Sydney and bathroom renovation near me Sydney with licensed builders, custom joinery and clear renovation packages." />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#1C1F1A" />
+    <link rel="canonical" href="https://mic-nsw.com.au/" />
+    <link rel="icon" href="https://mic-nsw.com.au/front/images/logo2.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Kitchen &amp; Bathroom Renovations Sydney | MIC NSW" />
+    <meta property="og:description" content="Licensed Sydney kitchen and bathroom renovation specialists for Greater Sydney homes, custom joinery and transparent packages." />
+    <meta property="og:url" content="https://mic-nsw.com.au/" />
+    <meta property="og:image" content="https://mic-nsw.com.au/front/images/logo2.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kitchen &amp; Bathroom Renovations Sydney | MIC NSW" />
+    <meta name="twitter:description" content="Sydney homeowners trust MIC NSW for kitchen and bathroom renovations with licensed building guidance and tailored design." />
+    <meta name="twitter:image" content="https://mic-nsw.com.au/front/images/logo2.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ink: #1C1F1A;
+        --brass: #B4813F;
+        --stone: #F6F3EC;
+        --white: #FFFEFB;
+        --slate: #2E4247;
+        --line: rgba(28,31,26,0.14);
+        --text-muted: #4b514a;
+        --shadow: 0 16px 40px -22px rgba(28,31,26,0.36);
+        --font-head: "Fraunces", Georgia, serif;
+        --font-body: "Inter", Arial, sans-serif;
+        --font-label: "Space Mono", monospace;
+        --max: 1180px;
+      }
 
-<link rel="preconnect" href="https://mic-nsw.com.au" crossorigin>
-<link rel="dns-prefetch" href="https://mic-nsw.com.au">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-<style>
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--font-body);
+        background: var(--white);
+        color: var(--ink);
+        line-height: 1.65;
+        overflow-x: hidden;
+      }
+      body.planner-open { overflow: hidden; }
+      img { display: block; max-width: 100%; }
+      a { color: inherit; text-decoration: none; }
+      button, input, select, textarea { font: inherit; }
+      ul { padding: 0; margin: 0; list-style: none; }
+      .container { width: min(var(--max), calc(100% - 2rem)); margin: 0 auto; }
+      .section { padding: 4.5rem 0; }
+      .section--dark { background: var(--slate); color: var(--white); }
+      .section--cream { background: var(--stone); }
+      .eyebrow {
+        margin: 0 0 0.7rem;
+        font-size: 0.75rem;
+        font-family: var(--font-label);
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--brass);
+      }
+      h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; margin: 0 0 1rem; }
+      h1 { font-size: clamp(2.3rem, 4.6vw, 3.7rem); max-width: 12ch; }
+      h2 { font-size: clamp(1.75rem, 3.25vw, 2.35rem); }
+      h3 { font-size: 1.25rem; }
+      p { margin: 0 0 1rem; color: var(--text-muted); }
+      .section--dark p, .section--dark li, .section--dark a { color: rgba(255,255,255,0.84); }
+      .section--dark .eyebrow { color: #f0d9b4; }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-height: 46px;
+        padding: 0.8rem 1.2rem;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      }
+      .btn:hover { transform: translateY(-1px); }
+      .btn--primary { background: var(--ink); color: var(--white); box-shadow: var(--shadow); }
+      .btn--brass { background: var(--brass); color: var(--white); box-shadow: var(--shadow); }
+      .btn--outline { background: transparent; border-color: var(--line); color: var(--ink); }
+      .btn--wa { background: #25D366; color: var(--white); }
+      .btn--light { background: var(--white); color: var(--ink); }
+      .btn-group { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+      .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--ink:#1C1F1A;--ink2:#4A4F46;--stone:#F6F3EC;--stone2:#EBE4D4;--white:#FFFEFB;--brass:#B4813F;--brass2:#8F6530;--brass3:#EFDDBB;--slate:#2E4247;--line:rgba(28,31,26,.12);--line2:rgba(28,31,26,.2);--sh:0 16px 40px -20px rgba(28,31,26,.3);--fd:'Fraunces',Georgia,serif;--fb:'Inter',system-ui,sans-serif;--fl:'Space Mono',monospace}
-html{scroll-behavior:smooth}section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#quote,#contact{scroll-margin-top:88px}body{font-family:var(--fb);color:var(--ink);background:var(--white);line-height:1.6;overflow-x:hidden}
-body.planner-open{overflow:hidden}
-img{max-width:100%;display:block}a{color:inherit;text-decoration:none}ul{list-style:none}button,input,select,textarea{font:inherit}
-.container{width:100%;max-width:1160px;margin:0 auto;padding:0 20px}@media(min-width:768px){.container{padding:0 40px}}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 24px;font-size:.92rem;font-weight:600;border:1.5px solid transparent;border-radius:4px;cursor:pointer;transition:.2s}
-.btn-primary{background:var(--ink);color:#fff}.btn-brass{background:var(--brass);color:#fff}.btn-outline{border-color:var(--line2);color:var(--ink);background:transparent}.btn-wa{background:#25D366;color:#fff}.btn-light{background:#fff;color:var(--ink)}.btn-block{width:100%}
-.site-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,254,251,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 0}
-.nav-wrap{display:flex;align-items:center;justify-content:space-between;gap:14px}
-.site-brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--fd);font-weight:700;font-size:1.15rem}
-.site-brand-mark{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--brass3);display:grid;place-items:center;font-family:var(--fl);font-size:.55rem;font-weight:700}
-.site-brand-text span{color:var(--brass2)}.primary-nav{display:none}.primary-nav ul{display:flex;gap:18px}
-.primary-nav a{font-size:.86rem;font-weight:500;color:var(--ink2)}.primary-nav a.active{color:var(--ink)}
-.header-actions{display:flex;gap:10px;align-items:center}.hamburger{width:44px;height:44px;border:1px solid var(--line2);border-radius:50%;background:transparent;cursor:pointer}
-@media(min-width:1024px){.primary-nav{display:block}.hamburger{display:none}.header-actions .btn-wa{display:inline-flex}}
-@media(max-width:1023px){.header-actions .btn-brass{display:none}.header-actions .btn-wa{display:none}}
-.mobile-nav{position:fixed;inset:0;z-index:1100;background:var(--ink);color:#fff;display:flex;flex-direction:column;padding:24px;transform:translateY(-105%);visibility:hidden;transition:.4s}
-.mobile-nav.open{transform:none;visibility:visible}
-.hero{padding:128px 0 64px;background:linear-gradient(165deg,var(--stone),var(--white))}
-.hero-grid{display:grid;gap:36px}@media(min-width:900px){.hero-grid{grid-template-columns:1.05fr .95fr}}
-h1{font-family:var(--fd);font-size:clamp(2.35rem,5.2vw,3.85rem);line-height:1.15}h1 em{font-style:italic;color:var(--brass2)}
-h2{font-family:var(--fd);font-size:clamp(1.7rem,3.5vw,2.55rem)}.section{padding:72px 0}@media(min-width:768px){.section{padding:96px 0}}
-.eyebrow{font-family:var(--fl);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--brass2)}
-.trust-bar{background:var(--slate);color:#fff;padding:26px 0}.trust-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;text-align:center}@media(min-width:800px){.trust-grid{grid-template-columns:repeat(5,1fr)}}
-.design-cards{display:grid;gap:18px}@media(min-width:780px){.design-cards{grid-template-columns:1fr 1fr}}
-.design-card{background:var(--stone);border:1px solid var(--line);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer}
-.design-card .img-wrap{aspect-ratio:16/10;position:relative;overflow:hidden}.design-card img{width:100%;height:100%;object-fit:cover}
-.design-card .tag{position:absolute;top:12px;left:12px;background:var(--brass);color:#fff;font-family:var(--fl);font-size:.62rem;padding:5px 10px;text-transform:uppercase}
-.design-card .tag.bath{background:var(--slate)}.design-card .body{padding:22px}.design-card .go{font-weight:600;color:var(--brass2);margin-top:10px;display:block}
-.pkg-grid{display:grid;gap:14px}@media(min-width:800px){.pkg-grid{grid-template-columns:repeat(4,1fr)}}
-.pkg-card{border:1px solid var(--line);border-radius:4px;padding:24px 18px;background:#fff;position:relative}
-.pkg-card.featured{border-color:var(--brass)}.pkg-card .badge{position:absolute;top:-10px;right:12px;background:var(--brass);color:#fff;font-family:var(--fl);font-size:.62rem;padding:4px 9px}
-.pkg-tabs{display:flex;gap:8px;margin-bottom:22px}.pkg-tabs button{min-height:44px;padding:10px 18px;border:1.5px solid var(--line2);background:transparent;border-radius:4px;font-weight:600;cursor:pointer}
-.pkg-tabs button.on{background:var(--ink);color:#fff}.disclaimer{font-size:.78rem;color:var(--ink2);margin-top:16px}
-.svc-grid{display:grid;gap:18px}@media(min-width:700px){.svc-grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:1000px){.svc-grid{grid-template-columns:repeat(3,1fr)}}
-.svc-card{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff}.svc-card img{width:100%;aspect-ratio:16/10;object-fit:cover}.svc-card .body{padding:20px}
-.process-grid{display:grid;gap:14px}@media(min-width:800px){.process-grid{grid-template-columns:repeat(4,1fr)}}
-.process-card{padding:22px;background:var(--stone);border:1px solid var(--line);border-radius:4px}
-.cta-band{background:var(--ink);color:#fff;padding:64px 0;text-align:center}.cta-band h2{color:#fff}
-.contact-grid{display:grid;gap:28px}@media(min-width:800px){.contact-grid{grid-template-columns:1fr 1.1fr}}
-.contact-form input,.contact-form select,.contact-form textarea{width:100%;min-height:48px;padding:12px 14px;border:1.5px solid var(--line2);border-radius:4px;margin-bottom:12px;font-size:16px}
-.contact-form label{display:block;font-size:.78rem;font-weight:600;margin-bottom:6px}
-footer{background:var(--slate);color:rgba(255,255,255,.82);padding:56px 0 0}
-.foot-grid{display:grid;gap:28px;padding-bottom:36px}@media(min-width:760px){.foot-grid{grid-template-columns:1.3fr 1fr 1fr 1.1fr}}
-footer h5{font-family:var(--fl);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--brass3);margin-bottom:12px}
-footer a{color:rgba(255,255,255,.7)}.foot-bottom{padding:16px 0;font-size:.72rem;color:rgba(255,255,255,.48)}
-.wa-float{position:fixed;bottom:18px;right:18px;z-index:900;width:52px;height:52px;border-radius:50%;background:#25D366;color:#fff;display:grid;place-items:center}
-body.planner-open .wa-float,body.planner-open .site-header{display:none}
-#planner-view{position:fixed;inset:0;z-index:2000;background:var(--stone,#F6F3EC);overflow:auto;display:none!important;visibility:hidden}
-#planner-view.is-active{display:block!important;visibility:visible}
-#website-view.is-hidden{display:none!important;visibility:hidden;pointer-events:none}#website-view{display:block;visibility:visible}
-body.planner-open{overflow:hidden!important}
-body.planner-open .site-header,
-body.planner-open .wa-float{display:none!important}
-.why-grid{display:grid;gap:14px}@media(min-width:700px){.why-grid{grid-template-columns:repeat(4,1fr)}}
-.why-card{background:var(--stone);padding:26px 20px;border:1px solid var(--line);border-radius:4px}
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(255,254,251,0.94);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
+      }
+      .site-header__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-height: 74px;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-width: 0;
+      }
+      .brand__mark {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 42px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: var(--white);
+      }
+      .brand__mark img { width: 100%; height: 100%; object-fit: contain; }
+      .brand__text { font-family: var(--font-head); font-size: 1.08rem; font-weight: 700; }
+      .brand__text small { display: block; font-family: var(--font-label); font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
+      .site-nav {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .site-nav__links { display: flex; gap: 1rem; flex-wrap: wrap; }
+      .site-nav__links a { font-size: 0.92rem; color: var(--text-muted); font-weight: 600; }
+      .site-nav__links a:hover, .site-nav__links a:focus-visible { color: var(--ink); }
+      .site-nav__actions { display: flex; gap: 0.7rem; align-items: center; }
+      .site-nav__toggle { display: none; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: var(--white); cursor: pointer; }
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 74px 1rem auto 1rem;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        box-shadow: var(--shadow);
+        padding: 1rem;
+        z-index: 90;
+      }
+      .mobile-menu.open { display: block; }
+      .mobile-menu a { display: block; padding: 0.8rem 0; border-bottom: 1px solid var(--line); font-weight: 600; }
+      .mobile-menu a:last-child { border-bottom: 0; }
 
-/* planner styles */
-:root{--side:250px;--sum:290px}
-input,select{border:1.5px solid var(--line2);border-radius:4px;padding:8px 10px;background:#fff;font-size:.84rem}
-input:focus,select:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0 3px rgba(180,129,63,.15)}
-.shell{display:grid;grid-template-rows:56px 48px 1fr;height:100%;min-height:100vh;min-height:100dvh}
-.topbar{background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 18px;gap:12px;z-index:40}
-.topbar .brand{display:flex;align-items:center;gap:8px;font-family:var(--fd);font-weight:700;font-size:1.05rem}
-.topbar .brand i{width:30px;height:30px;border-radius:50%;background:var(--brass);color:var(--ink);display:grid;place-items:center;font-family:var(--fl);font-size:.55rem;font-style:normal;font-weight:700}
-.topbar .brand span{color:var(--brass3)}
-.topbar a.cta{font-size:.8rem;font-weight:600;background:var(--brass);color:#fff;padding:8px 16px;border-radius:4px}
-.topbar a.cta:hover{background:var(--brass2)}
-.topbar a.back{font-size:.78rem;color:rgba(255,255,255,.65);padding:6px 12px;border:1px solid rgba(255,255,255,.15);border-radius:20px}
-.topbar a.back:hover{color:#fff;border-color:var(--brass)}
-.modes{display:flex;background:var(--ink);border-bottom:1px solid rgba(255,255,255,.08)}
-.mode{flex:1;padding:12px;text-align:center;font-size:.85rem;font-weight:600;color:rgba(255,255,255,.4);border-bottom:2px solid transparent;transition:.2s}
-.mode:hover{color:rgba(255,255,255,.75)}.mode.on{color:#fff;border-bottom-color:var(--brass);background:rgba(180,129,63,.1)}
-.app{display:grid;grid-template-columns:var(--side) 1fr var(--sum);height:calc(100vh - 104px);height:calc(100dvh - 104px);overflow:auto}
-.side{background:#fff;border-right:1px solid var(--line);display:flex;flex-direction:column;overflow:auto}
-.side-h{padding:14px 12px 10px;border-bottom:1px solid var(--line)}
-.side-h h2{font-family:var(--fd);font-size:.9rem;font-weight:600}
-.prog{height:3px;background:var(--stone2);border-radius:99px;margin-top:8px;overflow:auto}
-.prog>i{display:block;height:100%;background:var(--brass);border-radius:99px;transition:width .35s}
-.prog-l{font-size:.65rem;color:var(--ink2);margin-top:5px;font-family:var(--fl)}
-.steps{flex:1;overflow-y:auto;padding:6px 0;scrollbar-width:thin}
-.step{display:flex;align-items:center;gap:9px;padding:9px 12px;cursor:pointer;border-left:3px solid transparent;transition:.15s;font-size:.8rem}
-.step:hover:not(.lock){background:var(--stone)}
-.step.on{background:rgba(180,129,63,.1);border-left-color:var(--brass);font-weight:600}
-.step.done .num{background:#2D6A4F;border-color:#2D6A4F;color:#fff}
-.step.lock{opacity:.35;cursor:not-allowed}
-.num{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line2);display:grid;place-items:center;font-size:.65rem;font-weight:700;flex-shrink:0;background:#fff}
-.step.on .num{background:var(--brass);border-color:var(--brass);color:#fff}
-.canvas{display:flex;flex-direction:column;overflow:auto;background:var(--stone);min-width:0}
-.toolbar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#fff;border-bottom:1px solid var(--line);gap:8px;flex-wrap:wrap}
-.badge-3d{font-size:.7rem;font-weight:700;color:var(--ink);background:var(--stone);border:1px solid var(--line);padding:5px 11px;border-radius:4px;font-family:var(--fl);letter-spacing:.03em}
-.tools{display:flex;gap:4px}
-.tool{width:32px;height:32px;border-radius:4px;border:1px solid var(--line2);background:#fff;display:grid;place-items:center;font-size:.85rem;color:var(--ink);transition:.15s}
-.tool:hover{border-color:var(--brass);background:rgba(180,129,63,.1)}
-.stage-wrap{flex:1;position:relative;min-height:180px;background:linear-gradient(165deg,#e8e4db,#ddd8cd)}
-#c3d{width:100%;height:100%;display:block;touch-action:none}
-.stage-note{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:.6rem;color:var(--ink2);background:rgba(255,255,255,.9);padding:3px 12px;border-radius:99px;white-space:nowrap;pointer-events:none;font-family:var(--fl)}
-.panel{background:#fff;border-top:1px solid var(--line);overflow-y:auto;max-height:42%;min-height:140px}
-.panel-in{padding:14px 16px 18px}
-.panel-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
-.panel-h h3{font-family:var(--fd);font-size:1.1rem;font-weight:600}
-.panel-h p{font-size:.76rem;color:var(--ink2);margin-top:2px;max-width:420px}
-.done-tag{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:99px;background:#E8F5EE;color:#2D6A4F;border:1px solid #a3d4b5}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
-.grid.wide{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
-.card{border:1.5px solid var(--line);border-radius:6px;background:var(--stone);padding:11px;cursor:pointer;transition:.2s;position:relative;display:flex;flex-direction:column;gap:2px}
-.card:hover{border-color:var(--brass);box-shadow:var(--sh);transform:translateY(-1px)}
-.card.sel{border-color:var(--brass);background:linear-gradient(160deg,#FFFEF9,#F8F1E0);box-shadow:0 0 0 1px rgba(180,129,63,.25)}
-.card.sel::after{content:"✓";position:absolute;top:6px;left:6px;width:16px;height:16px;background:var(--brass);color:#fff;border-radius:50%;font-size:.6rem;font-weight:700;display:grid;place-items:center}
-.swatch{width:100%;height:56px;border-radius:6px;border:1px solid rgba(0,0,0,.08);margin-bottom:4px;position:relative;overflow:auto;background-size:cover;background-position:center}
-.swatch::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.18),transparent 45%,rgba(0,0,0,.06))}
-.card.style-card{text-align:center;padding:10px 8px}
-.card.style-card .swatch{height:72px;border-radius:8px}
-.card.style-card h4{font-size:.76rem;margin-top:4px}
-.layout-icon{width:100%;height:56px;display:flex;align-items:center;justify-content:center;background:var(--stone);border-radius:6px;margin-bottom:4px;border:1px solid var(--line)}
-.layout-icon svg{width:44px;height:44px;stroke:var(--ink);fill:none;stroke-width:1.6}
-.card.sel .layout-icon{background:linear-gradient(160deg,#FFFEF9,#F8F1E0);border-color:var(--brass)}
+      .hero {
+        padding: 4.5rem 0 3.5rem;
+        background: linear-gradient(135deg, rgba(246,243,236,0.95), rgba(255,254,251,0.95));
+      }
+      .hero__grid {
+        display: grid;
+        gap: 2rem;
+        align-items: center;
+      }
+      .hero__copy p { font-size: 1.05rem; max-width: 62ch; }
+      .hero__highlights {
+        display: grid;
+        gap: 0.9rem;
+        margin-top: 1.5rem;
+      }
+      .hero__highlights li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 0.95rem;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 0.9rem;
+        box-shadow: var(--shadow);
+      }
+      .chip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.7rem; border-radius: 999px; font-size: 0.8rem; font-family: var(--font-label); font-weight: 700; background: rgba(180,129,63,0.16); color: var(--brass); }
+      .hero__media { position: relative; }
+      .hero__media img { width: 100%; height: 100%; min-height: 420px; object-fit: cover; border-radius: 1.6rem; box-shadow: var(--shadow); }
+      .hero__card {
+        position: absolute;
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        background: rgba(255,254,251,0.96);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        padding: 1rem 1.1rem;
+        box-shadow: var(--shadow);
+      }
+      .hero__card strong { display: block; font-size: 0.95rem; margin-bottom: 0.25rem; }
+      .hero__card span { font-size: 0.86rem; color: var(--text-muted); }
 
-.brand{font-size:.55rem;font-weight:700;color:var(--brass2);text-transform:uppercase;letter-spacing:.05em;font-family:var(--fl)}
-.card h4{font-size:.78rem;font-weight:600;line-height:1.25}
-.meta{font-size:.65rem;color:var(--ink2)}
-.price{font-size:.74rem;font-weight:700;color:var(--brass2);margin-top:2px}
-.dims{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
-.dim{border:1.5px solid var(--line);border-radius:6px;padding:10px;background:var(--stone)}
-.dim label{display:block;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);margin-bottom:6px;font-family:var(--fl)}
-.dim-r{display:flex;align-items:center;gap:5px}
-.dim-r button{width:30px;height:30px;border-radius:4px;border:1.5px solid var(--line2);background:#fff;font-size:1rem;color:var(--ink)}
-.dim-r button:hover{border-color:var(--brass);background:rgba(180,129,63,.1)}
-.dim-r span{font-size:.95rem;font-weight:700;min-width:28px;text-align:center}
-.dim u{font-size:.6rem;color:var(--ink2);text-decoration:none;display:block;margin-top:3px}
-.toggles{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px}
-.tog{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:6px;padding:10px;background:var(--stone);cursor:pointer}
-.tog:hover{border-color:var(--brass)}.tog.on{border-color:var(--brass);background:linear-gradient(160deg,#FFFEF9,#F8F1E0)}
-.tog h4{font-size:.78rem;font-weight:600}.tog p{font-size:.64rem;color:var(--ink2);margin-top:1px}
-.chk{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line2);background:#d0c9b8;color:#fff;display:grid;place-items:center;font-size:.7rem;flex-shrink:0}
-.tog.on .chk{background:var(--brass);border-color:var(--brass)}
-.color-row{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
-.color-row input[type=color]{width:42px;height:36px;border:1px solid var(--line2);border-radius:4px;padding:2px;cursor:pointer}
-.color-row input[type=text]{width:100px;font-family:var(--fl);font-size:.8rem}
-.nav{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;padding:12px 0 4px;border-top:1px solid var(--line);position:sticky;bottom:0;background:linear-gradient(transparent,#fff 20%);z-index:2}
-#planner-view .nav .btn{min-width:110px;justify-content:center}
-#planner-view .nav .btn.pri{min-width:130px}
-#planner-view .btn{min-height:40px;padding:9px 18px;border-radius:6px;font-size:.8rem;font-weight:700;font-family:var(--fl);border:1.5px solid var(--line2);background:#fff;color:var(--ink);display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s,transform .12s;letter-spacing:.01em;line-height:1.2;user-select:none;-webkit-tap-highlight-color:transparent}
-#planner-view .btn:hover:not(:disabled){border-color:var(--brass);background:rgba(180,129,63,.08)}
-#planner-view .btn:active:not(:disabled){transform:translateY(1px)}
-#planner-view .btn:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
-#planner-view .btn.pri{background:var(--brass);border-color:var(--brass2);color:#fff;box-shadow:0 3px 12px rgba(180,129,63,.3)}
-#planner-view .btn.pri:hover:not(:disabled){background:#c4924a;box-shadow:0 4px 14px rgba(180,129,63,.35)}
-#planner-view .btn:disabled{opacity:.38;cursor:not-allowed;box-shadow:none;transform:none}
-.qty-btn,.dim-btn,.tool{transition:background .12s,border-color .12s,color .12s;font-family:var(--fl);cursor:pointer;-webkit-tap-highlight-color:transparent}
-.qty-btn:hover,.dim-btn:hover,.tool:hover{border-color:var(--brass);color:var(--brass2)}
-.qty-btn:focus-visible,.dim-btn:focus-visible,.tool:focus-visible,.card:focus-visible,.tog:focus-visible,.mode:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
-.card{transition:border-color .15s,box-shadow .15s,transform .12s}
-.card:hover{transform:translateY(-1px)}
-.card.sel{box-shadow:0 0 0 2px var(--brass),0 8px 20px rgba(180,129,63,.12)}
+      .feature-grid, .services-grid, .projects-grid, .packages-grid, .process-grid, .contact-grid {
+        display: grid;
+        gap: 1.2rem;
+      }
+      .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .feature-card, .service-card, .package-card, .process-card, .project-card, .faq-card, .contact-card {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 1.1rem;
+        padding: 1.25rem;
+        box-shadow: var(--shadow);
+      }
+      .feature-card h3, .service-card h3, .package-card h3, .process-card h3, .project-card h3, .faq-card h3, .contact-card h3 { margin-bottom: 0.65rem; }
+      .feature-card p, .service-card p, .package-card p, .process-card p, .project-card p, .faq-card p, .contact-card p { margin-bottom: 0; }
+      .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .service-card img, .project-card img { width: 100%; border-radius: 0.9rem; height: 220px; object-fit: cover; margin-bottom: 1rem; }
+      .project-card img { height: 240px; }
+      .package-card--featured { border-color: var(--brass); background: linear-gradient(180deg, rgba(255,254,251,1), rgba(246,243,236,1)); }
+      .package-card__price { display: block; margin-top: 0.8rem; font-size: 1.35rem; font-family: var(--font-head); color: var(--brass); }
+      .packages-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .process-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .process-card { background: var(--stone); }
+      .process-card strong { display: block; margin-bottom: 0.4rem; font-size: 0.9rem; color: var(--brass); font-family: var(--font-label); }
+      .projects-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .faq-list { display: grid; gap: 1rem; }
+      .faq-card details { cursor: pointer; }
+      .faq-card summary { font-weight: 700; display: flex; justify-content: space-between; gap: 1rem; list-style: none; }
+      .faq-card summary::-webkit-details-marker { display: none; }
+      .faq-card p { margin-top: 0.8rem; }
+      .contact-grid { grid-template-columns: 1.05fr 0.95fr; }
+      .contact-card form { display: grid; gap: 0.8rem; }
+      .contact-card label { font-size: 0.84rem; font-weight: 700; color: var(--ink); }
+      .contact-card input, .contact-card select, .contact-card textarea {
+        width: 100%;
+        min-height: 46px;
+        padding: 0.8rem 0.95rem;
+        border: 1px solid var(--line);
+        border-radius: 0.8rem;
+        background: var(--white);
+      }
+      .contact-card textarea { min-height: 120px; resize: vertical; }
+      .contact-card button { margin-top: 0.2rem; }
+      .contact-links { display: grid; gap: 0.7rem; margin-top: 1rem; }
+      .contact-links a { display: inline-flex; align-items: center; gap: 0.55rem; font-weight: 600; }
+      .contact-stack { display: grid; gap: 1rem; }
 
-.sum{background:#fff;border-left:1px solid var(--line);display:flex;flex-direction:column;overflow:auto}
-.sum-h{padding:12px 14px;background:var(--ink);color:#fff}
-.sum-h h3{font-family:var(--fd);font-size:.85rem;font-weight:600}
-.sum-h .big{font-size:1.4rem;font-weight:700;color:var(--brass3);margin-top:2px;font-family:var(--fd)}
-.sum-h .sub{font-size:.6rem;color:rgba(255,255,255,.4);margin-top:1px;font-family:var(--fl)}
-.sum-b{flex:1;overflow-y:auto;padding:10px 14px;scrollbar-width:thin}
-.sec{margin-bottom:10px}
-.sec h5{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);margin-bottom:4px;font-family:var(--fl)}
-.line{display:flex;justify-content:space-between;font-size:.7rem;padding:2px 0;color:var(--ink2);border-bottom:1px solid var(--line)}
-.line span:last-child{font-weight:600;color:var(--ink)}
-.line.tot{border-bottom:none;border-top:2px solid var(--line);padding-top:6px;margin-top:2px}
-.line.tot span{font-size:.82rem;font-weight:700}
-.prods{font-size:.68rem;color:var(--ink2);line-height:1.5}
-.prods strong{color:var(--ink);font-weight:600}
-.sum-f{padding:10px 14px;border-top:1px solid var(--line);background:var(--stone)}
-#planner-view .sum-f .btn{width:100%;justify-content:center}
-.sum-f .note{font-size:.58rem;color:var(--ink2);margin-top:6px;line-height:1.4;text-align:center}
-.overlay{position:fixed;inset:0;background:rgba(18,20,26,.6);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:16px;z-index:100}
-.overlay.open{display:flex}
-.modal{width:min(100%,400px);background:#fff;border-radius:8px;padding:20px;box-shadow:var(--sh);position:relative}
-.modal h3{font-family:var(--fd);font-size:1.1rem;margin-bottom:4px}
-.modal>p{font-size:.76rem;color:var(--ink2);margin-bottom:10px}
-.modal label{display:block;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2);margin:8px 0 3px;font-family:var(--fl)}
-.modal input{width:100%}
-.modal-acts{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
-.x{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:4px;border:1px solid var(--line2);display:grid;place-items:center}
-.x:hover{border-color:var(--brass)}
-.status{min-height:14px;font-size:.7rem;color:#2D6A4F;margin-top:6px}.status.err{color:#B33}
-.wa{position:fixed;bottom:16px;right:16px;z-index:50;background:#25D366;color:#fff;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:1.2rem;box-shadow:0 4px 14px rgba(0,0,0,.2)}
-.tip{margin-top:10px;padding:8px 10px;background:var(--stone);border:1px solid var(--line);border-radius:6px;font-size:.7rem;color:var(--ink2)}
-.tip strong{color:var(--ink)}
-@media(max-width:1100px){
-  .app{grid-template-columns:var(--side) 1fr}
-  .sum{display:none}.sum.mob{display:flex;position:fixed;inset:0;z-index:80;border:none}
-  .tool.mob-sum{display:grid!important}
-}
-@media(max-width:768px){
-  body{overflow:auto}
-  .shell{height:auto;min-height:100dvh;grid-template-rows:56px auto auto}
-  .app{grid-template-columns:1fr;height:auto}
-  .side{max-height:none;border-right:none;border-bottom:1px solid var(--line)}
-  .steps{display:flex;overflow-x:auto;padding:6px;gap:2px}
-  .step{min-width:100px;flex-direction:column;text-align:center;padding:8px 6px;border-left:none;border-bottom:3px solid transparent;gap:3px}
-  .step.on{border-left:none;border-bottom-color:var(--brass)}
-  .panel{max-height:none}
-  .stage-wrap{min-height:200px}
-}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+      .cta-band { padding: 3rem 0; background: var(--ink); color: var(--white); }
+      .cta-band__wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+      .cta-band h2 { margin-bottom: 0.4rem; color: var(--white); }
 
-.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}.skip-link:focus{position:fixed;left:12px;top:12px;z-index:9999;width:auto;height:auto;padding:12px 16px;background:var(--ink);color:#fff;font-weight:600}
+      .site-footer { background: var(--slate); color: rgba(255,255,255,0.9); padding: 3.2rem 0 1.3rem; }
+      .footer-grid { display: grid; gap: 1.1rem; grid-template-columns: 1.2fr 0.9fr 0.9fr 1fr; }
+      .site-footer h4 { font-family: var(--font-label); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: #f0d9b4; margin-bottom: 0.85rem; }
+      .footer-links { display: grid; gap: 0.55rem; }
+      .footer-links a { color: rgba(255,255,255,0.78); }
+      .footer-bottom { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.16); font-size: 0.82rem; color: rgba(255,255,255,0.66); }
+      .action-row { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1rem; }
 
-/* Isolation: website button styles override any residual planner cascade */
-#website-view .btn{font-family:var(--fb);}
-#planner-view .card{cursor:pointer}
-#planner-view .shell{min-height:100vh;min-height:100dvh}
-#planner-view .app,#planner-view .side,#planner-view .canvas,#planner-view .sum{overflow:hidden}
-@media(max-width:767px){
-  #planner-view .app,#planner-view .side,#planner-view .panel-in,#planner-view .sum-b{overflow:auto}
-}
+      #planner-view {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 110;
+        background: var(--stone);
+        color: var(--ink);
+      }
+      body.planner-open #planner-view { display: block; }
+      #planner-view .planner-shell { display: grid; grid-template-rows: auto 1fr auto; min-height: 100vh; }
+      #planner-view .planner-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem 1rem 0.8rem;
+        background: var(--ink);
+        color: var(--white);
+      }
+      #planner-view .planner-top .brand__text, #planner-view .planner-top .brand__text small { color: var(--white); }
+      #planner-view .planner-top .brand__text small { color: #f0d9b4; }
+      #planner-view .planner-top button { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; padding: 0.6rem 0.9rem; cursor: pointer; }
+      #planner-view .planner-content { display: grid; grid-template-columns: minmax(200px, 250px) minmax(0, 1fr) minmax(220px, 280px); min-height: 0; }
+      #planner-view .planner-section { padding: 1rem; border-right: 1px solid var(--line); overflow: auto; }
+      #planner-view .planner-section:last-child { border-right: 0; }
+      #planner-view .planner-steps { display: grid; gap: 0.6rem; }
+      #planner-view .planner-step {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        border: 1px solid var(--line);
+        border-radius: 0.8rem;
+        padding: 0.75rem 0.8rem;
+        background: var(--white);
+        cursor: pointer;
+        font-weight: 700;
+      }
+      #planner-view .planner-step.active { border-color: var(--brass); box-shadow: inset 0 0 0 1px rgba(180,129,63,0.2); }
+      #planner-view .planner-step__index { width: 28px; height: 28px; border-radius: 50%; background: var(--stone); display: inline-grid; place-items: center; font-size: 0.82rem; font-family: var(--font-label); }
+      #planner-view .planner-main { display: grid; grid-template-rows: auto 1fr; min-height: 0; }
+      #planner-view .planner-preview {
+        padding: 1rem 1rem 0;
+        display: grid;
+        gap: 0.8rem;
+      }
+      #planner-view .preview-card {
+        background: linear-gradient(160deg, rgba(255,254,251,0.98), rgba(246,243,236,0.96));
+        border: 1px solid var(--line);
+        border-radius: 1.2rem;
+        padding: 1rem;
+        box-shadow: var(--shadow);
+      }
+      #planner-view .preview-card__frame {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 0.75rem;
+        min-height: 220px;
+      }
+      #planner-view .preview-card__frame > div { border-radius: 1rem; border: 1px solid var(--line); background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(240,232,220,0.95)); }
+      #planner-view .preview-card__frame .preview-floor { background: linear-gradient(135deg, #fff, #eee3ce); min-height: 110px; }
+      #planner-view .preview-card__frame .preview-side { background: linear-gradient(135deg, #e9e0d0, #f7f0e5); min-height: 110px; }
+      #planner-view .preview-card__label { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.5rem; }
+      #planner-view .planner-options { padding: 1rem; overflow: auto; }
+      #planner-view .options-grid { display: grid; gap: 0.8rem; }
+      #planner-view .option-card {
+        border: 1px solid var(--line);
+        border-radius: 0.95rem;
+        padding: 0.9rem;
+        background: var(--white);
+        cursor: pointer;
+        transition: border-color 180ms ease, transform 180ms ease;
+      }
+      #planner-view .option-card:hover { border-color: var(--brass); transform: translateY(-1px); }
+      #planner-view .option-card.active { border-color: var(--brass); box-shadow: inset 0 0 0 1px rgba(180,129,63,0.15); }
+      #planner-view .option-card__title { font-weight: 700; margin-bottom: 0.2rem; }
+      #planner-view .option-card__desc { font-size: 0.88rem; color: var(--text-muted); }
+      #planner-view .planner-summary { padding: 1rem; background: rgba(255,255,255,0.86); overflow: auto; }
+      #planner-view .planner-summary__list { display: grid; gap: 0.7rem; margin-top: 0.7rem; }
+      #planner-view .planner-summary__item { border-bottom: 1px solid var(--line); padding-bottom: 0.6rem; }
+      #planner-view .planner-summary__item:last-child { border-bottom: 0; }
+      #planner-view .planner-nav {
+        position: sticky;
+        bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        gap: 0.8rem;
+        padding: 0.9rem 1rem calc(1rem + env(safe-area-inset-bottom));
+        border-top: 1px solid var(--line);
+        background: rgba(255,254,251,0.95);
+        backdrop-filter: blur(8px);
+      }
+      #planner-view .planner-nav button { min-width: 112px; }
+      #planner-view .planner-nav button[disabled] { opacity: 0.45; cursor: not-allowed; }
 
-
-.site-brand img.site-logo{height:36px;width:auto;display:block;object-fit:contain}
-.site-brand{gap:10px}
-.mobile-nav .site-brand img.site-logo{height:32px;filter:brightness(0) invert(1)}
-footer .site-brand img.site-logo{height:34px;filter:brightness(0) invert(1)}
-#planner-view .topbar .brand img{height:28px;width:auto;vertical-align:middle;margin-right:8px}
-.hero-visual img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px}
-
-</style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "HomeAndConstructionBusiness",
-  "name": "MIC NSW Pty Ltd",
-  "url": "https://mic-nsw.com.au/",
-  "telephone": "+61470640083",
-  "email": "info@mic-nsw.com.au",
-  "areaServed": {"@type": "AdministrativeArea", "name": "Greater Sydney, NSW"},
-  "description": "Kitchen, bathroom and home renovations across Greater Sydney.",
-  "identifier": [
-    {"@type": "PropertyValue", "name": "ABN", "value": "51 665 533 282"},
-    {"@type": "PropertyValue", "name": "NSW Contractor Licence", "value": "393630C"}
-  ],
-  "makesOffer": [
-    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Kitchen Renovations"}},
-    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Bathroom Renovations"}},
-    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Home Renovations"}}
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "MIC NSW",
-  "url": "https://mic-nsw.com.au/"
-}
-</script>
-
-
-<meta property="og:url" content="https://mic-nsw.com.au/">
-<meta property="og:image" content="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Kitchen & Bathroom Renovations Sydney | MIC NSW">
-<meta name="twitter:description" content="Plan your kitchen or bathroom online. Licensed NSW builder 393630C.">
-<meta name="twitter:image" content="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg">
-
-<meta property="og:title" content="Kitchen & Bathroom Renovations Sydney | MIC NSW">
-<meta property="og:description" content="Plan your kitchen or bathroom online. Licensed NSW builder 393630C. Greater Sydney.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://mic-nsw.com.au/">
-<meta property="og:locale" content="en_AU">
-<meta property="og:image" content="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Kitchen & Bathroom Renovations Sydney | MIC NSW">
-<meta name="twitter:description" content="Plan your kitchen or bathroom online. Licensed NSW builder 393630C.">
-<meta name="robots" content="index,follow">
-</head><body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
-
-<div id="website-view"><main id="main-content" aria-hidden="false">
-
-<header class="site-header" id="siteHeader">
-  <div class="container nav-wrap">
-    <a href="#home" class="site-brand" aria-label="MIC NSW home"><img class="site-logo" src="https://mic-nsw.com.au/front/images/logo2.png" alt="MIC NSW logo" width="120" height="36" decoding="async"><span class="site-brand-text">MIC<span>NSW</span></span></a>
-    <nav class="primary-nav"><ul>
-      <li><a href="#home" data-nav>Home</a></li>
-      <li><a href="#about" data-nav>About</a></li>
-      <li><a href="#services" data-nav>Services</a></li>
-      <li><a href="#design" data-nav>Design Yours Now</a></li>
-      <li><a href="#packages" data-nav>Packages</a></li>
-      <li><a href="#process" data-nav>Process</a></li>
-      <li><a href="#projects" data-nav>Projects</a></li>
-      <li><a href="#faq" data-nav>FAQ</a></li>
-      <li><a href="#quote" data-nav>Contact</a></li>
-    </ul></nav>
-    <div class="header-actions">
-      
-      <a href="https://www.facebook.com/micnsw" class="btn btn-outline" target="_blank" rel="noopener noreferrer" aria-label="MIC NSW on Facebook" style="min-height:42px;padding:8px 12px" title="Facebook">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.56-4.7 1.32 0 2.7.24 2.7.24v2.97h-1.52c-1.5 0-1.96.93-1.96 1.89v2.26h3.34l-.53 3.49h-2.81V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
-      </a>
-      <a href="https://www.instagram.com/micnsw" class="btn btn-outline" target="_blank" rel="noopener noreferrer" aria-label="MIC NSW on Instagram" style="min-height:42px;padding:8px 12px" title="Instagram">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.64-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.41-11.85a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/></svg>
-      </a>
-
-      <a href="https://wa.me/61470640083" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp</a>
-      <a href="#design" class="btn btn-brass">Start Designing</a>
-      <button type="button" class="hamburger" id="menuOpen" aria-label="Open menu">☰</button>
-    </div>
-  </div>
-</header>
-<div class="mobile-nav" id="mobileNav" aria-hidden="true">
-  <div style="display:flex;justify-content:space-between;margin-bottom:24px">
-    <a href="#home" class="site-brand" aria-label="MIC NSW"><img class="site-logo" src="https://mic-nsw.com.au/front/images/logo2.png" alt="MIC NSW logo" width="120" height="32" decoding="async"><span class="site-brand-text" style="color:#fff">MIC<span>NSW</span></span></a>
-    <button type="button" id="menuClose" style="color:#fff;background:transparent;border:1px solid rgba(255,255,255,.3);width:44px;height:44px;border-radius:50%">✕</button>
-  </div>
-  <ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
-    <li><a href="#home" class="mnav" style="color:#fff;font-size:1.2rem">Home</a></li>
-    <li><a href="#about" class="mnav" style="color:#fff;font-size:1.2rem">About</a></li>
-    <li><a href="#services" class="mnav" style="color:#fff;font-size:1.2rem">Services</a></li>
-    <li><a href="#design" class="mnav" style="color:#fff;font-size:1.2rem">Design Yours Now</a></li>
-    <li><a href="#packages" class="mnav" style="color:#fff;font-size:1.2rem">Packages</a></li>
-    <li><a href="#projects" class="mnav" style="color:#fff;font-size:1.2rem">Projects</a></li>
-    <li><a href="#faq" class="mnav" style="color:#fff;font-size:1.2rem">FAQ</a></li>
-    <li><a href="#process" class="mnav" style="color:#fff;font-size:1.2rem">Process</a></li>
-    <li><a href="#quote" class="mnav" style="color:#fff;font-size:1.2rem">Contact</a></li>
-  </ul>
-</div>
-
-<section class="hero" id="home">
-  <div class="container hero-grid">
-    <div>
-      <span class="eyebrow">Sydney renovations</span>
-      <h1>Design and Build a <em>Better Home</em></h1>
-      <p style="margin-top:16px;max-width:480px;color:var(--ink2)">Plan your kitchen or bathroom online, explore finishes and packages, receive a live project estimate and request a detailed quotation from a licensed Sydney renovation team.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:28px">
-        <a href="#design" class="btn btn-brass">Start Designing</a>
-        <a href="#quote" class="btn btn-outline">Request a Free Quote</a>
-      </div>
-      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:28px;padding-top:22px;border-top:1px solid var(--line);font-size:.84rem">
-        <div><strong style="display:block;font-family:var(--fl);font-size:.7rem">Licensed NSW Builder</strong>Licence 393630C</div>
-        <div><strong style="display:block;font-family:var(--fl);font-size:.7rem">Fully Insured</strong>Public liability</div>
-        <div><strong style="display:block;font-family:var(--fl);font-size:.7rem">Greater Sydney</strong>Service area</div>
-        <div><strong style="display:block;font-family:var(--fl);font-size:.7rem">Itemised Quotes</strong>Transparent pricing</div>
-      </div>
-    </div>
-    <div>
-      <img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Kitchen renovation by MIC NSW in Sydney" width="800" height="600" loading="eager" fetchpriority="high" decoding="async">
-    </div>
-  </div>
-</section>
-
-<section class="trust-bar" id="trust">
-  <div class="container trust-grid">
-    <div><strong style="display:block;font-family:var(--fl);font-size:.75rem;color:var(--brass3)">Licence 393630C</strong><span style="font-size:.8rem;color:rgba(255,255,255,.68)">Contractor licence</span></div>
-    <div><strong style="display:block;font-family:var(--fl);font-size:.75rem;color:var(--brass3)">ABN 51 665 533 282</strong><span style="font-size:.8rem;color:rgba(255,255,255,.68)">MIC NSW Pty Ltd</span></div>
-    <div><strong style="display:block;font-family:var(--fl);font-size:.75rem;color:var(--brass3)">Fully Insured</strong><span style="font-size:.8rem;color:rgba(255,255,255,.68)">Public liability</span></div>
-    <div><strong style="display:block;font-family:var(--fl);font-size:.75rem;color:var(--brass3)">Greater Sydney</strong><span style="font-size:.8rem;color:rgba(255,255,255,.68)">Service area</span></div>
-    <div><strong style="display:block;font-family:var(--fl);font-size:.75rem;color:var(--brass3)">Kitchen & Bathroom</strong><span style="font-size:.8rem;color:rgba(255,255,255,.68)">Specialists</span></div>
-  </div>
-</section>
-
-<section class="section" id="about">
-  <div class="container">
-    <span class="eyebrow">About MIC NSW</span>
-    <h2 style="margin-top:10px">Renovations Done Properly, From Start to Finish</h2>
-    <p style="margin-top:12px;max-width:560px">MIC NSW delivers thoughtfully planned kitchen, bathroom and home renovations across Greater Sydney, with clear communication, detailed quoting and coordinated project delivery.</p>
-    <h2 style="margin-top:48px">Why Choose MIC NSW</h2>
-    <div class="why-grid" style="margin-top:24px">
-      <div class="why-card"><h3>Expert Craftsmanship</h3><p style="font-size:.9rem;margin-top:8px">Skilled trades and careful project coordination focused on durable, high-quality finishes.</p></div>
-      <div class="why-card"><h3>Personalised Service</h3><p style="font-size:.9rem;margin-top:8px">Each project is planned around the customer’s home, lifestyle, goals and budget.</p></div>
-      <div class="why-card"><h3>Transparent Process</h3><p style="font-size:.9rem;margin-top:8px">Clear scope, itemised pricing and regular communication throughout the project.</p></div>
-      <div class="why-card"><h3>Coordinated Delivery</h3><p style="font-size:.9rem;margin-top:8px">MIC NSW manages design, scheduling, trades, construction and handover.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="design" style="background:var(--stone2)">
-  <div class="container">
-    <div style="text-align:center;max-width:560px;margin:0 auto 36px">
-      <span class="eyebrow">Design Studio</span>
-      <h2 style="margin-top:10px">Start designing your renovation</h2>
-      <p style="margin-top:12px">Open the interactive planner — it opens as a full workspace inside this page.</p>
-    </div>
-    <div class="design-cards">
-      <a href="#planner/kitchen" class="design-card" data-open-planner="kitchen">
-        <div class="img-wrap"><img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Design your kitchen with MIC NSW" width="640" height="400" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg'"><span class="tag">Kitchen</span></div>
-        <div class="body"><h3>Design Your Kitchen</h3><p style="margin-top:8px;font-size:.95rem;color:var(--ink2)">Layout, cabinetry, benchtop, finishes, hardware and appliances with a live estimate.</p><span class="go">Start Kitchen Design →</span></div>
-      </a>
-      <a href="#planner/bathroom" class="design-card" data-open-planner="bathroom">
-        <div class="img-wrap"><img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Design your bathroom with MIC NSW" width="640" height="400" loading="lazy" decoding="async" onerror="this.src='https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg'"><span class="tag bath">Bathroom</span></div>
-        <div class="body"><h3>Design Your Bathroom</h3><p style="margin-top:8px;font-size:.95rem;color:var(--ink2)">Layout, tiles, vanity, tapware, shower and fixtures with a live estimate.</p><span class="go">Start Bathroom Design →</span></div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="services">
-  <div class="container">
-    <span class="eyebrow">Services</span>
-    <h2 style="margin-top:10px">Specialist renovations across Greater Sydney</h2>
-    <div class="svc-grid" style="margin-top:28px">
-      <article class="svc-card"><img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Kitchen renovations by MIC NSW" width="640" height="400" loading="lazy" decoding="async" onerror="this.src='https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg'"><div class="body"><h3>Kitchen Renovations</h3><p style="font-size:.9rem;margin:8px 0">Custom cabinetry, benchtops, splashbacks and coordinated installation.</p><a href="#quote" class="btn btn-outline btn-block">Request Quote</a></div></article>
-      <article class="svc-card"><img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Bathroom renovations by MIC NSW" width="640" height="400" loading="lazy" decoding="async" onerror="this.src='https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg'"><div class="body"><h3>Bathroom Renovations</h3><p style="font-size:.9rem;margin:8px 0">Waterproofing, tiling, fixtures and finishes for ensuite and family bathrooms.</p><a href="#quote" class="btn btn-outline btn-block">Request Quote</a></div></article>
-      <article class="svc-card"><img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Laundry renovations by MIC NSW" width="640" height="400" loading="lazy" decoding="async" onerror="this.src='https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg'"><div class="body"><h3>Laundry Renovations</h3><p style="font-size:.9rem;margin:8px 0">Practical layouts, durable surfaces and efficient storage.</p><a href="#quote" class="btn btn-outline btn-block">Request Quote</a></div></article>
-      <article class="svc-card"><img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Full home renovations by MIC NSW" width="640" height="400" loading="lazy" decoding="async" onerror="this.src='https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg'"><div class="body"><h3>Full-Home Renovations</h3><p style="font-size:.9rem;margin:8px 0">Complete transformations with single-point project management.</p><a href="#quote" class="btn btn-outline btn-block">Request Quote</a></div></article>
-      <article class="svc-card"><img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Custom joinery by MIC NSW" width="640" height="400" loading="lazy" decoding="async" onerror="this.src='https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg'"><div class="body"><h3>Custom Joinery</h3><p style="font-size:.9rem;margin:8px 0">Built-in storage, wardrobes and feature cabinetry.</p><a href="#quote" class="btn btn-outline btn-block">Request Quote</a></div></article>
-      <article class="svc-card"><img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Commercial fit-outs by MIC NSW" width="640" height="400" loading="lazy" decoding="async" onerror="this.src='https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg'"><div class="body"><h3>Commercial Fit-Outs</h3><p style="font-size:.9rem;margin:8px 0">Office and retail renovations with compliance-ready finishes.</p><a href="#quote" class="btn btn-outline btn-block">Request Quote</a></div></article>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="packages" style="background:var(--stone)">
-  <div class="container">
-    <span class="eyebrow">Packages</span>
-    <h2 style="margin-top:10px">Clear packages, transparent pricing</h2>
-    <p style="margin-top:12px;color:var(--ink2)">Indicative Sydney metro starting prices. All displayed consumer prices include GST unless stated otherwise.</p>
-    <div class="pkg-tabs" style="margin-top:22px"><button type="button" class="on" data-pkg="kitchen">Kitchen</button><button type="button" data-pkg="bathroom">Bathroom</button></div>
-    <div class="pkg-grid" id="pkgGrid"></div>
-    <p class="disclaimer">Indicative estimate only. Final pricing is subject to site inspection, confirmed measurements, product availability, structural conditions, service locations, access requirements and the final agreed scope of work. This estimate is not a formal quotation or building contract.</p>
-  </div>
-</section>
-
-<section class="section" id="process">
-  <div class="container">
-    <span class="eyebrow">Process</span>
-    <h2 style="margin-top:10px">Four steps to your finished space</h2>
-    <div class="process-grid" style="margin-top:28px">
-      <div class="process-card"><div style="font-family:var(--fl);font-size:.72rem;color:var(--brass)">01</div><h3 style="margin:8px 0">Consultation &amp; Design</h3><p style="font-size:.88rem">Free meeting to discuss vision, budget and goals.</p></div>
-      <div class="process-card"><div style="font-family:var(--fl);font-size:.72rem;color:var(--brass)">02</div><h3 style="margin:8px 0">Quoting &amp; Project Planning</h3><p style="font-size:.88rem">Detailed transparent quote with cost breakdown and timeline.</p></div>
-      <div class="process-card"><div style="font-family:var(--fl);font-size:.72rem;color:var(--brass)">03</div><h3 style="margin:8px 0">Construction</h3><p style="font-size:.88rem">Professional team on site with a tidy, safe workspace.</p></div>
-      <div class="process-card"><div style="font-family:var(--fl);font-size:.72rem;color:var(--brass)">04</div><h3 style="margin:8px 0">Completion &amp; Handover</h3><p style="font-size:.88rem">Final walk-through together until you are satisfied.</p></div>
-    </div>
-  </div>
-</section>
-
-
-<section class="section" id="projects" style="background:var(--stone)">
-  <div class="container">
-    <span class="eyebrow">Projects</span>
-    <h2 style="margin-top:10px">Completed Renovation Projects</h2>
-    <p style="margin-top:12px;color:var(--ink2);max-width:560px">Explore selected kitchen, bathroom and home renovation work across Greater Sydney.</p>
-    <!-- REPLACE WITH REAL MIC NSW PROJECT IMAGES AND DETAILS -->
-    <div class="svc-grid" style="margin-top:28px">
-      <article class="svc-card">
-        <img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Kitchen renovation project concept — Greater Sydney" width="640" height="400" loading="lazy" decoding="async" onerror="this.src='https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg'">
-        <div class="body">
-          <h3>Kitchen Renovation</h3>
-          <p style="font-size:.85rem;color:var(--ink2);margin:6px 0">Location: Greater Sydney · Scope: Cabinetry, stone benchtop, splashback and appliance installation</p>
-          <p style="font-size:.8rem;color:var(--ink2)">Placeholder project card — replace with verified MIC NSW work.</p>
-        </div>
-      </article>
-      <article class="svc-card">
-        <img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Bathroom renovation project concept — Greater Sydney" width="640" height="400" loading="lazy" decoding="async" onerror="this.src='https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg'">
-        <div class="body">
-          <h3>Bathroom Renovation</h3>
-          <p style="font-size:.85rem;color:var(--ink2);margin:6px 0">Location: Greater Sydney · Scope: Waterproofing, tiling, vanity and fixtures</p>
-          <p style="font-size:.8rem;color:var(--ink2)">Placeholder project card — replace with verified MIC NSW work.</p>
-        </div>
-      </article>
-      <article class="svc-card">
-        <img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Laundry and joinery project concept — Greater Sydney" width="640" height="400" loading="lazy" decoding="async" onerror="this.src='https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg'">
-        <div class="body">
-          <h3>Laundry &amp; Joinery</h3>
-          <p style="font-size:.85rem;color:var(--ink2);margin:6px 0">Location: Greater Sydney · Scope: Cabinetry, benchtops and storage</p>
-          <p style="font-size:.8rem;color:var(--ink2)">Placeholder project card — replace with verified MIC NSW work.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="faq">
-  <div class="container" style="max-width:800px">
-    <span class="eyebrow">FAQ</span>
-    <h2 style="margin-top:10px">Common questions</h2>
-    <div class="faq-list" style="margin-top:28px" id="faqList">
-
-      <div class="faq-item" style="border-bottom:1px solid var(--line)">
-        <button type="button" class="faq-btn" aria-expanded="false" aria-controls="faq-panel-0" id="faq-btn-0" style="width:100%;text-align:left;background:transparent;border:0;padding:16px 0;font-weight:600;font-size:1rem;cursor:pointer;display:flex;justify-content:space-between;gap:12px;color:var(--ink)">
-          <span>Are the displayed prices inclusive of GST?</span><span aria-hidden="true">+</span>
-        </button>
-        <div id="faq-panel-0" role="region" aria-labelledby="faq-btn-0" hidden style="padding:0 0 16px;color:var(--ink2);font-size:.95rem">Yes. All displayed consumer prices include GST unless expressly stated otherwise.</div>
-      </div>
-
-      <div class="faq-item" style="border-bottom:1px solid var(--line)">
-        <button type="button" class="faq-btn" aria-expanded="false" aria-controls="faq-panel-1" id="faq-btn-1" style="width:100%;text-align:left;background:transparent;border:0;padding:16px 0;font-weight:600;font-size:1rem;cursor:pointer;display:flex;justify-content:space-between;gap:12px;color:var(--ink)">
-          <span>Is the planner estimate a final quotation?</span><span aria-hidden="true">+</span>
-        </button>
-        <div id="faq-panel-1" role="region" aria-labelledby="faq-btn-1" hidden style="padding:0 0 16px;color:var(--ink2);font-size:.95rem">No. The planner provides an indicative estimate only. Final pricing is subject to site inspection, confirmed measurements, product selection, availability, site access, structural conditions, service locations and the final agreed scope of work.</div>
-      </div>
-
-      <div class="faq-item" style="border-bottom:1px solid var(--line)">
-        <button type="button" class="faq-btn" aria-expanded="false" aria-controls="faq-panel-2" id="faq-btn-2" style="width:100%;text-align:left;background:transparent;border:0;padding:16px 0;font-weight:600;font-size:1rem;cursor:pointer;display:flex;justify-content:space-between;gap:12px;color:var(--ink)">
-          <span>Are appliances included in kitchen packages?</span><span aria-hidden="true">+</span>
-        </button>
-        <div id="faq-panel-2" role="region" aria-labelledby="faq-btn-2" hidden style="padding:0 0 16px;color:var(--ink2);font-size:.95rem">Appliance inclusions depend on the selected package and any allowances shown in the planner. Specific appliances, brands and models are confirmed in the formal quotation and may be customer-supplied where agreed.</div>
-      </div>
-
-      <div class="faq-item" style="border-bottom:1px solid var(--line)">
-        <button type="button" class="faq-btn" aria-expanded="false" aria-controls="faq-panel-3" id="faq-btn-3" style="width:100%;text-align:left;background:transparent;border:0;padding:16px 0;font-weight:600;font-size:1rem;cursor:pointer;display:flex;justify-content:space-between;gap:12px;color:var(--ink)">
-          <span>Does MIC NSW remove the existing kitchen or bathroom?</span><span aria-hidden="true">+</span>
-        </button>
-        <div id="faq-panel-3" role="region" aria-labelledby="faq-btn-3" hidden style="padding:0 0 16px;color:var(--ink2);font-size:.95rem">Demolition and removal are typically included where listed in the agreed package or quotation. The exact scope is confirmed after site review.</div>
-      </div>
-
-      <div class="faq-item" style="border-bottom:1px solid var(--line)">
-        <button type="button" class="faq-btn" aria-expanded="false" aria-controls="faq-panel-4" id="faq-btn-4" style="width:100%;text-align:left;background:transparent;border:0;padding:16px 0;font-weight:600;font-size:1rem;cursor:pointer;display:flex;justify-content:space-between;gap:12px;color:var(--ink)">
-          <span>Who coordinates plumbing and electrical work?</span><span aria-hidden="true">+</span>
-        </button>
-        <div id="faq-panel-4" role="region" aria-labelledby="faq-btn-4" hidden style="padding:0 0 16px;color:var(--ink2);font-size:.95rem">MIC NSW coordinates licensed trades as part of the project delivery where included in the agreed scope. Any existing service limitations are confirmed on site.</div>
-      </div>
-
-      <div class="faq-item" style="border-bottom:1px solid var(--line)">
-        <button type="button" class="faq-btn" aria-expanded="false" aria-controls="faq-panel-5" id="faq-btn-5" style="width:100%;text-align:left;background:transparent;border:0;padding:16px 0;font-weight:600;font-size:1rem;cursor:pointer;display:flex;justify-content:space-between;gap:12px;color:var(--ink)">
-          <span>Do you provide design-only services?</span><span aria-hidden="true">+</span>
-        </button>
-        <div id="faq-panel-5" role="region" aria-labelledby="faq-btn-5" hidden style="padding:0 0 16px;color:var(--ink2);font-size:.95rem">Ask MIC NSW to confirm design-only options for your project. Most projects combine design support with full renovation delivery.</div>
-      </div>
-
-      <div class="faq-item" style="border-bottom:1px solid var(--line)">
-        <button type="button" class="faq-btn" aria-expanded="false" aria-controls="faq-panel-6" id="faq-btn-6" style="width:100%;text-align:left;background:transparent;border:0;padding:16px 0;font-weight:600;font-size:1rem;cursor:pointer;display:flex;justify-content:space-between;gap:12px;color:var(--ink)">
-          <span>Which Sydney areas do you service?</span><span aria-hidden="true">+</span>
-        </button>
-        <div id="faq-panel-6" role="region" aria-labelledby="faq-btn-6" hidden style="padding:0 0 16px;color:var(--ink2);font-size:.95rem">MIC NSW services Greater Sydney, NSW. Suitability for a specific suburb is confirmed when you enquire.</div>
-      </div>
-
-      <div class="faq-item" style="border-bottom:1px solid var(--line)">
-        <button type="button" class="faq-btn" aria-expanded="false" aria-controls="faq-panel-7" id="faq-btn-7" style="width:100%;text-align:left;background:transparent;border:0;padding:16px 0;font-weight:600;font-size:1rem;cursor:pointer;display:flex;justify-content:space-between;gap:12px;color:var(--ink)">
-          <span>Will my project require approvals?</span><span aria-hidden="true">+</span>
-        </button>
-        <div id="faq-panel-7" role="region" aria-labelledby="faq-btn-7" hidden style="padding:0 0 16px;color:var(--ink2);font-size:.95rem">Some projects may require approvals depending on the scope and local requirements. Where required, this is discussed during quoting and project planning.</div>
-      </div>
-
-      <div class="faq-item" style="border-bottom:1px solid var(--line)">
-        <button type="button" class="faq-btn" aria-expanded="false" aria-controls="faq-panel-8" id="faq-btn-8" style="width:100%;text-align:left;background:transparent;border:0;padding:16px 0;font-weight:600;font-size:1rem;cursor:pointer;display:flex;justify-content:space-between;gap:12px;color:var(--ink)">
-          <span>What happens after I submit my planner design?</span><span aria-hidden="true">+</span>
-        </button>
-        <div id="faq-panel-8" role="region" aria-labelledby="faq-btn-8" hidden style="padding:0 0 16px;color:var(--ink2);font-size:.95rem">MIC NSW reviews your design, measurements and site requirements before contacting you to discuss the next steps and any formal quotation.</div>
-      </div>
-
-      <div class="faq-item" style="border-bottom:1px solid var(--line)">
-        <button type="button" class="faq-btn" aria-expanded="false" aria-controls="faq-panel-9" id="faq-btn-9" style="width:100%;text-align:left;background:transparent;border:0;padding:16px 0;font-weight:600;font-size:1rem;cursor:pointer;display:flex;justify-content:space-between;gap:12px;color:var(--ink)">
-          <span>Can I change selections after requesting a quote?</span><span aria-hidden="true">+</span>
-        </button>
-        <div id="faq-panel-9" role="region" aria-labelledby="faq-btn-9" hidden style="padding:0 0 16px;color:var(--ink2);font-size:.95rem">Yes. Selections can be refined during the quotation process before works are agreed. Changes after contract may affect pricing and timeframes.</div>
-      </div>
-
-      <div class="faq-item" style="border-bottom:1px solid var(--line)">
-        <button type="button" class="faq-btn" aria-expanded="false" aria-controls="faq-panel-10" id="faq-btn-10" style="width:100%;text-align:left;background:transparent;border:0;padding:16px 0;font-weight:600;font-size:1rem;cursor:pointer;display:flex;justify-content:space-between;gap:12px;color:var(--ink)">
-          <span>How are project timeframes confirmed?</span><span aria-hidden="true">+</span>
-        </button>
-        <div id="faq-panel-10" role="region" aria-labelledby="faq-btn-10" hidden style="padding:0 0 16px;color:var(--ink2);font-size:.95rem">Indicative timeframes only. Final scheduling depends on the confirmed scope, site conditions, product availability, approvals and trade availability.</div>
-      </div>
-
-      <div class="faq-item" style="border-bottom:1px solid var(--line)">
-        <button type="button" class="faq-btn" aria-expanded="false" aria-controls="faq-panel-11" id="faq-btn-11" style="width:100%;text-align:left;background:transparent;border:0;padding:16px 0;font-weight:600;font-size:1rem;cursor:pointer;display:flex;justify-content:space-between;gap:12px;color:var(--ink)">
-          <span>Are waterproofing and certificates included for bathroom renovations?</span><span aria-hidden="true">+</span>
-        </button>
-        <div id="faq-panel-11" role="region" aria-labelledby="faq-btn-11" hidden style="padding:0 0 16px;color:var(--ink2);font-size:.95rem">Waterproofing completed to applicable standards is included where listed in the bathroom package or quotation. Certificates are provided where required for the agreed works.</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section class="cta-band" id="cta">
-  <div class="container">
-    <h2>Ready to start your renovation?</h2>
-    <p style="color:rgba(255,255,255,.7);margin:12px auto 26px;max-width:440px">Open the design studio or request a free consultation.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center">
-      <a href="#design" class="btn btn-brass">Open Design Studio</a>
-      <a href="#quote" class="btn btn-light">Request a Quote</a>
-      <a href="https://wa.me/61470640083" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp</a>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="quote">
-  <div class="container contact-grid">
-    <div id="contact">
-      <span class="eyebrow">Contact</span>
-      <h2 style="margin-top:10px">Tell us about your project</h2>
-      <p style="margin:14px 0 22px;color:var(--ink2)">Our team will review your details and contact you about the next steps.</p>
-      <p><strong>Phone:</strong> <a href="tel:+61470640083" style="color:var(--brass2)">+61 470 640 083</a></p>
-      <p><strong>Email:</strong> <a href="mailto:info@mic-nsw.com.au" style="color:var(--brass2)">info@mic-nsw.com.au</a></p>
-      <p><strong>WhatsApp:</strong> <a href="https://wa.me/61470640083" target="_blank" rel="noopener" style="color:var(--brass2)">Message us</a></p>
-      <p>Greater Sydney, NSW · Mon–Fri 8am–5pm</p>
-      <p>Licence 393630C · ABN 51 665 533 282</p>
-    </div>
-    <form class="contact-form" id="contactForm">
-      <label for="cName">Full name *</label><input id="cName" name="name" required>
-      <label for="cEmail">Email *</label><input id="cEmail" name="email" type="email" required>
-      <label for="cPhone">Phone *</label><input id="cPhone" name="phone" type="tel" required>
-      <label for="cSuburb">Project suburb *</label><input id="cSuburb" name="suburb" required>
-      <label for="cType">Project type *</label>
-      <select id="cType" name="project_type" required>
-        <option value="">Select…</option>
-        <option>Kitchen renovation</option><option>Bathroom renovation</option><option>Laundry</option>
-        <option>Full home</option><option>Custom joinery</option><option>Commercial</option><option>Not sure yet</option>
-      </select>
-      <label for="cContactMethod">Preferred contact method</label>
-      <select id="cContactMethod" name="contact_method">
-        <option value="Phone">Phone</option>
-        <option value="Email">Email</option>
-        <option value="WhatsApp">WhatsApp</option>
-      </select>
-      <label for="cPackage">Preferred package</label>
-      <select id="cPackage" name="package"><option value="">Not sure yet</option><option>Essential</option><option>Signature</option><option>Luxury</option><option>Bespoke</option></select>
-      <label for="cMsg">Message</label><textarea id="cMsg" name="message" rows="4"></textarea>
-      <label style="display:flex;gap:10px;align-items:flex-start;font-weight:500;margin-bottom:14px">
-        <input type="checkbox" name="consent" required style="width:auto;min-height:0;margin-top:4px"><span>I agree to be contacted about this enquiry. *</span>
-      </label>
-      <button type="submit" class="btn btn-primary btn-block">Send message</button>
-      <div id="contactStatus" role="status" aria-live="polite" style="margin-top:12px;font-size:.9rem"></div>
-    </form>
-  </div>
-</section>
-
-<footer>
-  <div class="container foot-grid">
-    <div><a href="#home" class="site-brand" aria-label="MIC NSW home"><img class="site-logo" src="https://mic-nsw.com.au/front/images/logo2.png" alt="MIC NSW logo" width="120" height="36" decoding="async"><span class="site-brand-text">MIC<span>NSW</span></span></a>
-      <p style="color:rgba(255,255,255,.55);margin-top:12px;font-size:.88rem">Sydney’s specialist kitchen and bathroom renovation company.</p></div>
-    <div><h5>Explore</h5><ul style="list-style:none;display:flex;flex-direction:column;gap:9px">
-      <li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#services">Services</a></li>
-      <li><a href="#design">Design Yours Now</a></li><li><a href="#packages">Packages</a></li><li><a href="#quote">Contact</a></li>
-    </ul></div>
-    <div><h5>Design Studio</h5><ul style="list-style:none;display:flex;flex-direction:column;gap:9px">
-      <li><a href="#planner/kitchen" data-open-planner="kitchen">Kitchen Planner</a></li>
-      <li><a href="#planner/bathroom" data-open-planner="bathroom">Bathroom Planner</a></li>
-      <li><a href="#packages">Packages</a></li>
-    </ul></div>
-    <div><h5>Contact</h5><ul style="list-style:none;display:flex;flex-direction:column;gap:9px">
-      <li><a href="tel:+61470640083">+61 470 640 083</a></li>
-      <li><a href="mailto:info@mic-nsw.com.au">info@mic-nsw.com.au</a></li>
-      <li><a href="https://wa.me/61470640083" target="_blank" rel="noopener">WhatsApp</a></li>
-      <li><a href="https://www.facebook.com/micnsw" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-      <li><a href="https://www.instagram.com/micnsw" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-      <li>Licence 393630C · ABN 51 665 533 282</li>
-    </ul></div>
-  </div>
-  <div class="container" style="padding-bottom:12px;font-size:.82rem">
-      <button type="button" id="openPrivacy" style="background:none;border:0;color:rgba(255,255,255,.7);cursor:pointer;text-decoration:underline;margin-right:16px">Privacy Policy</button>
-      <button type="button" id="openDisclaimer" style="background:none;border:0;color:rgba(255,255,255,.7);cursor:pointer;text-decoration:underline">Estimate Disclaimer</button>
-    </div>
-    <div class="container foot-bottom">MIC NSW Pty Ltd — © 2026 MIC NSW. All rights reserved.</div>
-</footer>
-<a href="https://wa.me/61470640083" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 004.1 17.4L3 21.5l4.2-1.1A11 11 0 0020.5 3.5zm-8.5 17a9 9 0 01-4.6-1.3l-.3-.2-2.7.7.7-2.6-.2-.3A9 9 0 1120 12a9 9 0 01-8 8.5zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1s-.7.9-.8 1-.3.2-.6.1a7.4 7.4 0 01-2.2-1.4 8.3 8.3 0 01-1.5-1.9c-.2-.3 0-.4.1-.6l.5-.6c.1-.2.1-.3 0-.5l-.9-2.1c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3s-1 1-1 2.4 1 2.8 1.2 3a12.5 12.5 0 004.7 3.7c.6.3 1.2.4 1.6.5a3.8 3.8 0 001.8.1 2.9 2.9 0 001.9-1.3c.2-.4.2-.7.1-.8l-.5-.2z"/></svg></a>
-</main></div><!-- website-view -->
-
-<div id="planner-view" aria-hidden="true">
-<div class="shell">
-  <header class="topbar">
-    <a href="#design" data-exit-planner class="back">← Back to Website</a>
-    <div class="brand"><img class="site-logo" src="https://mic-nsw.com.au/front/images/logo2.png" alt="MIC NSW" width="90" height="28" decoding="async"><i>MIC</i> MIC<span>NSW</span></div>
-    <a href="#quote" data-exit-to-quote class="cta">Get a Quote</a>
-  </header>
-  <nav class="modes" role="tablist">
-    <button type="button" class="mode on" data-mode="kitchen" role="tab">Kitchen</button>
-    <button type="button" class="mode" data-mode="bathroom" role="tab">Bathroom</button>
-  </nav>
-  <div class="app">
-    <aside class="side">
-      <div class="side-h">
-        <h2 id="sideTitle">Kitchen Project</h2>
-        <div class="prog"><i id="progFill" style="width:7%"></i></div>
-        <div class="prog-l" id="progLabel">Step 1 of 7</div>
-      </div>
-      <div class="steps" id="stepList" role="list"></div>
-    </aside>
-    <main class="canvas">
-      <div class="toolbar">
-        <span class="badge-3d">3D PREVIEW</span>
-        <div class="tools">
-          <button type="button" class="tool" id="zIn" title="Zoom in">+</button>
-          <button type="button" class="tool" id="zOut" title="Zoom out">−</button>
-          <button type="button" class="tool" id="zReset" title="Reset view">↺</button>
-          <button type="button" class="tool mob-sum" id="togSum" title="Summary" style="display:none">☰</button>
-        </div>
-      </div>
-      <div class="stage-wrap">
-        <canvas id="c3d"></canvas>
-        <div class="stage-note">Interactive 3D Preview · Drag to Rotate · Pinch or Scroll to Zoom</div>
-      </div>
-      <div class="panel">
-        <div class="panel-in">
-          <div class="panel-h">
-            <div><h3 id="stepTitle">Step 1</h3><p id="stepDesc"></p></div>
-            <span class="done-tag" id="doneTag" style="display:none">Done</span>
+      @media (max-width: 980px) {
+        .services-grid, .projects-grid, .packages-grid, .contact-grid, .footer-grid { grid-template-columns: 1fr 1fr; }
+        .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        #planner-view .planner-content { grid-template-columns: 1fr; }
+        #planner-view .planner-section { border-right: 0; border-bottom: 1px solid var(--line); }
+        #planner-view .planner-preview { padding-bottom: 0; }
+      }
+      @media (max-width: 760px) {
+        .site-nav__links { display: none; }
+        .site-nav__actions .btn--primary { display: none; }
+        .site-nav__toggle { display: inline-grid; place-items: center; }
+        .hero__grid, .feature-grid, .services-grid, .projects-grid, .packages-grid, .process-grid, .contact-grid, .footer-grid { grid-template-columns: 1fr; }
+        .hero { padding-top: 3rem; }
+        .hero__media img { min-height: 320px; }
+        .section { padding: 3.6rem 0; }
+        .cta-band__wrap { align-items: flex-start; }
+        #planner-view .planner-top { padding: 0.9rem 0.9rem 0.8rem; }
+        #planner-view .planner-preview { padding: 0.8rem 0.8rem 0; }
+        #planner-view .preview-card__frame { grid-template-columns: 1fr; min-height: auto; }
+        #planner-view .planner-summary { order: 3; }
+        #planner-view .planner-preview { max-height: 32vh; overflow: hidden; }
+      }
+      @media (max-width: 520px) {
+        .container { width: min(var(--max), calc(100% - 1.2rem)); }
+        .btn { min-height: 44px; }
+        #planner-view .planner-nav { flex-direction: column-reverse; }
+        #planner-view .planner-nav button { width: 100%; }
+      }
+    </style>
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": ["HomeAndConstructionBusiness", "LocalBusiness"],
+        "name": "MIC NSW",
+        "url": "https://mic-nsw.com.au/",
+        "telephone": "+61-470-640-083",
+        "email": "info@mic-nsw.com.au",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "NSW",
+          "addressCountry": "AU",
+          "addressLocality": "Greater Sydney"
+        },
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Sydney"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Greater Sydney"
+          }
+        ],
+        "priceRange": "$$$",
+        "description": "MIC NSW delivers kitchen renovations Sydney, bathroom renovations Sydney and custom joinery across Greater Sydney.",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Kitchen and bathroom renovation services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Kitchen renovations Sydney"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Bathroom renovations Sydney"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Custom joinery Sydney"
+              }
+            }
+          ]
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do you work with licensed builders in Sydney?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. MIC NSW provides renovation project delivery across Greater Sydney with a licensed building approach and clear communication from planning through completion."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does a kitchen or bathroom renovation usually take?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Timelines vary by scope, but many kitchen renovations Sydney and bathroom renovation projects take several weeks to a few months depending on design complexity and approvals."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What affects bathroom renovation cost Sydney?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Floorplan changes, waterproofing, plumbing, joinery, fixtures and finish level all influence bathroom renovation cost Sydney."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which Sydney suburbs do you service?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We service homes throughout Sydney, Greater Sydney and nearby areas including the Inner West, North Shore, Eastern Suburbs, Western Sydney, Hills District, Sutherland Shire and Northern Beaches."
+            }
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "MIC NSW",
+        "url": "https://mic-nsw.com.au/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://mic-nsw.com.au/#contact",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+</head>
+  <body>
+    <a class="visually-hidden" href="#content">Skip to content</a>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href="#home" aria-label="MIC NSW home">
+          <span class="brand__mark" aria-hidden="true"><img src="https://mic-nsw.com.au/front/images/logo2.png" alt="MIC NSW logo" /></span>
+          <span class="brand__text">MIC NSW<small>Licensed builders</small></span>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <div class="site-nav__links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#design-studio">Design Studio</a>
+            <a href="#packages">Packages</a>
+            <a href="#process">Process</a>
+            <a href="#projects">Projects</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
           </div>
-          <div id="content"></div>
-          <div class="nav">
-            <button type="button" class="btn" id="btnBack" disabled>← Back</button>
-            <button type="button" class="btn pri" id="btnNext">Next →</button>
+          <div class="site-nav__actions">
+            <a class="btn btn--outline" href="https://wa.me/61470640083" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="btn btn--primary" href="#design-studio">Start Designing</a>
+            <button class="site-nav__toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-mobile-toggle>
+              ☰
+            </button>
+          </div>
+        </nav>
+      </div>
+      <div class="mobile-menu" data-mobile-menu>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#design-studio">Design Studio</a>
+        <a href="#packages">Packages</a>
+        <a href="#process">Process</a>
+        <a href="#projects">Projects</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </header>
+
+    <main id="content">
+      <section class="hero" id="home">
+        <div class="container hero__grid">
+          <div class="hero__copy">
+            <p class="eyebrow">Sydney kitchen &amp; bathroom renovations</p>
+            <h1>Kitchen &amp; bathroom renovations Sydney homeowners trust.</h1>
+            <p>MIC NSW helps families across Greater Sydney plan custom kitchen renovations, bathroom renovations and full home renovation upgrades with a licensed builder, clear packages and design-led support from concept to completion.</p>
+            <div class="btn-group">
+              <a class="btn btn--primary" href="#contact">Book a free consultation</a>
+              <a class="btn btn--outline" href="#design-studio">Open the planner</a>
+            </div>
+            <ul class="hero__highlights">
+              <li><span class="chip">Licensed builders</span> Home renovations NSW with expert project coordination</li>
+              <li><span class="chip">Custom joinery</span> Tailored storage, cabinetry and finishes for Sydney homes</li>
+              <li><span class="chip">Clear packages</span> Kitchen renovation packages Sydney and bathroom renovation cost guidance</li>
+            </ul>
+          </div>
+          <div class="hero__media">
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80" alt="Sydney kitchen renovation with stone benchtops and custom joinery" loading="eager" />
+            <div class="hero__card">
+              <strong>Serving Greater Sydney</strong>
+              <span>Inner West, North Shore, Eastern Suburbs, Western Sydney, Hills District, Sutherland Shire and Northern Beaches</span>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      <section class="section section--cream" id="about">
+        <div class="container">
+          <p class="eyebrow">About MIC NSW</p>
+          <h2>Licensed kitchen and bathroom specialists for Greater Sydney homes</h2>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <h3>Built for local homes</h3>
+              <p>We manage kitchen renovations Sydney and bathroom renovations Sydney with practical planning, strong communication and a focus on lasting workmanship. Our team is experienced in delivering home renovations NSW for busy family households, apartments and period homes.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Design-led renovation support</h3>
+              <p>From initial concept through to construction, we help you compare layouts, materials and renovation packages so the result feels functional, calm and aligned with your lifestyle.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="services">
+        <div class="container">
+          <p class="eyebrow">Services</p>
+          <h2>Kitchen and bathroom renovations tailored to Sydney living</h2>
+          <div class="services-grid">
+            <article class="service-card">
+              <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80" alt="Sydney kitchen renovation with open-plan cabinetry and premium finishes" loading="lazy" />
+              <h3>Kitchen renovations Sydney</h3>
+              <p>We design and build kitchen renovations Sydney that balance storage, cooking flow and entertaining. Whether you want a compact refresh or a full kitchen remodel Greater Sydney, our team can guide layout, joinery and finishes.</p>
+            </article>
+            <article class="service-card">
+              <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80" alt="Bathroom renovation in Sydney with modern vanity and stone surfaces" loading="lazy" />
+              <h3>Bathroom renovations Sydney</h3>
+              <p>From bathroom renovation near me Sydney searches to full ensuite upgrades, we help clients choose waterproofing, tiling and fittings that suit both use and visual style. We also provide practical guidance on bathroom renovation cost Sydney.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--cream" id="design-studio">
+        <div class="container">
+          <p class="eyebrow">Design Studio</p>
+          <h2>Explore your renovation direction before you commit</h2>
+          <p>Use our planner to compare project styles, layouts and finishes. It is designed to help Sydney homeowners narrow down decisions for a kitchen renovation or bathroom update without losing momentum.</p>
+          <div class="btn-group" style="margin-top: 1.2rem;">
+            <button class="btn btn--primary" type="button" data-planner-open>Open the planner</button>
+            <a class="btn btn--outline" href="#packages">View renovation packages</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="packages">
+        <div class="container">
+          <p class="eyebrow">Packages</p>
+          <h2>Flexible packages for kitchen and bathroom upgrades</h2>
+          <div class="packages-grid">
+            <article class="package-card">
+              <h3>Refresh</h3>
+              <p>Ideal for cosmetic updates, cabinetry refresh and targeted improvements.</p>
+              <span class="package-card__price">From $18k*</span>
+            </article>
+            <article class="package-card package-card--featured">
+              <h3>Signature</h3>
+              <p>Balanced scope for custom joinery, premium surfaces and smart storage.</p>
+              <span class="package-card__price">From $35k*</span>
+            </article>
+            <article class="package-card">
+              <h3>Complete Renovation</h3>
+              <p>Full project management for kitchen remodel Greater Sydney or bathroom renovations with structural works.</p>
+              <span class="package-card__price">From $60k*</span>
+            </article>
+          </div>
+          <p class="chip" style="margin-top: 1rem;">*Indicative Sydney metro pricing only and subject to site conditions, materials and scope.</p>
+        </div>
+      </section>
+
+      <section class="section section--cream" id="process">
+        <div class="container">
+          <p class="eyebrow">Process</p>
+          <h2>A clear renovation journey for local clients</h2>
+          <div class="process-grid">
+            <article class="process-card">
+              <strong>01</strong>
+              <h3>Consultation</h3>
+              <p>We review your goals, budget and site for kitchen renovations Sydney or bathroom renovations Sydney.</p>
+            </article>
+            <article class="process-card">
+              <strong>02</strong>
+              <h3>Design</h3>
+              <p>We map layout, joinery and finishes so your renovation feels intentional from the start.</p>
+            </article>
+            <article class="process-card">
+              <strong>03</strong>
+              <h3>Build</h3>
+              <p>We coordinate trades and keep the build transparent, efficient and aligned with your timeline.</p>
+            </article>
+            <article class="process-card">
+              <strong>04</strong>
+              <h3>Deliver</h3>
+              <p>Your project is finalised with practical support, maintenance guidance and a polished finish.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="projects">
+        <div class="container">
+          <p class="eyebrow">Projects</p>
+          <h2>Recent renovation directions shaped for Sydney homes</h2>
+          <div class="projects-grid">
+            <article class="project-card">
+              <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80" alt="Inner West kitchen renovation with contemporary cabinetry and stone island" loading="lazy" />
+              <h3>Inner West kitchen refresh</h3>
+              <p>Clean cabinetry, smart storage and a warmer palette for an active family home.</p>
+            </article>
+            <article class="project-card">
+              <img src="https://images.unsplash.com/photo-1620625515032-6ed0c1790c75?auto=format&fit=crop&w=1200&q=80" alt="North Shore bathroom renovation with spa-inspired finishes" loading="lazy" />
+              <h3>North Shore bathroom retreat</h3>
+              <p>Layered textures, floating vanity and a soft-toned palette for a calm ensuite.</p>
+            </article>
+            <article class="project-card">
+              <img src="https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=1200&q=80" alt="Western Sydney custom joinery installation for a modern kitchen" loading="lazy" />
+              <h3>Western Sydney custom joinery</h3>
+              <p>Built-in storage, integrated appliances and durable finishes for everyday family use.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--cream" id="faq">
+        <div class="container">
+          <p class="eyebrow">FAQ</p>
+          <h2>Common questions about Sydney renovation projects</h2>
+          <div class="faq-list">
+            <article class="faq-card">
+              <details open>
+                <summary>Do you work with licensed builders in Sydney?<span>+</span></summary>
+                <p>Yes. MIC NSW provides renovation project delivery across Greater Sydney with a licensed building approach and clear communication from planning through completion.</p>
+              </details>
+            </article>
+            <article class="faq-card">
+              <details>
+                <summary>How long does a kitchen or bathroom renovation usually take?<span>+</span></summary>
+                <p>Timelines vary by scope, but many kitchen renovations Sydney and bathroom renovation projects take several weeks to a few months depending on design complexity and approvals.</p>
+              </details>
+            </article>
+            <article class="faq-card">
+              <details>
+                <summary>What affects bathroom renovation cost Sydney?<span>+</span></summary>
+                <p>Floorplan changes, waterproofing, plumbing, joinery, fixtures and finish level all influence bathroom renovation cost Sydney. We provide transparent guidance during the planning stage.</p>
+              </details>
+            </article>
+            <article class="faq-card">
+              <details>
+                <summary>Which Sydney suburbs do you service?<span>+</span></summary>
+                <p>We service homes throughout Sydney, Greater Sydney and nearby areas including the Inner West, North Shore, Eastern Suburbs, Western Sydney, Hills District, Sutherland Shire and Northern Beaches.</p>
+              </details>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="container contact-grid">
+          <article class="contact-card">
+            <p class="eyebrow">Contact</p>
+            <h2>Start your Sydney renovation enquiry</h2>
+            <p>Tell us about your kitchen or bathroom renovation goals and we will help you understand the right package, timeline and design direction for your home.</p>
+            <div class="contact-links">
+              <a href="tel:+61470640083">Phone: +61 470 640 083</a>
+              <a href="mailto:info@mic-nsw.com.au">Email: info@mic-nsw.com.au</a>
+              <a href="https://wa.me/61470640083" target="_blank" rel="noopener">WhatsApp MIC NSW</a>
+            </div>
+          </article>
+          <article class="contact-card">
+            <form action="https://formspree.io/f/your-form-id" method="POST">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" required />
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="name@email.com" required />
+              <label for="service">Service</label>
+              <select id="service" name="service">
+                <option>Kitchen renovation</option>
+                <option>Bathroom renovation</option>
+                <option>Custom joinery</option>
+                <option>Full home renovation</option>
+              </select>
+              <label for="message">Project details</label>
+              <textarea id="message" name="message" placeholder="Share your Sydney renovation goals, suburb and timeline"></textarea>
+              <button class="btn btn--primary" type="submit">Request a quote</button>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta-band">
+        <div class="container cta-band__wrap">
+          <div>
+            <p class="eyebrow">Free consultation</p>
+            <h2>Discuss your kitchen or bathroom renovation in Sydney today.</h2>
+          </div>
+          <div class="btn-group">
+            <a class="btn btn--light" href="mailto:info@mic-nsw.com.au">Email us</a>
+            <a class="btn btn--brass" href="https://wa.me/61470640083" target="_blank" rel="noopener">Book on WhatsApp</a>
+          </div>
+        </div>
+      </section>
     </main>
-    <aside class="sum" id="sumCol">
-      <div class="sum-h">
-        <h3>Itemised Estimate</h3>
-        <div class="big" id="sumPrice">$0</div>
-        <div class="sub">Indicative pricing · GST inclusive · indicative</div>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <h4>MIC NSW</h4>
+          <p>Licensed builders for kitchen renovations Sydney, bathroom renovations Sydney and home renovations NSW with a design-led, transparent approach.</p>
+          <div class="action-row">
+            <a class="btn btn--light" href="mailto:info@mic-nsw.com.au">Email Us</a>
+            <a class="btn btn--wa" href="https://wa.me/61470640083" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <div class="footer-links">
+            <a href="tel:+61470640083">Phone +61 470 640 083</a>
+            <a href="mailto:info@mic-nsw.com.au">Email info@mic-nsw.com.au</a>
+            <a href="https://wa.me/61470640083" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+        <div>
+          <h4>Business details</h4>
+          <div class="footer-links">
+            <span>Licence 393630C</span>
+            <span>ABN 51 665 533 282</span>
+            <span>Greater Sydney, NSW, Australia</span>
+          </div>
+        </div>
+        <div>
+          <h4>Follow</h4>
+          <div class="footer-links">
+            <a href="https://www.facebook.com" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://www.instagram.com" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://wa.me/61470640083" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
       </div>
-      <div class="sum-b" id="sumBody"></div>
-      <div class="sum-f">
-        <button type="button" class="btn pri" id="btnQuote">Request This Quote</button>
-        <div class="note">Preliminary estimate only — final price may increase or decrease based on exact measurements, site conditions and confirmed products.<br>Fixed quote after free site measure · Lead 4–8 wks · Install 2–4 wks</div>
+      <div class="container footer-bottom">
+        <p>© 2026 MIC NSW. Licensed builder services for Sydney kitchen renovations and bathroom renovations.</p>
       </div>
-    </aside>
-  </div>
-</div>
-<div class="overlay" id="quoteModal" role="dialog" aria-modal="true">
-  <div class="modal">
-    <button type="button" class="x" id="qClose">✕</button>
-    <h3 id="qTitle">Request Your Quote</h3>
-    <p>MIC NSW will receive your design and itemised estimate.</p>
-    <form id="qForm">
-      <label for="qName">Full Name</label>
-      <input id="qName" type="text" autocomplete="name" required>
-      <label for="qEmail">Email</label>
-      <input id="qEmail" type="email" autocomplete="email" required>
-      <label for="qPhone">Phone</label>
-      <input id="qPhone" type="tel" autocomplete="tel" required>
-      <p class="status" id="qStatus" role="status"></p>
-      <div class="modal-acts">
-        <button type="button" class="btn" id="qCancel">Cancel</button>
-        <button type="submit" class="btn pri" id="qSubmit">Send Request</button>
+    </footer>
+
+    <div id="planner-view" aria-hidden="true">
+      <div class="planner-shell">
+        <div class="planner-top">
+          <a class="brand" href="#home" aria-label="MIC NSW home">
+            <span class="brand__mark" aria-hidden="true"><img src="https://mic-nsw.com.au/front/images/logo2.png" alt="MIC NSW logo" /></span>
+            <span class="brand__text">MIC NSW<small>Planner</small></span>
+          </a>
+          <button type="button" data-planner-close>Close</button>
+        </div>
+        <div class="planner-content">
+          <section class="planner-section" aria-label="Planner steps">
+            <h3>Plan your project</h3>
+            <div class="planner-steps" data-steps></div>
+          </section>
+          <section class="planner-section planner-main">
+            <div class="planner-preview" aria-live="polite">
+              <div class="preview-card">
+                <div class="preview-card__frame">
+                  <div class="preview-floor"></div>
+                  <div class="preview-side"></div>
+                </div>
+                <div class="preview-card__label">2D preview • 3D view is not required for the planning experience.</div>
+              </div>
+            </div>
+            <div class="planner-options" data-options></div>
+          </section>
+          <aside class="planner-section planner-summary" aria-label="Planner summary">
+            <h3>Summary</h3>
+            <div class="planner-summary__list" data-summary></div>
+          </aside>
+        </div>
+        <div class="planner-nav">
+          <button class="btn btn--outline" type="button" data-planner-back>Back</button>
+          <button class="btn btn--primary" type="button" data-planner-next>Next</button>
+        </div>
       </div>
-    </form>
-  </div>
-</div>
-</div><!-- planner-view -->
-<script>
+    </div>
 
-/* ============================================================
-   DEVELOPER CONFIGURATION (not shown to customers)
-   - CONTACT_ENDPOINT: POST URL for homepage contact form
-   - QUOTE_ENDPOINT: POST URL for planner quote form
-   - OG image / real project images / verified testimonials
-   ============================================================ */
+    <script>
+      const plannerView = document.getElementById('planner-view');
+      const plannerSteps = document.querySelector('[data-steps]');
+      const plannerOptions = document.querySelector('[data-options]');
+      const plannerSummary = document.querySelector('[data-summary]');
+      const openPlannerButtons = document.querySelectorAll('[data-planner-open]');
+      const closePlannerButton = document.querySelector('[data-planner-close]');
+      const plannerBack = document.querySelector('[data-planner-back]');
+      const plannerNext = document.querySelector('[data-planner-next]');
+      const mobileToggle = document.querySelector('[data-mobile-toggle]');
+      const mobileMenu = document.querySelector('[data-mobile-menu]');
 
-/* ============================================================
-   PRODUCTION CONFIG — edit before go-live (not shown on page)
-   CONTACT_ENDPOINT = your form POST URL (JSON body)
-   QUOTE_ENDPOINT   = planner quote POST URL
-   Optional: set Open Graph image to a real MIC NSW project photo
-   Optional: replace project placeholder cards with real photos
-   ============================================================ */
+      const plannerConfig = [
+        {
+          title: 'Project',
+          prompt: 'Choose the renovation focus',
+          options: [
+            { value: 'kitchen', title: 'Kitchen renovation', desc: 'Open plan, storage and premium finishes' },
+            { value: 'bathroom', title: 'Bathroom renovation', desc: 'Spa-like upgrades with practical layouts' },
+            { value: 'both', title: 'Kitchen + bathroom', desc: 'A whole-home refresh with coordinated finishes' }
+          ]
+        },
+        {
+          title: 'Style',
+          prompt: 'Choose the overall style',
+          options: [
+            { value: 'modern', title: 'Modern', desc: 'Clean lines and stone surfaces' },
+            { value: 'timeless', title: 'Timeless', desc: 'Warm textures and enduring materials' },
+            { value: 'minimal', title: 'Minimal', desc: 'Soft palette and streamlined storage' }
+          ]
+        },
+        {
+          title: 'Layout',
+          prompt: 'Select the feature layout',
+          options: [
+            { value: 'open', title: 'Open plan', desc: 'More flow and entertaining space' },
+            { value: 'family', title: 'Family-first', desc: 'Storage and durability are the priority' },
+            { value: 'compact', title: 'Compact and clever', desc: 'Efficient use of every square metre' }
+          ]
+        },
+        {
+          title: 'Finish',
+          prompt: 'Choose your preferred finish',
+          options: [
+            { value: 'stone', title: 'Stone', desc: 'Elegant benchtops and splashbacks' },
+            { value: 'timber', title: 'Timber', desc: 'Warm joinery and natural texture' },
+            { value: 'matte', title: 'Matte', desc: 'Soft-touch finishes and subtle detailing' }
+          ]
+        }
+      ];
 
-const CONTACT_ENDPOINT = '';
-const QUOTE_ENDPOINT = '';
-const STORAGE_KEY = 'mic_nsw_planner_v1';
+      const state = {
+        step: 0,
+        project: 'kitchen',
+        style: 'timeless',
+        layout: 'family',
+        finish: 'stone'
+      };
 
-
-
-(function(){
-var HOME_TITLE='Kitchen & Bathroom Renovations Sydney | MIC NSW';
-var savedScroll=0;
-var websiteView=document.getElementById('website-view');
-var plannerView=document.getElementById('planner-view');
-var siteHeader=document.getElementById('siteHeader');
-var opening=false;
-
-function openPlanner(mode, pkg){
-  window.__pendingPackage = pkg || '';
-
-  if(!plannerView||!websiteView){
-    console.warn('Planner views missing');
-    return;
-  }
-  if(opening) return;
-  opening=true;
-  mode = (mode==='bathroom') ? 'bathroom' : 'kitchen';
-  savedScroll=window.scrollY||0;
-  websiteView.classList.add('is-hidden');
-  websiteView.setAttribute('aria-hidden','true');
-  plannerView.classList.add('is-active');
-  plannerView.setAttribute('aria-hidden','false');
-  document.body.classList.add('planner-open');
-  if(siteHeader) siteHeader.style.display='none';
-  try{ window.scrollTo(0,0);}catch(e){}
-  var wantHash='#planner/'+mode;
-  if(location.hash!==wantHash){
-    try{ history.replaceState(null,'',wantHash); }catch(e){ location.hash=wantHash; }
-  }
-  setTimeout(function(){
-    try{
-      var tab=plannerView.querySelector('.mode[data-mode="'+mode+'"]');
-      if(tab) tab.click();
-    }catch(e){}
-    
-    try{
-      if(window.__pendingPackage){
-        var pkgId=window.__pendingPackage;
-        window.__pendingPackage='';
-        var pkgCard=plannerView.querySelector('[data-id="'+pkgId+'"], [data-pkg="'+pkgId+'"], .card[data-package="'+pkgId+'"]');
-        if(pkgCard) pkgCard.click();
-        // also try select by text match in package step
-        plannerView.querySelectorAll('.card').forEach(function(c){
-          var n=(c.textContent||'').toLowerCase();
-          if(pkgId && n.indexOf(pkgId)!==-1) c.click();
+      function render() {
+        const current = plannerConfig[state.step];
+        plannerSteps.innerHTML = '';
+        plannerConfig.forEach((step, index) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = `planner-step${state.step === index ? ' active' : ''}`;
+          button.innerHTML = `<span class="planner-step__index">${index + 1}</span><span>${step.title}</span>`;
+          button.addEventListener('click', () => {
+            state.step = index;
+            render();
+          });
+          plannerSteps.appendChild(button);
         });
+
+        plannerOptions.innerHTML = '';
+        const optionsWrap = document.createElement('div');
+        optionsWrap.className = 'options-grid';
+        const fieldName = current.title.toLowerCase();
+        current.options.forEach(option => {
+          const card = document.createElement('button');
+          card.type = 'button';
+          card.className = `option-card${state[fieldName] === option.value ? ' active' : ''}`;
+          card.innerHTML = `<div class="option-card__title">${option.title}</div><div class="option-card__desc">${option.desc}</div>`;
+          card.addEventListener('click', () => {
+            state[fieldName] = option.value;
+            render();
+          });
+          optionsWrap.appendChild(card);
+        });
+        plannerOptions.appendChild(optionsWrap);
+
+        plannerSummary.innerHTML = '';
+        const summaryItems = [
+          { label: 'Project', value: plannerConfig[0].options.find(o => o.value === state.project).title },
+          { label: 'Style', value: plannerConfig[1].options.find(o => o.value === state.style).title },
+          { label: 'Layout', value: plannerConfig[2].options.find(o => o.value === state.layout).title },
+          { label: 'Finish', value: plannerConfig[3].options.find(o => o.value === state.finish).title }
+        ];
+        summaryItems.forEach(item => {
+          const row = document.createElement('div');
+          row.className = 'planner-summary__item';
+          row.innerHTML = `<strong>${item.label}</strong><div>${item.value}</div>`;
+          plannerSummary.appendChild(row);
+        });
+
+        plannerBack.disabled = state.step === 0;
+        plannerNext.textContent = state.step === plannerConfig.length - 1 ? 'Done' : 'Next';
       }
-    }catch(err){}
 
-    opening=false;
-  },120);
-  document.title=mode==='bathroom'?'Bathroom Design Planner | MIC NSW':'Kitchen Design Planner | MIC NSW';
-}
+      function openPlanner() {
+        document.body.classList.add('planner-open');
+        plannerView.setAttribute('aria-hidden', 'false');
+        render();
+      }
 
-function closePlanner(hash){
-  if(!plannerView||!websiteView) return;
-  plannerView.classList.remove('is-active');
-  plannerView.setAttribute('aria-hidden','true');
-  websiteView.classList.remove('is-hidden');
-  websiteView.setAttribute('aria-hidden','false');
-  document.body.classList.remove('planner-open');
-  if(siteHeader) siteHeader.style.display='';
-  document.title=HOME_TITLE;
-  var target=hash||'#design';
-  if(target.charAt(0)!=='#') target='#'+target;
-  try{ history.replaceState(null,'',target); }catch(e){ location.hash=target; }
-  setTimeout(function(){
-    var el=document.querySelector(target);
-    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
-    else window.scrollTo(0,savedScroll||0);
-  },40);
-}
+      function closePlanner() {
+        document.body.classList.remove('planner-open');
+        plannerView.setAttribute('aria-hidden', 'true');
+      }
 
-function scrollToId(id){
-  if(!id) return false;
-  id = id.replace(/^#/,'');
-  if(!id || id.indexOf('planner')===0) return false;
-  var el = document.getElementById(id);
-  if(!el) return false;
-  // ensure website visible
-  if(websiteView){
-    websiteView.classList.remove('is-hidden');
-    websiteView.setAttribute('aria-hidden','false');
-  }
-  if(plannerView){
-    plannerView.classList.remove('is-active');
-    plannerView.setAttribute('aria-hidden','true');
-  }
-  document.body.classList.remove('planner-open');
-  if(siteHeader) siteHeader.style.display='';
-  try{
-    el.scrollIntoView({behavior:'smooth',block:'start'});
-  }catch(err){
-    try{ window.location.hash = '#'+id; }catch(e){}
-  }
-  return true;
-}
-
-function parseRoute(){
-  var raw = location.hash || '#home';
-  var h = raw.replace(/^#/,'');
-  var parts = h.split('/').filter(Boolean);
-  if(parts[0]==='planner'){
-    var mode = parts[1];
-    if(mode!=='kitchen' && mode!=='bathroom') mode='kitchen';
-    openPlanner(mode, parts[2]||'');
-    return;
-  }
-  if(plannerView && plannerView.classList.contains('is-active')){
-    closePlanner(raw.indexOf('#')===0 ? raw : '#'+ (parts[0]||'home'));
-    return;
-  }
-  scrollToId(parts[0]||'home');
-}
-
-window.addEventListener('hashchange', parseRoute);
-
-function bindPlannerTriggers(root){
-  (root||document).querySelectorAll('[data-open-planner]').forEach(function(el){
-    if(el.__plannerBound) return;
-    el.__plannerBound=true;
-    el.addEventListener('click', function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      var mode=el.getAttribute('data-open-planner')||'kitchen';
-      openPlanner(mode);
-    });
-  });
-  (root||document).querySelectorAll('[data-exit-planner]').forEach(function(el){
-    if(el.__exitBound) return;
-    el.__exitBound=true;
-    el.addEventListener('click', function(e){
-      e.preventDefault();
-      closePlanner('#design');
-    });
-  });
-  (root||document).querySelectorAll('[data-exit-to-quote]').forEach(function(el){
-    if(el.__exitQBound) return;
-    el.__exitQBound=true;
-    el.addEventListener('click', function(e){
-      e.preventDefault();
-      closePlanner('#quote');
-    });
-  });
-}
-
-document.addEventListener('DOMContentLoaded', function(){
-  bindPlannerTriggers(document);
-  // Event delegation fallback for dynamic package buttons
-  document.addEventListener('click', function(e){
-    var openEl = e.target.closest && e.target.closest('[data-open-planner]');
-    if(openEl){
-      e.preventDefault();
-      var mode=openEl.getAttribute('data-open-planner')||'kitchen';
-      var pkg=openEl.getAttribute('data-package')||'';
-      openPlanner(mode, pkg);
-      return;
-    }
-    var exitEl = e.target.closest && e.target.closest('[data-exit-planner]');
-    if(exitEl){
-      e.preventDefault();
-      closePlanner('#design');
-      return;
-    }
-    var quoteEl = e.target.closest && e.target.closest('[data-exit-to-quote]');
-    if(quoteEl){
-      e.preventDefault();
-      closePlanner('#quote');
-    }
-  });
-  if((location.hash||'').indexOf('#planner')===0) parseRoute();
-});
-
-window.MICRouter={openPlanner:openPlanner,closePlanner:closePlanner,bindPlannerTriggers:bindPlannerTriggers};
-
-document.addEventListener('click', function(e){
-  var a = e.target.closest && e.target.closest('a[href^="#"]');
-  if(!a) return;
-  // planner open/exit handled elsewhere
-  if(a.hasAttribute('data-open-planner') || a.hasAttribute('data-exit-planner') || a.hasAttribute('data-exit-to-quote')) return;
-  var href = a.getAttribute('href') || '';
-  if(!href || href === '#' || href.indexOf('#planner') === 0) return;
-  var id = href.slice(1);
-  if(!id) return;
-  var el = document.getElementById(id);
-  if(!el) return;
-  e.preventDefault();
-  // close mobile nav if open
-  var mn = document.getElementById('mobileNav');
-  if(mn){ mn.classList.remove('open'); document.body.style.overflow=''; }
-  if(typeof scrollToId === 'function'){
-    scrollToId(id);
-  } else {
-    try{ el.scrollIntoView({behavior:'smooth',block:'start'}); }catch(err){}
-  }
-  try{ history.pushState(null,'', '#'+id); }catch(err){ location.hash = '#'+id; }
-}, true);
-
-})();
-
-
-(function(){
-var mobileNav=document.getElementById('mobileNav');
-var menuOpen=document.getElementById('menuOpen');
-var menuClose=document.getElementById('menuClose');
-if(menuOpen) menuOpen.addEventListener('click',function(){mobileNav.classList.add('open');mobileNav.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';});
-function closeNav(){if(mobileNav){mobileNav.classList.remove('open');mobileNav.setAttribute('aria-hidden','true');document.body.style.overflow='';}}
-if(menuClose) menuClose.addEventListener('click',closeNav);
-document.querySelectorAll('.mnav').forEach(function(a){a.addEventListener('click',closeNav);});
-var PKG={
- kitchen:[
-  {name:'Essential',id:'essential',range:'From $18,990',desc:'Apartments · investment',items:['Site measure & basic design','Standard laminate cabinetry','Soft-close hardware','Laminate benchtop allowance','Standard sink & mixer','Install + reconnection'],featured:false},
-  {name:'Signature',id:'signature',range:'From $27,990',desc:'Family homes',items:['Everything in Essential','Custom-sized cabinetry','Stone / premium benchtop','Feature handles','Tiled splashback','Expanded services'],featured:true},
-  {name:'Luxury',id:'luxury',range:'From $42,990',desc:'Premium homes',items:['Premium custom cabinetry','Designer profiles','Premium benchtop','Feature splashback','Designer tapware','Pantry & feature lighting'],featured:false},
-  {name:'Bespoke',id:'bespoke',range:'Custom Quote',desc:'Architectural · structural',items:['Structural modifications','Major service relocation','Extensive custom joinery','Premium materials','Design consultation'],featured:false}
- ],
- bathroom:[
-  {name:'Essential',id:'essential',range:'From $18,990',desc:'Practical refresh',items:['Demolition & waste','Waterproofing','Standard tile allowance','Standard vanity & toilet','Semi-frameless screen','Install labour'],featured:false},
-  {name:'Signature',id:'signature',range:'From $23,990',desc:'Family bathrooms',items:['Everything in Essential','Porcelain tiles','Wall-hung vanity','Frameless screen','Selected tapware','Niche · heated rail'],featured:true},
-  {name:'Luxury',id:'luxury',range:'From $31,990',desc:'Spa retreats',items:['Large-format tiles','Designer vanity','Premium tapware','Custom frameless screen','Freestanding bath allowance','Feature lighting'],featured:false},
-  {name:'Bespoke',id:'bespoke',range:'Custom Quote',desc:'Structural · natural stone',items:['Structural changes','Major plumbing relocation','Natural stone','Custom joinery','Designer specs'],featured:false}
- ]
-};
-function renderPackages(type){
- var grid=document.getElementById('pkgGrid'); if(!grid) return;
- grid.innerHTML=PKG[type].map(function(p){
-  return '<article class="pkg-card'+(p.featured?' featured':'')+'">'+(p.featured?'<span class="badge">MOST POPULAR</span>':'')+
-   '<h3>'+p.name+'</h3><p style="font-size:.85rem;color:var(--ink2)">'+p.desc+'</p>'+
-   '<div style="font-family:var(--fd);font-size:1.3rem;margin:10px 0">'+p.range+' <small style="font-size:.72rem;font-family:var(--fb);color:var(--ink2)">AUD incl. GST</small></div>'+
-   '<ul style="list-style:none;margin:10px 0 16px;font-size:.84rem;color:var(--ink2)">'+p.items.map(function(i){return '<li style="padding-left:12px;position:relative;margin:6px 0"><span style="position:absolute;left:0;color:var(--brass)">·</span>'+i+'</li>';}).join('')+'</ul>'+
-   '<button type="button" class="btn '+(p.featured?'btn-brass':'btn-outline')+' btn-block" data-open-planner="'+type+'" data-package="'+p.id+'">Design this package</button></article>';
- }).join('');
- if(window.MICRouter&&window.MICRouter.bindPlannerTriggers){window.MICRouter.bindPlannerTriggers(grid);}else{grid.querySelectorAll('[data-open-planner]').forEach(function(el){el.addEventListener('click',function(e){e.preventDefault();if(window.MICRouter)window.MICRouter.openPlanner(el.getAttribute('data-open-planner'));});});}
-}
-renderPackages('kitchen');
-document.querySelectorAll('[data-pkg]').forEach(function(btn){
- btn.addEventListener('click',function(){
-  document.querySelectorAll('[data-pkg]').forEach(function(b){b.classList.remove('on');});
-  btn.classList.add('on');
-  renderPackages(btn.getAttribute('data-pkg'));
- });
-});
-
-var form=document.getElementById('contactForm');
-if(form) form.addEventListener('submit',function(e){
- e.preventDefault();
- if(!this.reportValidity()) return;
- var f=this;
- var btn=f.querySelector('[type="submit"]');
- var statusEl=document.getElementById('contactStatus');
- if(!statusEl){
-  statusEl=document.createElement('div');
-  statusEl.id='contactStatus';
-  statusEl.setAttribute('role','status');
-  statusEl.setAttribute('aria-live','polite');
-  statusEl.style.cssText='margin-top:12px;font-size:.9rem;';
-  f.appendChild(statusEl);
- }
- var phone = String(f.phone.value || '').replace(/\s+/g, '').replace(/[-()]/g, '');
- var phoneOk = /^(\+?61|0)4\d{8}$/.test(phone) || /^(\+?61|0)[2378]\d{8}$/.test(phone);
- if (!phoneOk) {
-  statusEl.textContent = 'Please enter a valid Australian phone number.';
-  statusEl.style.color = '#8B2E2E';
-  f.phone.setAttribute('aria-invalid', 'true');
-  return;
- }
- f.phone.removeAttribute('aria-invalid');
- var payload={
-  name:f.name.value.trim(),
-  email:f.email.value.trim(),
-  phone:f.phone.value.trim(),
-  suburb:f.suburb.value.trim(),
-  project_type:f.project_type.value,
-  package:f.package?f.package.value:'',
-  message:f.message?f.message.value.trim():'',
-  consent:!!(f.consent&&f.consent.checked),
-  source:'mic-nsw-website',
-  submitted_at:new Date().toISOString()
- };
- if(btn){btn.disabled=true;btn.textContent='Sending…';}
- statusEl.textContent='';
- statusEl.style.color='';
- function fail(msg){
-  statusEl.textContent=msg;
-  statusEl.style.color='#8B2E2E';
-  if(btn){btn.disabled=false;btn.textContent='Send message';}
- }
- function ok(msg){
-  statusEl.textContent=msg;
-  statusEl.style.color='#2D6A4F';
-  if(btn){btn.disabled=false;btn.textContent='Send message';}
-  f.reset();
- }
- if(typeof CONTACT_ENDPOINT==='string' && CONTACT_ENDPOINT){
-  fetch(CONTACT_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)})
-   .then(function(r){ if(!r.ok) throw new Error('Network'); return r.json().catch(function(){return {};}); })
-   .then(function(){ ok('Thank you. Your enquiry has been sent. MIC NSW will review the details and contact you.'); })
-   .catch(function(){ fail('We could not send your enquiry online. Please call +61 470 640 083, email info@mic-nsw.com.au, or use WhatsApp.'); });
- } else {
-  fail('Online form submission has not been connected yet. Please contact MIC NSW by phone, email or WhatsApp.');
-  if(btn){btn.disabled=false;btn.textContent='Send message';}
- }
-});
-
-})();
-
-
-(function () {
-'use strict';
-
-/* ============================================================
-   1. DATA CONFIGURATION  (internal "JSON")
-   ============================================================ */
-/* Australian standard cabinet dimensions (metres) */
-const AU = {
-  baseH: 0.72,      // 720mm excl. benchtop
-  baseD: 0.56,      // 560mm excl. door
-  wallH: 0.72,      // 720mm typical
-  wallD: 0.30,      // 300mm
-  kickH: 0.15,      // 150mm kickboard
-  singleW: 0.60,    // 600mm single door
-  doubleW: 0.90,    // 900mm double door
-  tallH: 2.10,      // floor to top of tall
-  fridgeGap: 0.08
-};
-
-const P = {
-  base:249, wall:179, tall:549, pantry:699, corner:449,
-  drawerBank:189, drawerExtra:49, bulkhead:39, kickboard:28, hinge:12,
-  doorFlat:0, doorShaker:55, doorPoly:95, doorHandleless:120,
-  handleBar:18, handleKnob:32, handleNone:0,
-  benchLam:95, benchEng:380, benchNat:520, benchDek:580, waterfall:0.85,
-  splashNone:0, splashTile:75, splashGlass:140, splashStone:190,
-  sinkSingle:389, sinkDouble:549, sinkComposite:849,
-  mixChrome:189, mixBrass:420, mixBlack:329,
-  oven:799, cook:899, hood:449, mw:599,
-  lightLed:55, lightPend:420
-};
-
-const AppConfig = {
-  kitchenSteps: [
-    {id:1,t:'Layout',s:'Shape',d:'Pick a layout — the 3D plan rebuilds like a professional kitchen planner.'},
-    {id:2,t:'Room & cabinets',s:'Size & modules',d:'Room size plus base, wall, tall, pantry and corner units (AU sizes).'},
-    {id:3,t:'Doors & colour',s:'Style',d:'Door profile and finish — preview updates on every cabinet.'},
-    {id:4,t:'Handles & storage',s:'Hardware',d:'Handles, hinges and drawer layout.'},
-    {id:5,t:'Benchtop & splash',s:'Surfaces',d:'Stone or laminate, waterfall, splashback and kickboard.'},
-    {id:6,t:'Sink & appliances',s:'Fit-out',d:'Sink, mixer, fridge, oven, cooktop, rangehood and lighting.'},
-    {id:7,t:'Review',s:'Quote',d:'Itemised estimate indicative — request your MIC NSW quote.'}
-  ],
-  bathroomSteps: [
-    {id:1,t:'Layout',s:'Plan',d:'Bathroom layout style.'},
-    {id:2,t:'Room Size',s:'Dimensions',d:'Set room size.'},
-    {id:3,t:'Vanity',s:'Style',d:'Vanity configuration.'},
-    {id:4,t:'Colour',s:'Finish',d:'Vanity colour.'},
-    {id:5,t:'Tapware',s:'Mixers',d:'Tapware finish.'},
-    {id:6,t:'Shower',s:'Screen',d:'Shower enclosure.'},
-    {id:7,t:'Bath',s:'Optional',d:'Add a bath or skip.'},
-    {id:8,t:'Tiles',s:'Surfaces',d:'Wall and floor tiles.'},
-    {id:9,t:'Review',s:'Quote',d:'Review and quote.'}
-  ],
-  layoutsK: [
-    {id:'straight',name:'Straight Line',desc:'Single run'},
-    {id:'galley',name:'Galley',desc:'Two parallel runs'},
-    {id:'lshape',name:'L-Shape',desc:'Two walls'},
-    {id:'corner',name:'L + Corner Tall',desc:'L with tall corner'},
-    {id:'ushape',name:'U-Shape',desc:'Three walls'},
-    {id:'island',name:'Island',desc:'Run + island'}
-  ],
-  layoutsB: [{id:'standard',name:'Standard'},{id:'wetroom',name:'Wet Room'},{id:'ensuite',name:'Ensuite'}],
-  islandSizes: [
-    {id:'small',name:'Small island',desc:'1.2m · compact',w:1.2,d:0.8},
-    {id:'medium',name:'Medium island',desc:'1.8m · standard',w:1.8,d:0.95},
-    {id:'large',name:'Large island',desc:'2.4m · family',w:2.4,d:1.05},
-    {id:'xl',name:'XL island',desc:'3.0m · entertaining',w:3.0,d:1.1}
-  ],
-  doors: [
-    {id:'flat',name:'Flat / Melamine',mod:P.doorFlat,desc:'Standard'},
-    {id:'shaker',name:'Shaker',mod:P.doorShaker,desc:'Per door'},
-    {id:'poly',name:'Polyurethane',mod:P.doorPoly,desc:'Per door'},
-    {id:'handleless',name:'Handleless Gola',mod:P.doorHandleless,desc:'Per door'}
-  ],
-  colors: [
-    {id:'white',name:'Classic White',hex:'#F5F2EB',desc:'Most popular Sydney'},
-    {id:'warmwhite',name:'Warm White',hex:'#EFE8DC',desc:'Soft coastal'},
-    {id:'black',name:'Matte Black',hex:'#2A2C2E',desc:'Modern contrast'},
-    {id:'polywhite',name:'Poly White Gloss',hex:'#FAFAFA',desc:'High gloss'},
-    {id:'sage',name:'Sage Green',hex:'#8A9A80',desc:'Hamptons / coastal'},
-    {id:'navy',name:'Navy',hex:'#1C2B33',desc:'Classic Sydney'},
-    {id:'oak',name:'Natural Oak',hex:'#C9A876',desc:'Timber look'},
-    {id:'walnut',name:'Walnut',hex:'#5C4033',desc:'Rich timber'},
-    {id:'charcoal',name:'Charcoal',hex:'#4A4E52',desc:'Soft dark'},
-    {id:'greige',name:'Greige',hex:'#B8B0A4',desc:'Neutral trend'},
-    {id:'custom',name:'Custom Colour',hex:'#D4C4A8',desc:'Your paint code'}
-  ],
-  handles: [
-    {id:'none',name:'Handleless / Gola',brand:'Blum',mod:P.handleNone,show:false,hColor:'#222',desc:'No visible handle'},
-    {id:'bar-black',name:'Bar Pull 160mm',brand:'Häfele',mod:P.handleBar,show:true,hColor:'#1a1a1a',desc:'Matte black · popular Sydney'},
-    {id:'bar-brass',name:'Bar Pull Brass',brand:'Castella',mod:22,show:true,hColor:'#C9A24B',desc:'Brushed brass'},
-    {id:'bar-chrome',name:'Bar Pull Chrome',brand:'Häfele',mod:16,show:true,hColor:'#C7CBCE',desc:'Polished chrome'},
-    {id:'knob-brass',name:'Knob · Brass',brand:'Castella',mod:P.handleKnob,show:true,hColor:'#B8914A',desc:'Classic knob'},
-    {id:'rail-black',name:'D-Rail Black',brand:'Kethy',mod:18,show:true,hColor:'#222',desc:'Sydney favourite'},
-    {id:'rail-ss',name:'D-Rail Stainless',brand:'Kethy',mod:18,show:true,hColor:'#A8B0B5',desc:'Stainless steel'}
-  ],
-  benches: [
-    {id:'none',brand:'—',name:'No benchtop',hex:'#E8E4DC',mod:0,mat:'—'},
-    {id:'lam',brand:'Laminex',name:'Natural White',hex:'#F0EDE6',mod:P.benchLam,mat:'Laminate'},
-    {id:'eng',brand:'Caesarstone',name:'Calacatta Nuvo',hex:'#EDE7DD',mod:P.benchEng,mat:'Quartz'},
-    {id:'taj',brand:'Rex Marble',name:'Taj Mahal Quartzite',hex:'#F2EDE3',mod:680,mat:'Quartzite · Sydney stock'},
-    {id:'super',brand:'Rex Marble',name:'Super White',hex:'#F7F5F0',mod:720,mat:'Dolomite'},
-    {id:'carrara',brand:'Rex Marble',name:'Carrara Marble',hex:'#E8E6E1',mod:650,mat:'Marble'},
-    {id:'calacatta',brand:'Rex Marble',name:'Calacatta',hex:'#F5F0E6',mod:780,mat:'Marble'},
-    {id:'statuario',brand:'Rex Marble',name:'Statuario',hex:'#F0EBE3',mod:820,mat:'Marble'},
-    {id:'dek',brand:'Dekton',name:'Sirocco',hex:'#8C8378',mod:P.benchDek,mat:'Ultra-compact'},
-    {id:'custom-stone',brand:'Custom',name:'Specify your stone',hex:'#E5DFD4',mod:0,mat:'Client specified',desc:'Type the stone name below'}
-  ],
-  splash: [
-    {id:'none',name:'No Splashback',mod:0,hex:'#E5E0D4'},
-    {id:'tile',name:'Subway Ceramic',mod:P.splashTile,hex:'#F7F6F2'},
-    {id:'glass',name:'Painted Glass',mod:P.splashGlass,hex:'#D0D8E0'},
-    {id:'stone',name:'Stone Match',mod:P.splashStone,hex:'#EDE7DD'}
-  ],
-  sinks: [
-    {id:'none',brand:'—',name:'Select later',mod:0},
-    {id:'abey1',brand:'Abey',name:'Single Bowl SS',mod:P.sinkSingle},
-    {id:'abey2',brand:'Abey',name:'Double Bowl',mod:P.sinkDouble},
-    {id:'blanco',brand:'Blanco',name:'Silgranit',mod:P.sinkComposite},
-    {id:'oliveri',brand:'Oliveri',name:'Professional',mod:679}
-  ],
-  mixers: [
-    {id:'none',brand:'—',name:'Select later',hex:'#ccc',mod:0},
-    {id:'caroma',brand:'Caroma',name:'Chrome',hex:'#C7CBCE',mod:P.mixChrome},
-    {id:'phoenix',brand:'Phoenix',name:'Matte Black',hex:'#26282A',mod:P.mixBlack},
-    {id:'sussex',brand:'Sussex',name:'Brushed Brass',hex:'#C9A24B',mod:P.mixBrass}
-  ],
-  fridges: [{id:'none',name:'No fridge'},{id:'f600',name:'Fridge 600mm'},{id:'f900',name:'Fridge 900mm'}],
-  ovens: [
-    {id:'none',brand:'—',name:'None',mod:0},
-    {id:'west',brand:'Westinghouse',name:'60cm pyrolytic',mod:P.oven},
-    {id:'bosch',brand:'Bosch',name:'Series 6 60cm',mod:1699},
-    {id:'fp',brand:'Fisher & Paykel',name:'60cm',mod:1899},
-    {id:'miele',brand:'Miele',name:'H 2265',mod:2899},
-    {id:'specific-oven',brand:'Specific brand',name:'Client specified',mod:0,desc:'Final price on quote'}
-  ],
-  cooks: [
-    {id:'none',brand:'—',name:'None',mod:0},
-    {id:'ind',brand:'Westinghouse',name:'60cm induction',mod:P.cook},
-    {id:'ind90',brand:'Bosch',name:'90cm induction',mod:1899},
-    {id:'gas',brand:'Fisher & Paykel',name:'90cm gas',mod:2199},
-    {id:'ilve',brand:'ILVE',name:'90cm dual fuel',mod:4200},
-    {id:'specific-cook',brand:'Specific brand',name:'Client specified',mod:0,desc:'Final price on quote'}
-  ],
-  hoods: [
-    {id:'none',brand:'—',name:'None',mod:0},
-    {id:'can',brand:'Westinghouse',name:'Canopy 60',mod:P.hood},
-    {id:'fp',brand:'Fisher & Paykel',name:'Canopy 90',mod:1299},
-    {id:'qasair',brand:'Qasair',name:'Undermount',mod:1599},
-    {id:'specific-hood',brand:'Specific brand',name:'Client specified',mod:0,desc:'Final price on quote'}
-  ],
-  mws: [
-    {id:'none',brand:'—',name:'None',mod:0},
-    {id:'built',brand:'Westinghouse',name:'Built-in MW',mod:P.mw},
-    {id:'bosch-mw',brand:'Bosch',name:'Built-in combi',mod:1299},
-    {id:'specific-mw',brand:'Specific brand',name:'Client specified',mod:0,desc:'Final price on quote'}
-  ],
-  fridgesFull: [
-    {id:'none',name:'No fridge',mod:0},
-    {id:'f600',name:'Fridge 600mm integrated',mod:0,desc:'Panel-ready'},
-    {id:'f900',name:'Fridge 900mm French door',mod:0,desc:'Panel-ready'},
-    {id:'fp-fridge',brand:'Fisher & Paykel',name:'Integrated 600',mod:0},
-    {id:'specific-fridge',brand:'Specific brand',name:'Client specified',mod:0,desc:'Final price on quote'}
-  ],
-  lights: [{id:'none',name:'None',mod:0},{id:'led',name:'LED under-cab /lm',mod:P.lightLed},{id:'pend',name:'Pendants (set 3)',mod:P.lightPend},{id:'full',name:'LED + Pendants',mod:650}],
-  hinges: [
-    {id:'std',name:'Standard hinges',mod:0,desc:'Included'},
-    {id:'soft',name:'Soft-close hinges',mod:12,desc:'Per door'},
-    {id:'push',name:'Push-to-open',mod:28,desc:'Per door · handleless'}
-  ],
-  drawerOpts: [{id:0,name:'Doors only'},{id:1,name:'1 drawer bank'},{id:2,name:'2 drawer banks'},{id:3,name:'3 drawer banks'}],
-  drawersPer: [{id:2,name:'2 drawers'},{id:3,name:'3 drawers'},{id:4,name:'4 drawers'}],
-  vanS: [{id:'wall',name:'Wall-Hung',mod:0},{id:'free',name:'Freestanding',mod:900}],
-  vanC: [{id:'white',name:'White',hex:'#F4F2ED'},{id:'oak',name:'Oak',hex:'#C9A876'},{id:'black',name:'Black',hex:'#26282A'}],
-  screens: [{id:'semi',name:'Semi-frameless',mod:0},{id:'frame',name:'Frameless',mod:620}],
-  baths: [{id:'none',name:'No Bath',mod:0},{id:'free',name:'Freestanding',mod:1800}],
-  wTiles: [{id:'sub',name:'Subway',hex:'#F7F6F2'},{id:'mar',name:'Marble-look',hex:'#EAE6DC'}],
-  fTiles: [{id:'gry',name:'Grey',hex:'#D8D2C4'},{id:'stn',name:'Stone',hex:'#C8C2B4'}]
-};
-
-/* ============================================================
-   2. REACTIVE STATE (Proxy) — any nested set triggers render
-   ============================================================ */
-const $ = id => document.getElementById(id);
-const clamp = (v,a,c) => Math.max(a, Math.min(c, v));
-const money = v => '$' + Math.round(v || 0).toLocaleString('en-AU');
-const find = (list, id) => (list || []).find(x => x.id === id) || (list && list[0]) || {};
-
-let renderScheduled = false;
-function scheduleRender() {
-  if (renderScheduled) return;
-  renderScheduled = true;
-  requestAnimationFrame(() => {
-    renderScheduled = false;
-    render();
-  });
-}
-
-function reactive(obj) {
-  return new Proxy(obj, {
-    set(target, prop, value) {
-      if (target[prop] === value) return true;
-      target[prop] = value;
-      scheduleRender();
-      return true;
-    }
-  });
-}
-
-const kitchen = reactive({
-  step:1, done:{},
-  layout:'lshape', w:3.6, d:3.0, h:2.7, benchLm:4.2,
-  base:4, wall:3, tall:1, pantry:0, corner:0,
-  pantrySide:'right', tallSide:'left', drawerOn:'first', islandSeating:true, islandCook:false, islandSize:'medium', baseDoors:'auto', wallDoors:'auto', pantryStyle:'standard', fridgePanel:'both',
-  drawerBanks:1, drawersPer:3,
-  door:'flat', color:'white', customHex:'#C4B5A0', customStone:'',
-  
-  handle:'bar-black', bench:'eng', waterfall:false,
-  splash:'tile', bulkhead:false, kickboard:true, hinge:'soft',
-  sink:'abey1', mixer:'phoenix',
-  fridge:'f600', oven:'west', cook:'ind', hood:'can', mw:'none',
-  light:'none'
-});
-const bathroom = reactive({
-  step:1, done:{},
-  layout:'standard', w:2.4, d:2.0, h:2.4,
-  vanity:'wall', vColor:'white',
-  tap:'caroma', screen:'semi', bath:'none',
-  wTile:'sub', fTile:'gry'
-});
-const app = reactive({ mode:'kitchen', ready:false });
-
-function st() { return app.mode === 'kitchen' ? kitchen : bathroom; }
-function steps() { return app.mode === 'kitchen' ? AppConfig.kitchenSteps : AppConfig.bathroomSteps; }
-function nSteps() { return steps().length; }
-function cabHex() {
-  return kitchen.color === 'custom' ? kitchen.customHex : find(AppConfig.colors, kitchen.color).hex;
-}
-
-function markDone() {
-  const s = st();
-  s.done = { ...s.done, [s.step]: 1 };
-}
-
-/* ============================================================
-   3. PRICING
-   ============================================================ */
-function calcKitchen() {
-  const k = kitchen;
-  const nDoors = k.base + k.wall + k.tall + k.pantry + k.corner;
-  const cab = k.base*P.base + k.wall*P.wall + k.tall*P.tall + k.pantry*P.pantry + k.corner*P.corner;
-  const drawers = k.drawerBanks*P.drawerBank + Math.max(0, k.drawersPer-2)*k.drawerBanks*P.drawerExtra;
-  const doorUp = find(AppConfig.doors, k.door).mod * nDoors;
-  const handleUp = find(AppConfig.handles, k.handle).mod * nDoors;
-  const hingeUp = (find(AppConfig.hinges, k.hinge).mod || 0) * nDoors;
-  const br = find(AppConfig.benches, k.bench).mod;
-  const bench = br * k.benchLm + (k.waterfall ? br * P.waterfall : 0);
-  const sp = find(AppConfig.splash, k.splash).mod * k.benchLm;
-  const bulk = k.bulkhead ? P.bulkhead * k.benchLm : 0;
-  const kick = k.kickboard ? P.kickboard * k.benchLm : 0;
-  const sink = find(AppConfig.sinks, k.sink).mod;
-  const mixer = find(AppConfig.mixers, k.mixer).mod;
-  const apps = find(AppConfig.ovens, k.oven).mod + find(AppConfig.cooks, k.cook).mod +
-               find(AppConfig.hoods, k.hood).mod + find(AppConfig.mws, k.mw).mod;
-  let light = 0;
-  if (k.light === 'led') light = P.lightLed * k.benchLm;
-  else light = find(AppConfig.lights, k.light).mod;
-  const total = cab + drawers + doorUp + handleUp + hingeUp + bench + sp + bulk + kick + sink + mixer + apps + light;
-  return { total, cab, drawers, doorUp, handleUp, hingeUp, bench, sp, bulk, kick, sink, mixer, apps, light, nDoors };
-}
-function calcBathroom() {
-  let t = find(AppConfig.vanS, bathroom.vanity).mod;
-  t += find(AppConfig.mixers, bathroom.tap).mod;
-  t += find(AppConfig.screens, bathroom.screen).mod;
-  t += find(AppConfig.baths, bathroom.bath).mod;
-  return { total: t, base: 12000 };
-}
-
-/* ============================================================
-   4. 3D OBJECT POOL
-   ============================================================ */
-let scene, camera, renderer, controls, root;
-const MeshPool = {
-  map: new Map(),
-  hideAll() {
-    this.map.forEach(m => { m.visible = false; });
-  },
-  get(key) {
-    let mesh = this.map.get(key);
-    if (!mesh) {
-      const g = new THREE.BoxGeometry(1, 1, 1);
-      const m = new THREE.MeshStandardMaterial({
-        color: 0xcccccc,
-        roughness: 0.55,
-        metalness: 0.05,
-        envMapIntensity: 0.6
+      openPlannerButtons.forEach(button => button.addEventListener('click', openPlanner));
+      closePlannerButton.addEventListener('click', closePlanner);
+      plannerBack.addEventListener('click', () => {
+        if (state.step > 0) {
+          state.step -= 1;
+          render();
+        }
       });
-      mesh = new THREE.Mesh(g, m);
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
-      this.map.set(key, mesh);
-      root.add(mesh);
-    }
-    mesh.visible = true;
-    return mesh;
-  },
-  /* style: 'matte' | 'stone' | 'metal' | 'glass' | 'appliance' */
-  box(key, w, h, d, hex, x, y, z, style) {
-    const mesh = this.get(key);
-    mesh.scale.set(Math.max(w, 0.001), Math.max(h, 0.001), Math.max(d, 0.001));
-    mesh.position.set(x, y, z);
-    const mat = mesh.material;
-    mat.color.set(hex);
-    mat.transparent = false;
-    mat.opacity = 1;
-    if (style === 'metal') {
-      mat.roughness = 0.28; mat.metalness = 0.85;
-    } else if (style === 'stone') {
-      mat.roughness = 0.72; mat.metalness = 0.02;
-    } else if (style === 'glass') {
-      mat.roughness = 0.15; mat.metalness = 0.1; mat.transparent = true; mat.opacity = 0.55;
-    } else if (style === 'appliance') {
-      mat.roughness = 0.35; mat.metalness = 0.65;
-    } else if (style === 'floor') {
-      mat.roughness = 0.9; mat.metalness = 0;
-    } else {
-      mat.roughness = 0.52; mat.metalness = 0.04; /* matte door/cabinet */
-    }
-    mat.needsUpdate = true;
-    return mesh;
-  }
-};
-
-function init3D() {
-  const canvas = $('c3d');
-  const wrap = canvas.parentElement;
-  const w = wrap.clientWidth || 600, h = wrap.clientHeight || 320;
-  scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xece8df);
-  scene.fog = new THREE.Fog(0xece8df, 9, 24);
-
-  camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 60);
-  camera.position.set(4.6, 3.3, 5.6);
-
-  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
-  renderer.setSize(w, h, false);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  if (renderer.outputEncoding !== undefined) renderer.outputEncoding = THREE.sRGBEncoding;
-  if (THREE.sRGBEncoding && THREE.ACESFilmicToneMapping) {
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
-  }
-
-  if (THREE.OrbitControls) {
-    controls = new THREE.OrbitControls(camera, canvas);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.07;
-    controls.minDistance = 1.8;
-    controls.maxDistance = 16;
-    controls.maxPolarAngle = Math.PI / 2.02;
-    controls.target.set(1.9, 0.95, 1.15);
-    controls.enablePan = true;
-    controls.screenSpacePanning = false;
-  }
-
-  scene.add(new THREE.AmbientLight(0xfff8f0, 0.48));
-  const key = new THREE.DirectionalLight(0xfff5e6, 0.9);
-  key.position.set(5.5, 9, 4.5);
-  key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024);
-  key.shadow.camera.near = 0.5;
-  key.shadow.camera.far = 28;
-  key.shadow.camera.left = -8;
-  key.shadow.camera.right = 8;
-  key.shadow.camera.top = 8;
-  key.shadow.camera.bottom = -8;
-  key.shadow.bias = -0.00025;
-  scene.add(key);
-  const fill = new THREE.DirectionalLight(0xc8d8e8, 0.32);
-  fill.position.set(-4, 5, -3);
-  scene.add(fill);
-  const rim = new THREE.DirectionalLight(0xffffff, 0.18);
-  rim.position.set(0, 3, 6);
-  scene.add(rim);
-
-  root = new THREE.Group();
-  scene.add(root);
-
-  (function loop() {
-    requestAnimationFrame(loop);
-    if (controls) controls.update();
-    renderer.render(scene, camera);
-  })();
-
-  function resize3D() {
-    const ww = wrap.clientWidth, hh = wrap.clientHeight;
-    if (!ww || !hh || !camera || !renderer) return;
-    camera.aspect = ww / hh;
-    camera.updateProjectionMatrix();
-    renderer.setSize(ww, hh, false);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  }
-  window.addEventListener('resize', resize3D);
-  if (window.ResizeObserver) {
-    try { new ResizeObserver(resize3D).observe(wrap); } catch (e) {}
-  }
-}
-
-function buildKitchen3D() {
-  MeshPool.hideAll();
-  const k = kitchen;
-  const hex = cabHex();
-  const H = find(AppConfig.handles, k.handle);
-  const bh = k.bench !== 'none' ? (find(AppConfig.benches, k.bench).hex || '#EDE7DD') : null;
-  const L = k.layout;
-
-  /* AU module sizes */
-  const baseW = k.baseDoors === 'double' ? AU.doubleW : AU.singleW;
-  const wallW = k.wallDoors === 'double' ? AU.doubleW : (k.wallDoors === 'single' ? AU.singleW : baseW);
-  const baseH = AU.baseH, baseD = AU.baseD, wallH = AU.wallH, wallD = AU.wallD, kickH = AU.kickH;
-  const doorsPerBase = (k.baseDoors === 'single' || (k.baseDoors === 'auto' && baseW <= 0.65)) ? 1 : 2;
-  const doorsPerWall = (k.wallDoors === 'single' || (k.wallDoors === 'auto' && wallW <= 0.65)) ? 1 : 2;
-
-  const fw = Math.max(k.w, 3.6);
-  const fd = Math.max(k.d, 3.0);
-  const roomH = k.h || 2.7;
-
-  /* Room shell */
-  MeshPool.box('floor', fw + 1.2, 0.02, fd + 1.2, '#d4cbb8', fw / 2, 0.01, fd / 2, 'floor');
-  /* soft skirting hint */
-  MeshPool.box('skirt-b', fw + 0.3, 0.08, 0.03, '#c2b8a4', fw / 2, 0.04, 0.04);
-  const splashHex = k.splash === 'none' ? '#e5e0d4' : find(AppConfig.splash, k.splash).hex;
-  MeshPool.box('wall-back', fw + 0.4, roomH, 0.04, splashHex, fw / 2, roomH / 2, 0.02);
-  if (L === 'lshape' || L === 'corner' || L === 'ushape') {
-    MeshPool.box('wall-left', 0.04, roomH, fd + 0.2, '#e8e4da', 0.02, roomH / 2, fd / 2);
-  }
-  if (L === 'ushape') {
-    MeshPool.box('wall-right', 0.04, roomH, fd + 0.2, '#e8e4da', fw - 0.02, roomH / 2, fd / 2);
-  }
-
-  const baseN = Math.max(1, k.base | 0);
-  const wallN = Math.max(0, k.wall | 0);
-  const tallN = Math.max(0, Math.min(k.tall | 0, 2));
-  const pantryN = Math.max(0, Math.min(k.pantry | 0, 2));
-  const hasCorner = L === 'corner' || (k.corner > 0 && (L === 'lshape' || L === 'ushape'));
-  const hasFridge = k.fridge && k.fridge !== 'none';
-  const fridgeW = k.fridge === 'f900' ? 0.9 : 0.7;
-  const tallW = AU.singleW;
-  const pantryW = k.pantryStyle === 'custom' ? 0.7 : AU.singleW;
-
-  let x = 0.15;
-  const z0 = 0.12;
-
-  function drawDoors(key, cx, y, zFront, w, h, nDoors, handleY) {
-    if (nDoors >= 2) {
-      MeshPool.box(key + '-seam', 0.012, h * 0.92, 0.012, '#00000030', cx, y, zFront, 'matte');
-    }
-    if (H && H.show) {
-      if (nDoors >= 2) {
-        MeshPool.box(key + '-ha', 0.09, 0.014, 0.014, H.hColor, cx - w * 0.22, handleY, zFront + 0.01, 'metal');
-        MeshPool.box(key + '-hb', 0.09, 0.014, 0.014, H.hColor, cx + w * 0.22, handleY, zFront + 0.01, 'metal');
-      } else {
-        MeshPool.box(key + '-ha', 0.09, 0.014, 0.014, H.hColor, cx + w * 0.28, handleY, zFront + 0.01, 'metal');
-      }
-    }
-  }
-
-  function placeBase(i, bx) {
-    const w = baseW;
-    const cx = bx + w / 2;
-    const cy = kickH + baseH / 2;
-    MeshPool.box('base-' + i, w * 0.98, baseH, baseD, hex, cx, cy, z0 + baseD / 2);
-    if (bh) MeshPool.box('bench-' + i, w * 0.98 + 0.02, 0.04, baseD + 0.03, bh, cx, kickH + baseH + 0.02, z0 + baseD / 2, 'stone');
-    if (k.kickboard) MeshPool.box('kick-' + i, w * 0.98, kickH, baseD - 0.05, '#2a2a2a', cx, kickH / 2, z0 + baseD / 2 - 0.02);
-    drawDoors('bd-' + i, cx, cy, z0 + baseD, w, baseH, doorsPerBase, kickH + baseH * 0.55);
-    /* drawer lines */
-    let showDr = k.drawerBanks > 0;
-    const sinkIdx = Math.round(baseN * 0.65);
-    if (k.drawerOn === 'first') showDr = showDr && i < k.drawerBanks;
-    else if (k.drawerOn === 'sink-avoid') showDr = showDr && i !== sinkIdx;
-    if (showDr) {
-      const rows = Math.min(k.drawersPer || 3, 4);
-      for (let r = 0; r < rows; r++) {
-        MeshPool.box('dr-' + i + '-' + r, w * 0.85, 0.012, 0.01, '#00000022', cx, kickH + 0.15 + r * (baseH * 0.7 / rows), z0 + baseD + 0.01);
-      }
-    }
-    return w;
-  }
-
-  function placeWall(i, bx) {
-    const w = wallW;
-    const cx = bx + w / 2;
-    const topY = roomH - 0.05 - wallH / 2;
-    MeshPool.box('wall-' + i, w * 0.98, wallH, wallD, hex, cx, topY, z0 + wallD / 2);
-    drawDoors('wd-' + i, cx, topY, z0 + wallD, w, wallH, doorsPerWall, topY - wallH * 0.15);
-    return w;
-  }
-
-  function placeTall(prefix, bx, count, appliances) {
-    let used = 0;
-    for (let i = 0; i < count; i++) {
-      const w = prefix === 'pantry' ? pantryW : tallW;
-      const cx = bx + used + w / 2;
-      const h = AU.tallH;
-      MeshPool.box(prefix + '-' + i, w * 0.98, h, baseD, hex, cx, h / 2, z0 + baseD / 2);
-      drawDoors(prefix + 'd-' + i, cx, h / 2, z0 + baseD, w, h, 2, h * 0.55);
-      if (k.kickboard) MeshPool.box(prefix + '-k-' + i, w * 0.98, kickH, baseD - 0.05, '#2a2a2a', cx, kickH / 2, z0 + baseD / 2 - 0.02);
-      if (appliances && i === 0) {
-        if (k.oven !== 'none') {
-          MeshPool.box('oven', 0.52, 0.55, 0.5, '#1a1a1a', cx, kickH + 0.85, z0 + 0.3, 'appliance');
-          MeshPool.box('oven-g', 0.38, 0.32, 0.02, '#333', cx, kickH + 0.85, z0 + baseD - 0.02);
+      plannerNext.addEventListener('click', () => {
+        if (state.step < plannerConfig.length - 1) {
+          state.step += 1;
+          render();
+        } else {
+          closePlanner();
         }
-        if (k.mw !== 'none') {
-          MeshPool.box('mw', 0.48, 0.32, 0.38, '#2c2c2c', cx, kickH + 1.4, z0 + 0.28);
+      });
+
+      mobileToggle.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('open');
+        mobileToggle.setAttribute('aria-expanded', String(open));
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!mobileMenu.contains(event.target) && !mobileToggle.contains(event.target)) {
+          mobileMenu.classList.remove('open');
+          mobileToggle.setAttribute('aria-expanded', 'false');
         }
-      }
-      used += w;
-    }
-    return used;
-  }
+      });
 
-  /* ===== BACK WALL PACKING (no overlaps) ===== */
-  /* Left: pantry then tall */
-  if (pantryN > 0 && k.pantrySide === 'left') {
-    x += placeTall('pantry', x, pantryN, false) + 0.03;
-  }
-  if (tallN > 0 && k.tallSide === 'left') {
-    x += placeTall('tall', x, tallN, true) + 0.03;
-  }
-
-  /* On L/U/Corner: first module slot reserved for corner junction on back wall */
-  const cornerReserve = (L === 'lshape' || L === 'corner' || L === 'ushape') ? baseW : 0;
-  const runStart = x + cornerReserve;
-
-  /* Base run (after corner reserve on L plans) */
-  const baseStartIndex = cornerReserve ? 1 : 0; /* visual: first base is the corner piece */
-  for (let i = baseStartIndex; i < baseN; i++) {
-    placeBase(i, runStart + (i - baseStartIndex) * baseW);
-  }
-  /* Wall run aligned to base start (same reserve as bases) */
-  for (let i = 0; i < wallN; i++) {
-    placeWall(i, runStart + i * wallW);
-  }
-  if (k.bulkhead && wallN > 0) {
-    const bw = wallN * wallW;
-    MeshPool.box('bulk', bw, 0.16, wallD, hex, runStart + bw / 2, roomH - 0.08, z0 + wallD / 2);
-  }
-  x = runStart + Math.max(0, baseN - baseStartIndex) * baseW;
-
-  /* RIGHT: tall then pantry — before fridge */
-  if (tallN > 0 && k.tallSide === 'right') {
-    x += 0.03;
-    x += placeTall('tall', x, tallN, true);
-  }
-  if (pantryN > 0 && k.pantrySide === 'right') {
-    x += 0.03;
-    x += placeTall('pantry', x, pantryN, false);
-  }
-
-  /* Fridge housing — custom to order, panels */
-  if (hasFridge) {
-    x += AU.fridgeGap;
-    const fx = x;
-    const fH = AU.tallH - 0.32;
-    MeshPool.box('fridge-body', fridgeW, fH, 0.66, '#c5ccd2', fx + fridgeW / 2, fH / 2, z0 + 0.33, 'appliance');
-    MeshPool.box('fridge-div', fridgeW * 0.94, 0.01, 0.02, '#00000020', fx + fridgeW / 2, fH * 0.55, z0 + 0.66);
-    if (k.fridgePanel === 'right' || k.fridgePanel === 'both') {
-      MeshPool.box('fridge-pr', 0.02, fH, 0.66, hex, fx + fridgeW + 0.015, fH / 2, z0 + 0.33);
-    }
-    if (k.fridgePanel === 'both') {
-      MeshPool.box('fridge-pl', 0.02, fH, 0.66, hex, fx - 0.015, fH / 2, z0 + 0.33);
-    }
-    /* Overhead cabinet above fridge — 2 doors, designed to order */
-    MeshPool.box('fridge-top', fridgeW + 0.04, 0.38, wallD + 0.02, hex, fx + fridgeW / 2, AU.tallH - 0.12, z0 + wallD / 2);
-    drawDoors('ft', fx + fridgeW / 2, AU.tallH - 0.12, z0 + wallD, fridgeW, 0.38, 2, AU.tallH - 0.18);
-    if (k.kickboard) MeshPool.box('fridge-kick', fridgeW, kickH, 0.6, '#2a2a2a', fx + fridgeW / 2, kickH / 2, z0 + 0.3);
-    x += fridgeW;
-  }
-
-  /* ===== TRUE L-CORNER: joins back run + left run (both sides connected) ===== */
-  if (L === 'lshape' || L === 'corner' || L === 'ushape') {
-    const cornerX = 0.15;
-    const cornerZ = z0;
-    /* Corner base carcass — fills the L junction (blind corner style) */
-    if (hasCorner || L === 'lshape' || L === 'ushape') {
-      /* back-facing leg of corner */
-      MeshPool.box('cn-back', baseW, baseH, baseD, hex,
-        cornerX + baseW / 2, kickH + baseH / 2, cornerZ + baseD / 2);
-      /* left-facing leg of corner — shares the junction, continuous benchtop feel */
-      MeshPool.box('cn-left', baseD, baseH, baseW, hex,
-        cornerX + baseD / 2, kickH + baseH / 2, cornerZ + baseD + baseW / 2);
-      /* continuous corner benchtop L-shape */
-      if (bh) {
-        MeshPool.box('cn-top-b', baseW + 0.02, 0.04, baseD + 0.03, bh,
-          cornerX + baseW / 2, kickH + baseH + 0.02, cornerZ + baseD / 2, 'stone');
-        MeshPool.box('cn-top-l', baseD + 0.03, 0.04, baseW + 0.02, bh,
-          cornerX + baseD / 2, kickH + baseH + 0.02, cornerZ + baseD + baseW / 2, 'stone');
-      }
-      if (k.kickboard) {
-        MeshPool.box('cn-kb', baseW * 0.98, kickH, baseD - 0.05, '#2a2a2a',
-          cornerX + baseW / 2, kickH / 2, cornerZ + baseD / 2 - 0.02);
-        MeshPool.box('cn-kl', baseD - 0.05, kickH, baseW * 0.98, '#2a2a2a',
-          cornerX + baseD / 2 - 0.02, kickH / 2, cornerZ + baseD + baseW / 2);
-      }
-      /* doors on accessible faces */
-      drawDoors('cn-db', cornerX + baseW / 2, kickH + baseH / 2, cornerZ + baseD, baseW, baseH, 1, kickH + baseH * 0.55);
-      drawDoors('cn-dl', cornerX + baseD, kickH + baseH / 2, cornerZ + baseD + baseW / 2, baseD, baseH, 1, kickH + baseH * 0.55);
-      /* tall corner unit (only when corner layout / corner qty) */
-      if (hasCorner) {
-        MeshPool.box('cn-tall', baseW * 0.95, AU.tallH, baseD * 0.95, hex,
-          cornerX + baseW / 2, AU.tallH / 2, cornerZ + baseD / 2);
-        drawDoors('cn-td', cornerX + baseW / 2, AU.tallH / 2, cornerZ + baseD, baseW, AU.tallH, 2, AU.tallH * 0.55);
-      }
-    }
-
-    /* Left return cabinets AFTER the corner unit (connected, no gap) */
-    const retN = Math.max(1, Math.floor(baseN / 2));
-    const zStart = cornerZ + baseD + baseW; /* starts right after corner leg */
-    for (let i = 0; i < retN; i++) {
-      const cz = zStart + i * baseW + baseW / 2;
-      const cx = cornerX + baseD / 2;
-      MeshPool.box('ret-l-' + i, baseD, baseH, baseW * 0.98, hex, cx, kickH + baseH / 2, cz);
-      if (bh) MeshPool.box('ret-lb-' + i, baseD + 0.03, 0.04, baseW * 0.98, bh, cx, kickH + baseH + 0.02, cz);
-      if (k.kickboard) MeshPool.box('ret-lk-' + i, baseD - 0.05, kickH, baseW * 0.98, '#2a2a2a', cx - 0.02, kickH / 2, cz);
-      drawDoors('rdl-' + i, cx + baseD / 2, kickH + baseH / 2, cz + baseW / 2, baseD, baseH, doorsPerBase, kickH + baseH * 0.55);
-      /* wall cabs on return */
-      if (i < wallN) {
-        const topY = roomH - 0.05 - wallH / 2;
-        MeshPool.box('ret-w-' + i, wallD, wallH, baseW * 0.98, hex, cornerX + wallD / 2, topY, cz);
-      }
-    }
-  }
-
-  if (L === 'ushape') {
-    const retN = Math.max(1, Math.floor(baseN / 3));
-    const rx = Math.min(x - baseD - 0.1, fw - 0.9);
-    const zStart = z0 + baseD + 0.08;
-    for (let i = 0; i < retN; i++) {
-      const cz = zStart + i * baseW + baseW / 2;
-      MeshPool.box('ret-r-' + i, baseD, baseH, baseW * 0.98, hex, rx + baseD / 2, kickH + baseH / 2, cz);
-      if (bh) MeshPool.box('ret-rb-' + i, baseD + 0.02, 0.04, baseW * 0.98, bh, rx + baseD / 2, kickH + baseH + 0.02, cz);
-    }
-  }
-
-  /* Galley opposite run */
-  if (L === 'galley') {
-    const gz = fd - 0.7;
-    const gN = Math.max(2, Math.floor(baseN * 0.75));
-    for (let i = 0; i < gN; i++) {
-      const cx = runStart + i * baseW + baseW / 2;
-      MeshPool.box('gal-' + i, baseW * 0.98, baseH, baseD, hex, cx, kickH + baseH / 2, gz);
-      if (bh) MeshPool.box('gal-b-' + i, baseW * 0.98, 0.04, baseD + 0.02, bh, cx, kickH + baseH + 0.02, gz);
-    }
-  }
-
-  /* Island */
-  if (L === 'island') {
-    const sizes = { small:[1.2,0.8], medium:[1.8,0.95], large:[2.4,1.05], xl:[3.0,1.1] };
-    const sz = sizes[k.islandSize] || sizes.medium;
-    let iw = sz[0], idp = sz[1];
-    const seat = k.islandSeating ? 0.3 : 0;
-    const topD = idp + seat;
-    const aisle = 1.05;
-    const ix = runStart + Math.max(0, (baseN * baseW - iw) / 2);
-    const iz = z0 + baseD + aisle;
-    const cx = ix + iw / 2;
-    const modules = Math.max(2, Math.round(iw / baseW));
-    const modW = iw / modules;
-    for (let i = 0; i < modules; i++) {
-      const mx = ix + i * modW + modW / 2;
-      MeshPool.box('isl-' + i, modW * 0.98, baseH, idp * 0.96, hex, mx, kickH + baseH / 2, iz + idp / 2);
-      drawDoors('isl-d-' + i, mx, kickH + baseH / 2, iz + idp, modW, baseH, 2, kickH + baseH * 0.55);
-    }
-    if (k.kickboard) MeshPool.box('isl-k', iw * 0.98, kickH, idp * 0.9, '#2a2a2a', cx, kickH / 2, iz + idp / 2);
-    if (bh) {
-      MeshPool.box('isl-top', iw + 0.06, 0.04, topD + 0.04, bh, cx, kickH + baseH + 0.02, iz + topD / 2);
-      if (k.waterfall) {
-        MeshPool.box('wf-l', 0.04, baseH + kickH, topD, bh, ix + 0.02, (baseH + kickH) / 2, iz + topD / 2);
-        MeshPool.box('wf-r', 0.04, baseH + kickH, topD, bh, ix + iw - 0.02, (baseH + kickH) / 2, iz + topD / 2);
-      }
-    }
-    if (k.islandCook) {
-      MeshPool.box('isl-cook', 0.56, 0.03, 0.48, '#1a1a1a', cx, kickH + baseH + 0.05, iz + idp / 2);
-    }
-    if (k.islandSeating) {
-      const stoolN = Math.min(4, Math.max(2, Math.round(iw / 0.7)));
-      for (let i = 0; i < stoolN; i++) {
-        const sx = ix + 0.35 + i * ((iw - 0.5) / Math.max(1, stoolN - 1));
-        MeshPool.box('stool-' + i, 0.28, 0.04, 0.28, '#5c4033', sx, 0.72, iz + idp + seat * 0.5);
-        MeshPool.box('stool-l-' + i, 0.04, 0.7, 0.04, '#3a3a3a', sx, 0.35, iz + idp + seat * 0.5);
-      }
-    }
-    if (k.light === 'pend' || k.light === 'full' || k.islandCook) {
-      for (let i = 0; i < 3; i++) {
-        MeshPool.box('isl-pc-' + i, 0.014, 0.4, 0.014, '#888', cx - 0.4 + i * 0.4, 2.05, iz + idp / 2);
-        MeshPool.box('isl-pb-' + i, 0.12, 0.12, 0.12, '#f5e6a8', cx - 0.4 + i * 0.4, 1.82, iz + idp / 2);
-      }
-    }
-  }
-
-  /* Sink + mixer on main run */
-  if (k.sink !== 'none') {
-    const sx = runStart + baseN * baseW * 0.65;
-    const sz = z0 + 0.28;
-    const topY = kickH + baseH + 0.03;
-    if (k.sink === 'abey2' || k.sink === 'oliveri') {
-      MeshPool.box('sink-l', 0.26, 0.05, 0.34, '#9aadb8', sx - 0.15, topY, sz);
-      MeshPool.box('sink-r', 0.26, 0.05, 0.34, '#9aadb8', sx + 0.15, topY, sz);
-    } else if (k.sink === 'blanco') {
-      MeshPool.box('sink-o', 0.48, 0.05, 0.4, '#3d3f42', sx, topY, sz);
-    } else {
-      MeshPool.box('sink-o', 0.44, 0.05, 0.38, '#9aadb8', sx, topY, sz);
-    }
-    if (k.mixer !== 'none') {
-      const mx = find(AppConfig.mixers, k.mixer).hex || '#C7CBCE';
-      MeshPool.box('mix-b', 0.05, 0.03, 0.05, mx, sx - 0.02, topY + 0.04, sz - 0.1);
-      MeshPool.box('mix-s', 0.025, 0.18, 0.025, mx, sx - 0.02, topY + 0.13, sz - 0.1);
-      MeshPool.box('mix-p', 0.14, 0.025, 0.025, mx, sx + 0.05, topY + 0.2, sz - 0.05);
-    }
-  }
-  if (k.cook !== 'none' && !k.islandCook) {
-    const cx = runStart + baseN * baseW * 0.35;
-    MeshPool.box('cook', 0.56, 0.03, 0.48, '#1a1a1a', cx, kickH + baseH + 0.04, z0 + 0.26);
-  }
-  if (k.hood !== 'none') {
-    const cx = runStart + baseN * baseW * 0.35;
-    MeshPool.box('hood', 0.66, 0.07, 0.36, '#3a4046', cx, 1.55, z0 + 0.2);
-  }
-  if ((k.light === 'led' || k.light === 'full')) {
-    MeshPool.box('led', baseN * baseW * 0.85, 0.02, 0.03, '#ffe9ae', runStart + baseN * baseW / 2, 1.4, z0 + 0.35);
-  }
-  if ((k.light === 'pend' || k.light === 'full') && L !== 'island') {
-    const px = runStart + baseN * baseW / 2;
-    for (let i = 0; i < 3; i++) {
-      MeshPool.box('pc-' + i, 0.014, 0.35, 0.014, '#888', px - 0.35 + i * 0.35, 2.0, z0 + 0.9);
-      MeshPool.box('pb-' + i, 0.11, 0.11, 0.11, '#f5e6a8', px - 0.35 + i * 0.35, 1.8, z0 + 0.9);
-    }
-  }
-
-  if (controls) controls.target.set(Math.min(x, fw) / 2, 0.95, 0.85);
-}
-
-function buildBath3D() {
-  MeshPool.hideAll();
-  const b = bathroom;
-  const fw = b.w, fd = b.d, wallH = b.h;
-  MeshPool.box('bfloor', fw + 0.6, 0.02, fd + 0.6, find(AppConfig.fTiles, b.fTile).hex, fw / 2, 0.01, fd / 2);
-  MeshPool.box('bwall', fw, wallH, 0.04, find(AppConfig.wTiles, b.wTile).hex, fw / 2, wallH / 2, 0.02);
-  const vc = find(AppConfig.vanC, b.vColor).hex;
-  MeshPool.box('vanity', 1.0, 0.55, 0.45, vc, 0.7, 0.35, 0.35);
-  MeshPool.box('vtop', 1.05, 0.03, 0.48, '#fff', 0.7, 0.64, 0.35);
-  MeshPool.box('basin', 0.32, 0.05, 0.32, '#fff', 0.7, 0.68, 0.35);
-  const th = find(AppConfig.mixers, b.tap).hex || '#ccc';
-  MeshPool.box('tap', 0.03, 0.18, 0.03, th, 0.7, 0.78, 0.22);
-  MeshPool.box('screen', 0.02, 1.8, 0.9, th, fw - 0.5, 0.95, 0.5);
-  if (b.bath !== 'none') MeshPool.box('bath', 1.5, 0.45, 0.7, '#fff', fw / 2, 0.25, fd - 0.5);
-  if (controls) controls.target.set(fw / 2, 0.8, fd / 2);
-}
-
-/* ============================================================
-   5. RENDER ENGINE (UI + 3D)
-   ============================================================ */
-function layoutSVG(id) {
-  const s = 'viewBox="0 0 48 48"';
-  if (id === 'straight') return `<svg ${s}><rect x="6" y="28" width="36" height="10" rx="1"/><rect x="6" y="12" width="36" height="8" rx="1"/></svg>`;
-  if (id === 'galley') return `<svg ${s}><rect x="6" y="8" width="36" height="8" rx="1"/><rect x="6" y="32" width="36" height="8" rx="1"/></svg>`;
-  if (id === 'lshape') return `<svg ${s}><rect x="6" y="10" width="10" height="28" rx="1"/><rect x="6" y="30" width="36" height="10" rx="1"/></svg>`;
-  if (id === 'corner') return `<svg ${s}><rect x="6" y="10" width="10" height="28" rx="1"/><rect x="6" y="30" width="36" height="10" rx="1"/><rect x="32" y="8" width="10" height="22" rx="1"/></svg>`;
-  if (id === 'ushape') return `<svg ${s}><rect x="6" y="10" width="8" height="28" rx="1"/><rect x="34" y="10" width="8" height="28" rx="1"/><rect x="6" y="30" width="36" height="10" rx="1"/></svg>`;
-  if (id === 'island') return `<svg ${s}><rect x="6" y="30" width="36" height="10" rx="1"/><rect x="14" y="12" width="20" height="12" rx="1"/></svg>`;
-  return `<svg ${s}><rect x="10" y="14" width="28" height="20" rx="2"/></svg>`;
-}
-function card(item, sel, attrs) {
-  const isLayout = item.id && ['straight','galley','lshape','corner','ushape','island'].includes(item.id);
-  const isColor = !!item.hex;
-  const cls = `card ${sel?'sel':''} ${isColor||isLayout?'style-card':''}`;
-  let visual = '';
-  if (isLayout) visual = `<div class="layout-icon">${layoutSVG(item.id)}</div>`;
-  else if (item.hex) visual = `<div class="swatch" style="background:${item.hex}"></div>`;
-  const br = item.brand ? `<div class="brand">${item.brand}</div>` : '';
-  const pr = 'mod' in item ? `<div class="price">${item.mod ? money(item.mod) : 'Included'}</div>` : '';
-  const meta = item.mat ? `<div class="meta">${item.mat}</div>` : item.desc ? `<div class="meta">${item.desc}</div>` : '';
-  return `<article class="${cls}" ${attrs} role="button" tabindex="0">${visual}${br}<h4>${item.name || item.brand || ''}</h4>${meta}${pr}</article>`;
-}
-function qtyHTML(label, key, val, min, max, unit) {
-  return `<div class="dim"><label>${label}</label><div class="dim-r">
-    <button type="button" class="qty-btn" data-qty="${key}" data-dir="-1" data-min="${min}" data-max="${max}">−</button>
-    <span>${val}</span>
-    <button type="button" class="qty-btn" data-qty="${key}" data-dir="1" data-min="${min}" data-max="${max}">+</button>
-  </div><u>${unit != null ? money(unit) + ' ea · ' + money(val * unit) : ''}</u></div>`;
-}
-function dimHTML(label, key, val, min, max, step) {
-  return `<div class="dim"><label>${label}</label><div class="dim-r">
-    <button type="button" class="dim-btn" data-dim="${key}" data-dir="-1" data-step="${step}" data-min="${min}" data-max="${max}">−</button>
-    <span>${typeof val === 'number' && val % 1 ? val.toFixed(1) : val}</span>
-    <button type="button" class="dim-btn" data-dim="${key}" data-dir="1" data-step="${step}" data-min="${min}" data-max="${max}">+</button>
-  </div><u>metres</u></div>`;
-}
-
-function renderSide() {
-  const s = st(), list = steps();
-  const keys = Object.keys(s.done).map(Number);
-  const maxR = keys.length ? Math.max(...keys, s.step) : s.step;
-  $('stepList').innerHTML = list.map(x => {
-    const done = !!s.done[x.id], on = s.step === x.id, lock = x.id > maxR + 1 && !done;
-    return `<div class="step ${on?'on':''} ${done?'done':''} ${lock?'lock':''}" data-go="${x.id}" role="listitem">
-      <div class="num">${done?'✓':x.id}</div><div><div style="font-weight:600;font-size:.78rem">${x.t}</div>
-      <div style="font-size:.6rem;color:var(--ink2)">${x.s}</div></div></div>`;
-  }).join('');
-  $('progFill').style.width = Math.round(s.step / list.length * 100) + '%';
-  $('progLabel').textContent = `Step ${s.step} of ${list.length}`;
-  $('sideTitle').textContent = app.mode === 'kitchen' ? 'Kitchen Project' : 'Bathroom Project';
-}
-
-function renderSummary() {
-  if (app.mode === 'kitchen') {
-    const t = calcKitchen(), k = kitchen;
-    $('sumPrice').textContent = money(t.total);
-    $('sumBody').innerHTML = `<div class="sec"><h5>Itemised (indicative)</h5>
-      <div class="line"><span>Base ×${k.base}</span><span>${money(k.base*P.base)}</span></div>
-      <div class="line"><span>Wall ×${k.wall}</span><span>${money(k.wall*P.wall)}</span></div>
-      <div class="line"><span>Tall ×${k.tall}</span><span>${money(k.tall*P.tall)}</span></div>
-      <div class="line"><span>Pantry ×${k.pantry}</span><span>${money(k.pantry*P.pantry)}</span></div>
-      <div class="line"><span>Corner ×${k.corner}</span><span>${money(k.corner*P.corner)}</span></div>
-      <div class="line"><span>Drawers</span><span>${money(t.drawers)}</span></div>
-      <div class="line"><span>Doors & handles (×doors)</span><span>${money(t.doorUp+t.handleUp)}</span></div>
-      <div class="line"><span>Hinges (×${t.nDoors} doors)</span><span>${money(t.hingeUp)}</span></div>
-      <div class="line"><span>Benchtop ${k.benchLm}lm${k.waterfall?' +WF':''}</span><span>${money(t.bench)}</span></div>
-      <div class="line"><span>Splashback</span><span>${money(t.sp)}</span></div>
-      <div class="line"><span>Bulkhead</span><span>${money(t.bulk)}</span></div>
-      <div class="line"><span>Kickboard</span><span>${money(t.kick)}</span></div>
-      <div class="line"><span>Sink & mixer</span><span>${money(t.sink+t.mixer)}</span></div>
-      <div class="line"><span>Appliances</span><span>${money(t.apps)}</span></div>
-      <div class="line"><span>Lighting</span><span>${money(t.light)}</span></div>
-      <div class="line tot"><span>Estimated total</span><span>${money(t.total)}</span></div></div>
-      <div class="sec"><h5>Configuration</h5><div class="prods">
-        <strong>Layout:</strong> ${find(AppConfig.layoutsK,k.layout).name}<br>
-        <strong>Room:</strong> ${k.w}×${k.d}×${k.h}m<br>
-        <strong>Colour:</strong> ${k.color==='custom'?'Custom '+k.customHex:find(AppConfig.colors,k.color).name}<br>
-        <strong>Stone:</strong> ${find(AppConfig.benches,k.bench).brand} ${find(AppConfig.benches,k.bench).name}
-      </div></div>`;
-  } else {
-    const t = calcBathroom();
-    $('sumPrice').textContent = money(t.base + t.total);
-    $('sumBody').innerHTML = `<div class="sec"><h5>Bathroom estimate</h5>
-      <div class="line"><span>Base scope</span><span>${money(t.base)}</span></div>
-      <div class="line"><span>Upgrades</span><span>${money(t.total)}</span></div>
-      <div class="line tot"><span>Estimated</span><span>${money(t.base+t.total)}</span></div></div>`;
-  }
-}
-
-function renderContent() {
-  const s = st(), list = steps(), step = list.find(x => x.id === s.step);
-  if (!step) return;
-  $('stepTitle').textContent = `Step ${step.id}: ${step.t}`;
-  $('stepDesc').textContent = step.d;
-  $('doneTag').style.display = s.done[step.id] ? 'inline-flex' : 'none';
-  let h = '';
-  const k = kitchen, b = bathroom, C = AppConfig;
-
-  if (app.mode === 'kitchen') {
-    if (s.step === 1) {
-      h = `<div class="grid">${C.layoutsK.map(l => card(l, k.layout===l.id, `data-k="layout" data-v="${l.id}"`)).join('')}</div>`;
-      if (k.layout === 'island') {
-        h += `<p style="font-size:.62rem;font-weight:700;margin:14px 0 6px;text-transform:uppercase;color:var(--ink2)">Island size</p>
-        <div class="grid">${(C.islandSizes||[]).map(x => card(x, k.islandSize===x.id, `data-k="islandSize" data-v="${x.id}"`)).join('')}</div>
-        <div class="toggles" style="margin-top:10px">
-          <div class="tog ${k.islandSeating?'on':''}" data-bool="islandSeating" role="button" tabindex="0">
-            <div><h4>Breakfast bar</h4><p>Overhang + stools</p></div><div class="chk">${k.islandSeating?'✓':''}</div>
-          </div>
-          <div class="tog ${k.islandCook?'on':''}" data-bool="islandCook" role="button" tabindex="0">
-            <div><h4>Cooktop on island</h4><p>With pendant lights</p></div><div class="chk">${k.islandCook?'✓':''}</div>
-          </div>
-        </div>`;
-      }
-      h += `<div class="tip"><strong>Tip:</strong> choose a shape first — cabinets, stone and appliances stay editable next.</div>`;
-    }
-    if (s.step === 2) {
-      h = `<div class="dims">${dimHTML('Width','w',k.w,2.4,7,.1)}${dimHTML('Depth','d',k.d,2,5,.1)}${dimHTML('Ceiling','h',k.h,2.4,3.2,.1)}</div>
-      <div class="dims" style="margin-top:8px">${qtyHTML('Benchtop length (lm)','benchLm',k.benchLm,2,12,null)}</div>
-      <p style="font-size:.62rem;font-weight:700;margin:14px 0 6px;text-transform:uppercase;color:var(--ink2)">Cabinet modules</p>
-      <div class="dims">
-        ${qtyHTML('Base','base',k.base,0,12,P.base)}
-        ${qtyHTML('Wall','wall',k.wall,0,12,P.wall)}
-        ${qtyHTML('Tall','tall',k.tall,0,3,P.tall)}
-        ${qtyHTML('Pantry','pantry',k.pantry,0,2,P.pantry)}
-        ${qtyHTML('Corner','corner',k.corner,0,1,P.corner)}
-      </div>
-      <div class="grid" style="margin-top:10px">
-        ${[{id:'left',name:'Pantry left'},{id:'right',name:'Pantry right'}].map(x=>card(x,k.pantrySide===x.id,`data-k="pantrySide" data-v="${x.id}"`)).join('')}
-        ${[{id:'left',name:'Tall left'},{id:'right',name:'Tall right'}].map(x=>card(x,k.tallSide===x.id,`data-k="tallSide" data-v="${x.id}"`)).join('')}
-      </div>
-      <div class="grid" style="margin-top:8px">
-        ${[{id:'auto',name:'Doors auto'},{id:'single',name:'Single doors'},{id:'double',name:'Double doors'}].map(x=>card(x,k.baseDoors===x.id,`data-k="baseDoors" data-v="${x.id}"`)).join('')}
-      </div>
-      <div class="tip">AU sizes · zones never overlap · 3D updates live.</div>`;
-    }
-    if (s.step === 3) {
-      const nDoors = k.base + k.wall + k.tall + k.pantry + k.corner;
-      h = `<p style="font-size:.62rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Door profile</p>
-      <div class="grid">${C.doors.map(d => card({...d, desc:(d.mod?money(d.mod)+' × '+nDoors+' doors':'Included')}, k.door===d.id, `data-k="door" data-v="${d.id}"`)).join('')}</div>
-      <p style="font-size:.62rem;font-weight:700;margin:12px 0 6px;text-transform:uppercase;color:var(--ink2)">Colour / finish</p>
-      <div class="grid">${C.colors.map(c => card(c, k.color===c.id, `data-k="color" data-v="${c.id}"`)).join('')}</div>`;
-      if (k.color === 'custom') h += `<div class="color-row"><label style="font-size:.7rem;font-weight:700;color:var(--ink2)">Custom</label>
-        <input type="color" id="customColor" value="${k.customHex}">
-        <input type="text" id="customHex" value="${k.customHex}" maxlength="7"></div>`;
-      h += `<div class="tip">Finish applies live on every door in 3D.</div>`;
-    }
-    if (s.step === 4) {
-      const nDoors = k.base + k.wall + k.tall + k.pantry + k.corner;
-      h = `<p style="font-size:.62rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Handles</p>
-      <div class="grid">${C.handles.map(x => card({...x, desc:(x.mod?money(x.mod)+' × '+nDoors:'Included')}, k.handle===x.id, `data-k="handle" data-v="${x.id}"`)).join('')}</div>
-      <p style="font-size:.62rem;font-weight:700;margin:12px 0 6px;text-transform:uppercase;color:var(--ink2)">Hinges · × ${nDoors} doors</p>
-      <div class="grid">${C.hinges.map(x => card({...x, desc:(x.mod?money(x.mod*nDoors):x.desc)}, k.hinge===x.id, `data-k="hinge" data-v="${x.id}"`)).join('')}</div>
-      <p style="font-size:.62rem;font-weight:700;margin:12px 0 6px;text-transform:uppercase;color:var(--ink2)">Drawers</p>
-      <div class="grid">${[
-        {id:'first',name:'First banks'},{id:'all',name:'All base'},{id:'sink-avoid',name:'Skip sink bay'}
-      ].map(x => card(x, k.drawerOn===x.id, `data-k="drawerOn" data-v="${x.id}"`)).join('')}</div>
-      <div class="grid" style="margin-top:8px">${C.drawerOpts.map(d => card({...d,mod:d.id*P.drawerBank}, k.drawerBanks===d.id, `data-num="drawerBanks" data-v="${d.id}"`)).join('')}</div>`;
-    }
-    if (s.step === 5) {
-      h = `<p style="font-size:.62rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Benchtop</p>
-      <div class="grid wide">${C.benches.map(x => card(x, k.bench===x.id, `data-k="bench" data-v="${x.id}"`)).join('')}</div>`;
-      if (k.bench === 'custom-stone') {
-        h += `<div class="color-row" style="margin-top:10px"><label style="font-size:.7rem;font-weight:700;color:var(--ink2)">Stone name</label>
-          <input type="text" id="customStone" value="${k.customStone||''}" placeholder="e.g. Taj Mahal Quartzite" style="flex:1;min-width:180px"></div>`;
-      }
-      h += `<p style="font-size:.62rem;font-weight:700;margin:12px 0 6px;text-transform:uppercase;color:var(--ink2)">Splashback</p>
-      <div class="grid">${C.splash.map(x => card(x, k.splash===x.id, `data-k="splash" data-v="${x.id}"`)).join('')}</div>
-      <div class="toggles" style="margin-top:10px">
-        <div class="tog ${k.waterfall?'on':''}" data-bool="waterfall" role="button" tabindex="0">
-          <div><h4>Waterfall</h4><p>Stone end panel</p></div><div class="chk">${k.waterfall?'✓':''}</div>
-        </div>
-        <div class="tog ${k.kickboard?'on':''}" data-bool="kickboard" role="button" tabindex="0">
-          <div><h4>Kickboard</h4><p>150mm plinth</p></div><div class="chk">${k.kickboard?'✓':''}</div>
-        </div>
-        <div class="tog ${k.bulkhead?'on':''}" data-bool="bulkhead" role="button" tabindex="0">
-          <div><h4>Bulkhead</h4><p>Above wall cabs</p></div><div class="chk">${k.bulkhead?'✓':''}</div>
-        </div>
-      </div>`;
-    }
-    if (s.step === 6) {
-      h = `<p style="font-size:.62rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Sink & mixer</p>
-      <div class="grid">${C.sinks.map(x => card(x, k.sink===x.id, `data-k="sink" data-v="${x.id}"`)).join('')}</div>
-      <div class="grid" style="margin-top:6px">${C.mixers.map(x => card(x, k.mixer===x.id, `data-k="mixer" data-v="${x.id}"`)).join('')}</div>
-      <p style="font-size:.62rem;font-weight:700;margin:10px 0 6px;text-transform:uppercase;color:var(--ink2)">Appliances</p>
-      <div class="grid">${(C.fridgesFull||C.fridges).map(x => card(x, k.fridge===x.id, `data-k="fridge" data-v="${x.id}"`)).join('')}</div>
-      <div class="grid" style="margin-top:6px">${C.ovens.map(x => card(x, k.oven===x.id, `data-k="oven" data-v="${x.id}"`)).join('')}</div>
-      <div class="grid" style="margin-top:6px">${C.cooks.map(x => card(x, k.cook===x.id, `data-k="cook" data-v="${x.id}"`)).join('')}</div>
-      <div class="grid" style="margin-top:6px">${C.hoods.map(x => card(x, k.hood===x.id, `data-k="hood" data-v="${x.id}"`)).join('')}</div>
-      <div class="grid" style="margin-top:6px">${C.mws.map(x => card(x, k.mw===x.id, `data-k="mw" data-v="${x.id}"`)).join('')}</div>
-      <p style="font-size:.62rem;font-weight:700;margin:10px 0 6px;text-transform:uppercase;color:var(--ink2)">Lighting</p>
-      <div class="grid">${C.lights.map(x => card(x, k.light===x.id, `data-k="light" data-v="${x.id}"`)).join('')}</div>`;
-    }
-    if (s.step === 7) {
-      const t = calcKitchen();
-      h = `<div class="tip"><strong>Your kitchen plan is ready.</strong></div>
-        <div style="font-size:.8rem;line-height:1.75;margin-top:8px">
-          ${find(C.layoutsK,k.layout).name} · ${k.w}×${k.d}m<br>
-          ${k.base} base · ${k.wall} wall · ${k.tall} tall · ${k.pantry} pantry<br>
-          ${k.color==='custom'?'Custom '+k.customHex:find(C.colors,k.color).name}
-          · ${find(C.benches,k.bench).brand}<br>
-          <strong style="font-size:1.15rem">${money(t.total)}</strong>
-        </div>
-        <div class="tip" style="margin-top:10px">Preliminary estimate — final price after measure.</div>`;
-    }
-  } else {
-    if (s.step === 1) h = `<div class="grid">${C.layoutsB.map(l => card(l, b.layout===l.id, `data-b="layout" data-v="${l.id}"`)).join('')}</div>`;
-    if (s.step === 2) h = `<div class="dims">${dimHTML('Width','w',b.w,1.8,4,.1)}${dimHTML('Depth','d',b.d,1.5,3.5,.1)}</div>`;
-    if (s.step === 3) h = `<div class="grid">${C.vanS.map(x => card(x, b.vanity===x.id, `data-b="vanity" data-v="${x.id}"`)).join('')}</div>`;
-    if (s.step === 4) h = `<div class="grid">${C.vanC.map(x => card(x, b.vColor===x.id, `data-b="vColor" data-v="${x.id}"`)).join('')}</div>`;
-    if (s.step === 5) h = `<div class="grid">${C.mixers.map(x => card(x, b.tap===x.id, `data-b="tap" data-v="${x.id}"`)).join('')}</div>`;
-    if (s.step === 6) h = `<div class="grid">${C.screens.map(x => card(x, b.screen===x.id, `data-b="screen" data-v="${x.id}"`)).join('')}</div>`;
-    if (s.step === 7) h = `<div class="grid">${C.baths.map(x => card(x, b.bath===x.id, `data-b="bath" data-v="${x.id}"`)).join('')}</div>`;
-    if (s.step === 8) h = `<div class="grid">${C.wTiles.map(x => card(x, b.wTile===x.id, `data-b="wTile" data-v="${x.id}"`)).join('')}</div>
-      <div class="grid" style="margin-top:8px">${C.fTiles.map(x => card(x, b.fTile===x.id, `data-b="fTile" data-v="${x.id}"`)).join('')}</div>`;
-    if (s.step === 9) { const t = calcBathroom(); h = `<div class="tip"><strong>Ready.</strong> Est. ${money(t.base+t.total)}</div>`; }
-  }
-
-  $('content').innerHTML = h;
-  $('btnBack').disabled = s.step === 1;
-  $('btnNext').textContent = s.step === nSteps() ? 'Complete' : 'Next →';
-  $('btnNext').disabled = s.step === nSteps();
-
-  const cp = $('customColor'), hx = $('customHex'), cs = $('customStone');
-  if (cp) cp.oninput = () => { kitchen.customHex = cp.value; if (hx) hx.value = cp.value; markDone(); };
-  if (hx) hx.onchange = () => { if (/^#[0-9A-Fa-f]{6}$/.test(hx.value)) { kitchen.customHex = hx.value; if (cp) cp.value = hx.value; markDone(); } };
-  if (cs) cs.oninput = () => { kitchen.customStone = cs.value; markDone(); };
-}
-
-function render() {
-  if (!app.ready) return;
-  const max = nSteps();
-  if (st().step > max) st().step = max;
-  if (st().step < 1) st().step = 1;
-  renderSide();
-  renderContent();
-  renderSummary();
-  if (app.mode === 'kitchen') buildKitchen3D();
-  else buildBath3D();
-}
-
-/* ============================================================
-   6. EVENTS + INIT
-   ============================================================ */
-function go(n) { st().step = clamp(n, 1, nSteps()); }
-function next() { markDone(); if (st().step < nSteps()) st().step++; }
-function prev() { if (st().step > 1) st().step--; }
-
-function bind() {
-  document.querySelectorAll('.mode').forEach(tab => {
-    tab.onclick = () => {
-      document.querySelectorAll('.mode').forEach(t => t.classList.remove('on'));
-      tab.classList.add('on');
-      app.mode = tab.dataset.mode;
-    };
-  });
-  $('zIn').onclick = () => {
-    if (!camera) return;
-    camera.position.multiplyScalar(0.88);
-    if (controls) controls.update();
-  };
-  $('zOut').onclick = () => {
-    if (!camera) return;
-    camera.position.multiplyScalar(1.14);
-    if (controls) controls.update();
-  };
-  $('zReset').onclick = () => {
-    if (!camera) return;
-    camera.position.set(4.6, 3.3, 5.6);
-    if (controls) {
-      controls.target.set(1.9, 0.95, 1.15);
-      controls.update();
-    }
-  };
-  $('btnBack').onclick = prev;
-  $('btnNext').onclick = next;
-  $('stepList').onclick = e => {
-    const i = e.target.closest('[data-go]');
-    if (!i || i.classList.contains('lock')) return;
-    go(+i.dataset.go);
-  };
-  $('content').onclick = e => {
-    const t = e.target;
-    const qty = t.closest('.qty-btn');
-    if (qty && qty.dataset.qty) {
-      e.preventDefault();
-      const key = qty.dataset.qty, dir = +qty.dataset.dir, mn = +qty.dataset.min, mx = +qty.dataset.max;
-      if (key === 'benchLm') kitchen.benchLm = clamp(+(kitchen.benchLm + dir * 0.5).toFixed(1), mn, mx);
-      else kitchen[key] = clamp((Number(kitchen[key]) || 0) + dir, mn, mx);
-      markDone();
-      return;
-    }
-    const dim = t.closest('.dim-btn');
-    if (dim && dim.dataset.dim) {
-      e.preventDefault();
-      const key = dim.dataset.dim, dir = +dim.dataset.dir, step = +dim.dataset.step;
-      const cur = st();
-      cur[key] = clamp(+(Number(cur[key]) + dir * step).toFixed(1), +dim.dataset.min, +dim.dataset.max);
-      markDone();
-      return;
-    }
-    const dk = t.closest('[data-k]'); if (dk) { kitchen[dk.dataset.k] = dk.dataset.v; markDone(); return; }
-    const db = t.closest('[data-b]'); if (db) { bathroom[db.dataset.b] = db.dataset.v; markDone(); return; }
-    const dn = t.closest('[data-num]'); if (dn) { kitchen[dn.dataset.num] = +dn.dataset.v; markDone(); return; }
-    const bool = t.closest('[data-bool]'); if (bool) { kitchen[bool.dataset.bool] = !kitchen[bool.dataset.bool]; markDone(); }
-  };
-  $('content').onkeydown = e => {
-    if (e.key !== 'Enter' && e.key !== ' ') return;
-    const c = e.target.closest('.card,.tog,.qty-btn');
-    if (c) { e.preventDefault(); c.click(); }
-  };
-  const mq = matchMedia('(max-width:1100px)');
-  function checkMob() { $('togSum').style.display = mq.matches ? 'grid' : 'none'; }
-  mq.addEventListener('change', checkMob); checkMob();
-  $('togSum').onclick = () => $('sumCol').classList.toggle('mob');
-
-  const EMAIL = 'info@mic-nsw.com.au';
-  // Prefer proxy: window.__ENV.QUOTE_ENDPOINT = '/api/quote'
-  // Do not hardcode production Web3Forms keys in client code.
-  let pending = null;
-  function openQ() {
-    pending = { m: quoteMsg() };
-    $('qTitle').textContent = `Request ${app.mode === 'kitchen' ? 'Kitchen' : 'Bathroom'} Quote`;
-    $('qForm').reset(); $('qStatus').textContent = '';
-    $('quoteModal').classList.add('open'); $('qName').focus();
-  }
-  function closeQ() { $('quoteModal').classList.remove('open'); pending = null; }
-  $('btnQuote').onclick = openQ; $('qClose').onclick = closeQ; $('qCancel').onclick = closeQ;
-  $('quoteModal').onclick = e => { if (e.target === $('quoteModal')) closeQ(); };
-  $('qForm').onsubmit = async e => {
-    e.preventDefault();
-    if (!$('qForm').reportValidity()) return;
-    const payload = { from_name: $('qName').value.trim(), email: $('qEmail').value.trim(), phone: $('qPhone').value.trim(), message: pending?.m || quoteMsg() };
-    const btn = $('qSubmit'); btn.disabled = true; btn.textContent = 'Sending…';
-    const endpoint = (typeof QUOTE_ENDPOINT === 'string' && QUOTE_ENDPOINT) || (window.__ENV && window.__ENV.QUOTE_ENDPOINT) || '';
-    try {
-      if (!endpoint) throw new Error('NO_ENDPOINT');
-      const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) });
-      if (!res.ok) throw new Error('FAIL');
-      $('qStatus').textContent = `Thanks ${payload.from_name}! Sent to MIC NSW.`;
-      $('qStatus').className = 'status';
-      setTimeout(() => { btn.disabled = false; btn.textContent = 'Send Request'; closeQ(); }, 2000);
-    } catch (err) {
-      const body = encodeURIComponent(payload.message + '\n\nFrom: ' + payload.from_name + '\nEmail: ' + payload.email + '\nPhone: ' + payload.phone);
-      window.location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('MIC NSW Quote Request') + '&body=' + body;
-      $('qStatus').textContent = 'Online quote submission is not connected yet. Please use phone, email or WhatsApp, or copy your project summary.';
-      $('qStatus').className = 'status';
-      setTimeout(() => { btn.disabled = false; btn.textContent = 'Send Request'; closeQ(); }, 1500); return;
-      $('qStatus').className = 'status err';
-      btn.disabled = false; btn.textContent = 'Send Request';
-    }
-  };
-}
-
-function quoteMsg() {
-  if (app.mode === 'kitchen') {
-    const t = calcKitchen(), k = kitchen;
-    return ['Kitchen estimate — MIC NSW', `Total: ${money(t.total)}`, `Layout: ${find(AppConfig.layoutsK, k.layout).name}`,
-      `Cabinets: ${k.base} base / ${k.wall} wall / ${k.tall} tall / ${k.pantry} pantry / ${k.corner} corner`].join('\n');
-  }
-  const t = calcBathroom();
-  return ['Bathroom estimate — MIC NSW', `Est. ${money(t.base + t.total)}`].join('\n');
-}
-
-function init() {
-  init3D();
-  bind();
-  app.ready = true; // triggers first render via Proxy
-}
-
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-else init();
-})();
-
-
-(function(){
- document.querySelectorAll('.faq-btn').forEach(function(btn){
-  btn.addEventListener('click',function(){
-   var expanded=btn.getAttribute('aria-expanded')==='true';
-   var panel=document.getElementById(btn.getAttribute('aria-controls'));
-   btn.setAttribute('aria-expanded', expanded?'false':'true');
-   if(panel) panel.hidden=expanded;
-   var icon=btn.querySelector('[aria-hidden]');
-   if(icon) icon.textContent=expanded?'+':'−';
-  });
- });
-})();
-
-</script>
-
-<div id="legalModal" hidden style="position:fixed;inset:0;z-index:3000;background:rgba(28,31,26,.55);display:none;align-items:center;justify-content:center;padding:20px">
-  <div role="dialog" aria-modal="true" aria-labelledby="legalTitle" style="background:#fff;max-width:560px;width:100%;max-height:80vh;overflow:auto;border-radius:6px;padding:28px;position:relative">
-    <button type="button" id="closeLegal" aria-label="Close" style="position:absolute;top:12px;right:12px;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:#fff;cursor:pointer">✕</button>
-    <h2 id="legalTitle" style="font-family:var(--fd);margin-bottom:12px">Privacy Policy</h2>
-    <div id="legalBody" style="font-size:.95rem;color:var(--ink2);line-height:1.6"></div>
-  </div>
-</div>
-<script>
-(function(){
- var modal=document.getElementById('legalModal');
- var title=document.getElementById('legalTitle');
- var body=document.getElementById('legalBody');
- var lastFocus=null;
- function openLegal(kind){
-  lastFocus=document.activeElement;
-  title.textContent=kind==='privacy'?'Privacy Policy':'Estimate Disclaimer';
-  if(kind==='privacy'){
-   body.innerHTML='<p>MIC NSW Pty Ltd collects contact and project information you submit through this website to respond to enquiries and prepare quotations.</p><p>Information may include your name, email, phone, suburb, project details and planner selections.</p><p>We use this information to communicate with you about your enquiry. Data may be processed by service providers who help us operate forms or email.</p><p>Contact info@mic-nsw.com.au for access or correction requests.</p><p style="font-size:.8rem;margin-top:12px"><!-- LEGAL REVIEW RECOMMENDED BEFORE PUBLICATION --></p>';
-  } else {
-   body.innerHTML='<p>Planner results are preliminary indicative estimates only. They are not a formal building quotation, contract or fixed price.</p><p>Final pricing is subject to site inspection, confirmed measurements, product selection, availability, site access, structural conditions, service locations and the final agreed scope of work.</p><p>All displayed consumer prices include GST unless expressly stated otherwise.</p>';
-  }
-  modal.hidden=false; modal.style.display='flex';
-  document.body.style.overflow='hidden';
-  document.getElementById('closeLegal').focus();
- }
- function closeLegal(){
-  modal.hidden=true; modal.style.display='none';
-  document.body.style.overflow='';
-  if(lastFocus) lastFocus.focus();
- }
- var op=document.getElementById('openPrivacy');
- var od=document.getElementById('openDisclaimer');
- if(op) op.addEventListener('click',function(){openLegal('privacy');});
- if(od) od.addEventListener('click',function(){openLegal('disclaimer');});
- document.getElementById('closeLegal').addEventListener('click',closeLegal);
- modal.addEventListener('click',function(e){ if(e.target===modal) closeLegal(); });
- document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!modal.hidden) closeLegal(); });
-})();
-</script>
-
-</body>
+      render();
+    </script>
+  </body>
 </html>
