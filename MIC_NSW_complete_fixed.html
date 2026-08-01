@@ -26,6 +26,8 @@
   --line:rgba(25,28,23,.12);--line2:rgba(25,28,23,.2);--sh:0 16px 40px -20px rgba(25,28,23,.3);
   --fd:'Fraunces',Georgia,serif;--fb:'Inter',system-ui,sans-serif;--fl:'Space Mono',monospace;
   --side:250px;--sum:290px;--radius:16px;
+  --type-h1:clamp(2.35rem, 6vw, 4.5rem);--type-h2:clamp(1.85rem, 4vw, 3rem);--type-h3:clamp(1.15rem, 2vw, 1.5rem);
+  --type-body-lg:clamp(1rem, 1.4vw, 1.125rem);--type-body:1rem;--type-small:.875rem;--type-label:.72rem;
   --safe-t:env(safe-area-inset-top,0px);--safe-r:env(safe-area-inset-right,0px);
   --safe-b:env(safe-area-inset-bottom,0px);--safe-l:env(safe-area-inset-left,0px);
 }
@@ -555,6 +557,33 @@ section.section,.hero,.trust-bar,.reassure-strip,footer{opacity:1}
 
 /* ── Planner route transition ── */
 #planner-view.is-active{animation:_micFadeUp .25s ease both}
+
+/* Consistent responsive typography scale */
+body{font-size:var(--type-body);line-height:1.65}
+p,li,dd,dt{font-size:var(--type-body);line-height:1.7}
+h1{font-size:var(--type-h1);line-height:1.05;letter-spacing:-.01em;max-width:12ch}
+h2{font-size:var(--type-h2);line-height:1.16;letter-spacing:-.01em;max-width:13ch}
+h3{font-size:var(--type-h3);line-height:1.25;letter-spacing:-.005em}
+.hero p,.hero a[href="#quote"]{font-size:var(--type-body-lg)}
+.hero p{max-width:62ch;line-height:1.7}
+.eyebrow,.mnav-section-label,.foot-contact-list li,.foot-bottom,.faq-btn,.planner-label{font-size:var(--type-label)}
+.btn{font-size:var(--type-small)}
+.site-brand{font-size:clamp(1rem, 1.4vw, 1.15rem)}
+.primary-nav a{font-size:var(--type-small)}
+.mobile-nav a.mnav{font-size:clamp(.95rem, 1.2vw, 1.05rem)}
+.mobile-nav .mnav-contact-item,.mobile-nav .mnav-contact-row{font-size:var(--type-small)}
+footer h3{font-size:var(--type-label)}
+.foot-contact-list li{font-size:var(--type-small)}
+.foot-bottom{font-size:var(--type-label)}
+#planner-view .topbar .brand{font-size:clamp(.9rem, 1.2vw, 1rem)}
+#planner-view .step,#planner-view .panel-h p,#planner-view .meta,#planner-view .price,#planner-view .line,#planner-view .prods,#planner-view .tip,#planner-view .sum-h .sub,#planner-view .modal>p,#planner-view .status{font-size:var(--type-small)}
+#planner-view .panel-h h3,#planner-view .sum-h h3{font-size:clamp(.95rem, 1.3vw, 1.12rem)}
+#planner-view .sum-h .big{font-size:clamp(1.2rem, 2.2vw, 1.55rem)}
+#planner-view .card h4{font-size:clamp(.8rem, 1.1vw, .95rem)}
+#planner-view .dim label,#planner-view .modal label{font-size:var(--type-label)}
+.feature-copy p,.reassure-copy p,.reassure-grid div{font-size:var(--type-small);line-height:1.6}
+.feature-copy h3,.reassure-copy h3{font-size:clamp(.95rem, 1.1vw, 1.06rem)}
+.cap-tile .cap-label span{font-size:clamp(.9rem, 1.2vw, 1rem)}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"MIC NSW Pty Ltd","url":"https://mic-nsw.com.au/","telephone":"+61470640083","email":"info@mic-nsw.com.au","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"},"areaServed":[{"@type":"City","name":"Sydney"},{"@type":"AdministrativeArea","name":"Greater Sydney, NSW"}],"description":"Licensed kitchen, bathroom and home renovations across Greater Sydney. Design online with live estimates. NSW Contractor Licence 393630C.","identifier":[{"@type":"PropertyValue","name":"ABN","value":"51 665 533 282"},{"@type":"PropertyValue","name":"NSW Contractor Licence","value":"393630C"}],"makesOffer":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Kitchen Renovations Sydney"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Bathroom Renovations Sydney"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Home Renovations Sydney"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Commercial Renovations Sydney"}}]}
