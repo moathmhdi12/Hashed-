@@ -867,7 +867,9 @@
         kitchen: document.getElementById('package-grid-kitchen'),
         bathroom: document.getElementById('package-grid-bathroom')
       };
-      const plannerConfig = {
+      const defaultTitle = 'MIC NSW | Kitchen & Bathroom Renovations Sydney';
+
+const plannerConfig = {
         kitchen: {
           title: 'Kitchen Planner',
           steps: [
@@ -1019,7 +1021,7 @@
         plannerModeButtons.forEach(button => {
           button.classList.toggle('active', button.dataset.modeSwitch === state.mode);
         });
-        document.title = `${config.title} | MIC NSW`;
+        document.title = plannerView.getAttribute('aria-hidden') === 'false' ? `${config.title} | MIC NSW` : defaultTitle;
 
         const currentStep = getCurrentStep();
         plannerHelp.innerHTML = `<strong>${currentStep.title}</strong><p>${currentStep.prompt}</p>`;
@@ -1085,6 +1087,7 @@
       function closePlanner() {
         document.body.classList.remove('planner-open');
         plannerView.setAttribute('aria-hidden', 'true');
+        document.title = defaultTitle;
         window.history.pushState(null, '', window.location.pathname + window.location.search);
       }
 
