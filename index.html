@@ -1120,6 +1120,59 @@ const bathroom = reactive({
 });
 const app = reactive({ mode:'kitchen', ready:false });
 
+function readPlannerState(){
+  if(!window.localStorage) return null;
+  try{
+    const raw=window.localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    const parsed=JSON.parse(raw);
+    return parsed && typeof parsed==='object' ? parsed : null;
+  }catch(err){ return null; }
+}
+function persistPlannerState(){
+  if(!window.localStorage) return;
+  try{
+    const snapshot={
+      version:1,
+      mode:app.mode,
+      kitchen:{
+        step:kitchen.step, done:kitchen.done, pkg:kitchen.pkg,
+        layout:kitchen.layout, w:kitchen.w, d:kitchen.d, h:kitchen.h, benchLm:kitchen.benchLm,
+        base:kitchen.base, wall:kitchen.wall, tall:kitchen.tall, pantry:kitchen.pantry, corner:kitchen.corner,
+        pantrySide:kitchen.pantrySide, tallSide:kitchen.tallSide, drawerOn:kitchen.drawerOn,
+        islandSeating:kitchen.islandSeating, islandCook:kitchen.islandCook, islandSize:kitchen.islandSize,
+        baseDoors:kitchen.baseDoors, wallDoors:kitchen.wallDoors, pantryStyle:kitchen.pantryStyle, fridgePanel:kitchen.fridgePanel,
+        drawerBanks:kitchen.drawerBanks, drawersPer:kitchen.drawersPer,
+        door:kitchen.door, color:kitchen.color, customHex:kitchen.customHex, customStone:kitchen.customStone,
+        handle:kitchen.handle, bench:kitchen.bench, waterfall:kitchen.waterfall,
+        splash:kitchen.splash, bulkhead:kitchen.bulkhead, kickboard:kitchen.kickboard, hinge:kitchen.hinge,
+        sink:kitchen.sink, mixer:kitchen.mixer,
+        fridge:kitchen.fridge, oven:kitchen.oven, cook:kitchen.cook, hood:kitchen.hood, mw:kitchen.mw,
+        light:kitchen.light
+      },
+      bathroom:{
+        step:bathroom.step, done:bathroom.done, pkg:bathroom.pkg,
+        layout:bathroom.layout, w:bathroom.w, d:bathroom.d, h:bathroom.h,
+        vanity:bathroom.vanity, vColor:bathroom.vColor,
+        tap:bathroom.tap, screen:bathroom.screen, bath:bathroom.bath,
+        wTile:bathroom.wTile, fTile:bathroom.fTile
+      }
+    };
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+  }catch(err){}
+}
+function restorePlannerState(){
+  const snapshot=readPlannerState();
+  if(!snapshot) return;
+  if(snapshot.mode==='kitchen' || snapshot.mode==='bathroom') app.mode=snapshot.mode;
+  if(snapshot.kitchen){
+    Object.keys(snapshot.kitchen).forEach(key=>{ if(key in kitchen) kitchen[key]=snapshot.kitchen[key]; });
+  }
+  if(snapshot.bathroom){
+    Object.keys(snapshot.bathroom).forEach(key=>{ if(key in bathroom) bathroom[key]=snapshot.bathroom[key]; });
+  }
+}
+
 window.MICPlanner = window.MICPlanner || {};
 window.MICPlanner.setPackage = function(mode, pkgId){
   pkgId = (pkgId||'').toLowerCase();
@@ -1692,6 +1745,7 @@ function render(){
   if(st().step<1) st().step=1;
   renderSide(); renderContent(); renderSummary();
   if(threeReady){ if(app.mode==='kitchen') buildKitchen3D(); else buildBath3D(); }
+  persistPlannerState();
 }
 
 function go(n){st().step=clamp(n,1,nSteps());}
@@ -1780,6 +1834,7 @@ function quoteMsg(){
 
 function init(){
   init3D();
+  restorePlannerState();
   bind();
   app.ready=true;
 }
