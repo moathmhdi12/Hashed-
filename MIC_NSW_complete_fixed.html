@@ -22,7 +22,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --ink:#191C17;--ink2:#50544C;--stone:#F5F1E8;--stone2:#EBE4D4;--stone-light:#FBFAF6;
-  --white:#FFFFFF;--brass:#B9833B;--brass2:#895F2B;--brass3:#EFDDBB;--slate:#2E4145;
+  --white:#FFFFFF;--brass:#B9833B;--brass2:#895F2B;--brass3:#EFDDBB;--slate:#2E4145;--logo-bronze-filter:brightness(0) saturate(100%) invert(58%) sepia(32%) saturate(1011%) hue-rotate(353deg) brightness(92%) contrast(88%);
   --line:rgba(25,28,23,.12);--line2:rgba(25,28,23,.2);--sh:0 16px 40px -20px rgba(25,28,23,.3);
   --fd:'Fraunces',Georgia,serif;--fb:'Inter',system-ui,sans-serif;--fl:'Space Mono',monospace;
   --side:250px;--sum:290px;--radius:16px;
@@ -49,7 +49,7 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,254,251,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);box-shadow:0 2px 16px -8px rgba(25,28,23,.12);padding:10px 0;padding-top:max(10px,var(--safe-t))}
 .nav-wrap{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0}
 .site-brand{display:inline-flex;align-items:center;gap:8px;font-family:var(--fd);font-weight:700;font-size:1.1rem;min-width:0;flex-shrink:0}
-.site-brand img.site-logo{height:32px;width:auto;max-width:110px;object-fit:contain}
+.site-brand img.site-logo{height:32px;width:auto;max-width:110px;object-fit:contain;transition:filter .18s ease}
 .primary-nav{display:none}.primary-nav ul{display:flex;gap:6px;flex-wrap:nowrap}
 .primary-nav a{position:relative;font-size:.86rem;font-weight:500;color:var(--ink2);white-space:nowrap;padding:8px 10px;border-radius:8px;transition:color .18s,background-color .18s}
 .primary-nav a::after{content:"";position:absolute;left:10px;right:10px;bottom:3px;height:2px;background:var(--brass);border-radius:2px;transform:scaleX(0);transform-origin:center;transition:transform .2s ease}
@@ -58,11 +58,11 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 .primary-nav a.active{color:var(--brass2);font-weight:600}
 .primary-nav a.active::after{transform:scaleX(1)}
 .primary-nav a:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
-.header-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.header-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}.header-social-row{display:none;align-items:center;gap:8px;margin-right:4px}.header-social-row a{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:linear-gradient(180deg,#fff,rgba(245,241,232,.96));color:var(--ink2);box-shadow:0 12px 28px -22px rgba(25,28,23,.55);transition:border-color .15s,background-color .15s,color .15s,transform .15s}.header-social-row a:hover{transform:translateY(-1px);color:var(--brass2);border-color:rgba(185,131,59,.45);background:rgba(185,131,59,.08)}.header-social-row a:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
 .hamburger{width:44px;height:44px;min-width:44px;border:1px solid var(--line2);border-radius:50%;background:transparent;cursor:pointer;display:grid;place-items:center;font-size:1.1rem;color:var(--ink);transition:border-color .18s,background-color .18s}
 .hamburger:hover{border-color:var(--brass);background:rgba(185,131,59,.06)}
 .hamburger:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
-@media(min-width:1024px){.primary-nav{display:block}.hamburger{display:none}.site-brand img.site-logo{height:36px;max-width:130px}}
+@media(min-width:1024px){.primary-nav{display:block}.hamburger{display:none}.site-brand img.site-logo{height:36px;max-width:130px}}@media(min-width:1280px){.header-social-row{display:flex}}
 @media(max-width:1023px){.header-actions .btn-outline{display:none}}
 @media(max-width:767px){
   .site-header{padding:8px 0;padding-top:max(8px,var(--safe-t))}
@@ -79,7 +79,7 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 }
 .mobile-nav{position:fixed;inset:0;z-index:1100;background:linear-gradient(165deg,#1a1d18 0%,#2a2e28 100%);color:#fff;display:flex;flex-direction:column;padding:20px;padding-top:max(20px,var(--safe-t));padding-bottom:max(20px,var(--safe-b));padding-left:max(20px,var(--safe-l));padding-right:max(20px,var(--safe-r));transform:translateY(-105%);visibility:hidden;transition:.35s;overflow-y:auto;-webkit-overflow-scrolling:touch;height:100dvh;height:100vh}
 .mobile-nav.open{transform:none;visibility:visible}
-.mobile-nav .site-brand img.site-logo{height:30px;filter:brightness(0) invert(1)}
+.mobile-nav .site-brand img.site-logo{height:30px;filter:var(--logo-bronze-filter)}
 .mobile-nav a.mnav{display:flex;align-items:center;gap:12px;min-height:52px;color:rgba(255,255,255,.92);font-size:1.08rem;font-weight:500;padding:4px 6px;margin:0 -6px;border-radius:10px;border-bottom:1px solid rgba(255,255,255,.06);transition:color .15s,background-color .15s}
 .mobile-nav a.mnav:hover,.mobile-nav a.mnav:focus-visible{color:var(--brass3);background:rgba(255,255,255,.06)}
 .mobile-nav a.mnav:focus-visible{outline:2px solid var(--brass3);outline-offset:-2px}
@@ -317,10 +317,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .foot-contact-list{display:flex;flex-direction:column;gap:10px;list-style:none;margin-top:12px}
 .foot-contact-list li{display:flex;align-items:center;gap:10px;font-size:.86rem;color:rgba(255,255,255,.78)}
 .foot-contact-list li svg{flex-shrink:0;color:var(--brass3)}
-.foot-social-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.foot-social-row a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.18);color:#fff;transition:border-color .15s,background-color .15s,transform .15s}
-.foot-social-row a:hover{border-color:var(--brass3);background:rgba(185,131,59,.14);transform:translateY(-1px)}
-.foot-social-row a:focus-visible{outline:2px solid var(--brass3);outline-offset:2px}
+.foot-social-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.foot-social-row a{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:14px;border:1px solid rgba(255,255,255,.16);color:#fff;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03));box-shadow:0 16px 34px -26px rgba(0,0,0,.85);transition:border-color .15s,background-color .15s,color .15s,transform .15s}.foot-social-row a:hover{border-color:rgba(239,221,187,.85);background:rgba(185,131,59,.2);color:var(--brass3);transform:translateY(-1px)}.foot-social-row a:focus-visible{outline:2px solid var(--brass3);outline-offset:2px}
 .back-to-top{position:fixed;bottom:calc(max(16px,var(--safe-b)) + 64px);right:max(16px,var(--safe-r));z-index:850;width:46px;height:46px;border-radius:50%;background:var(--ink);color:#fff;display:none;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.15);box-shadow:0 4px 14px rgba(0,0,0,.22);cursor:pointer;opacity:0;transform:translateY(8px);transition:opacity .2s ease,transform .2s ease}
 .back-to-top.show{display:flex;opacity:1;transform:translateY(0)}
 .back-to-top:hover{background:var(--brass2)}
@@ -369,7 +366,7 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
   border-bottom:1px solid var(--line);
   box-shadow:0 24px 60px -28px rgba(25,28,23,.36);
 }
-.mobile-nav .site-brand img.site-logo{filter:none}
+.mobile-nav .site-brand img.site-logo{filter:var(--logo-bronze-filter)}
 .mobile-nav a.mnav{
   color:var(--ink2);
   border-bottom-color:var(--line);
@@ -389,8 +386,9 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
 .mobile-nav .mnav-contact-row svg{color:var(--brass2)}
 .mobile-nav .foot-social-row a,.mobile-nav .mnav-social{
   color:var(--ink);
-  border-color:var(--line2);
-  background:#fff;
+  border-color:rgba(25,28,23,.12);
+  background:linear-gradient(180deg,#fff,#f8f3ea);
+  box-shadow:0 14px 26px -22px rgba(25,28,23,.45);
 }
 .mobile-nav .foot-social-row a:hover,.mobile-nav .mnav-social:hover{
   color:var(--brass2);
@@ -428,6 +426,10 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
   word-break:normal;
 }
 .btn{white-space:normal}
+.site-header .site-brand img.site-logo,.mobile-nav .site-brand img.site-logo,footer .site-brand img.site-logo{filter:var(--logo-bronze-filter)}
+.bathroom-inspiration-intro{max-width:740px;margin-bottom:28px}
+.bathroom-inspiration-intro p{margin-top:12px;color:var(--ink2);max-width:660px}
+.bathroom-inspiration-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
 
 /* Why homeowners choose MIC NSW */
 .why-section-head{max-width:720px;margin-bottom:28px}
@@ -486,7 +488,7 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
 
 @media(max-width:767px){
   .mobile-nav{padding-top:max(18px,var(--safe-t));padding-inline:max(18px,var(--safe-l));padding-bottom:max(20px,var(--safe-b))}
-  .mobile-nav a.mnav{min-height:50px;font-size:1rem;padding:5px 10px;margin:0}
+  .mobile-nav a.mnav{min-height:52px;font-size:1rem;padding:7px 10px;margin:0}
   .why-grid.pro-grid,.reassure-grid{grid-template-columns:1fr}
   .why-card.pro-card{grid-template-columns:46px minmax(0,1fr);gap:13px;padding:16px}
   .feature-icon{width:44px;height:44px;border-radius:12px}
@@ -503,15 +505,6 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
 }
 
 
-.site-map-section{background:var(--stone-light);border-top:1px solid var(--line)}
-.site-map-intro{margin-top:10px;max-width:640px;color:var(--ink2)}
-.site-map-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
-.site-map-group{min-width:0;padding:18px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 24px -20px rgba(25,28,23,.32)}
-.site-map-group h3{font-family:var(--fd);font-size:1rem;margin-bottom:10px;color:var(--ink)}
-.site-map-group a{display:block;width:fit-content;max-width:100%;padding:5px 0;color:var(--ink2);font-size:.88rem;overflow-wrap:anywhere}
-.site-map-group a:hover,.site-map-group a:focus-visible{color:var(--brass2)}
-@media(min-width:850px){.site-map-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:520px){.site-map-grid{grid-template-columns:1fr}.site-map-group{padding:16px}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"MIC NSW Pty Ltd","url":"https://mic-nsw.com.au/","telephone":"+61470640083","email":"info@mic-nsw.com.au","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"},"areaServed":[{"@type":"City","name":"Sydney"},{"@type":"AdministrativeArea","name":"Greater Sydney, NSW"}],"description":"Licensed kitchen, bathroom and home renovations across Greater Sydney. Design online with live estimates. NSW Contractor Licence 393630C.","identifier":[{"@type":"PropertyValue","name":"ABN","value":"51 665 533 282"},{"@type":"PropertyValue","name":"NSW Contractor Licence","value":"393630C"}],"makesOffer":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Kitchen Renovations Sydney"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Bathroom Renovations Sydney"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Home Renovations Sydney"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Commercial Renovations Sydney"}}]}
@@ -558,6 +551,11 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
       <li><a href="#quote" data-nav>Contact</a></li>
     </ul></nav>
     <div class="header-actions">
+      <div class="header-social-row" aria-label="MIC NSW social links">
+        <a href="https://wa.me/61470640083" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 004.1 17.4L3 21.5l4.2-1.1A11 11 0 0020.5 3.5zm-8.5 17a9 9 0 01-4.6-1.3l-.3-.2-2.7.7.7-2.6-.2-.3A9 9 0 1120 12a9 9 0 01-8 8.5zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1s-.7.9-.8 1-.3.2-.6.1a7.4 7.4 0 01-2.2-1.4 8.3 8.3 0 01-1.5-1.9c-.2-.3 0-.4.1-.6l.5-.6c.1-.2.1-.3 0-.5l-.9-2.1c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3s-1 1-1 2.4 1 2.8 1.2 3a12.5 12.5 0 004.7 3.7c.6.3 1.2.4 1.6.5a3.8 3.8 0 001.8.1 2.9 2.9 0 001.9-1.3c.2-.4.2-.7.1-.8l-.5-.2z"/></svg></a>
+        <a href="https://www.facebook.com/micnsw" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 21v-7h2.4l.4-3h-2.8V8.7c0-.9.3-1.4 1.4-1.4h1.6V4.7c-.3 0-1.2-.1-2.3-.1-2.4 0-4 1.4-4 4.1V11H7.4v3h2.5v7h3.3z"/></svg></a>
+        <a href="https://www.instagram.com/micnsw" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg></a>
+      </div>
       <a href="#planner/kitchen" class="btn btn-brass" data-open-planner="kitchen" aria-label="Open the kitchen design planner">Start Designing</a>
       <a href="#quote" class="btn btn-outline">Get a Quote</a>
       <button type="button" class="hamburger" id="menuOpen" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
@@ -569,7 +567,7 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
     <a href="#home" class="site-brand" aria-label="MIC NSW"><img class="site-logo" src="https://mic-nsw.com.au/front/images/logo2.png" alt="MIC NSW logo" width="100" height="30" decoding="async"></a>
     <button type="button" id="menuClose" aria-label="Close menu" style="color:#fff;background:transparent;border:1px solid rgba(255,255,255,.3);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;transition:border-color .15s,background-color .15s"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
   </div>
-  <ul style="list-style:none;display:flex;flex-direction:column;gap:2px;overflow-y:auto;flex:1">
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;overflow-y:auto;flex:1">
     <li><a href="#home" class="mnav"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Home</a></li>
     <li><a href="#about" class="mnav"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.8" r="0.6" fill="currentColor" stroke="none"/></svg>About</a></li>
     <li><a href="#services" class="mnav"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a3 3 0 10-4.2 4.2L4 17l3 3 6.5-6.5a3 3 0 004.2-4.2l-2 2-2-2z"/></svg>Services</a></li>
@@ -580,13 +578,13 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
     <li><a href="#faq" class="mnav"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 114 2c-.9.7-1.5 1.2-1.5 2.5"/><circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg>FAQ</a></li>
     <li><a href="#quote" class="mnav"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5L12 13l8.5-6.5"/></svg>Contact</a></li>
   </ul>
-  <div style="border-top:1px solid rgba(255,255,255,.15);margin-top:12px;padding-top:16px">
+  <div style="border-top:1px solid rgba(25,28,23,.12);margin-top:22px;padding-top:22px">
     <div class="mnav-contact-row"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5c0 8.3 6.7 15 15 15l3-4-6-3-2 2c-2.5-1.2-4.8-3.5-6-6l2-2-3-6-4 3z"/></svg><a href="tel:+61470640083" style="color:rgba(255,255,255,.85)">+61 470 640 083</a></div>
-    <div class="mnav-contact-row" style="margin-top:10px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5L12 13l8.5-6.5"/></svg><a href="mailto:info@mic-nsw.com.au" style="color:rgba(255,255,255,.85);overflow-wrap:anywhere">info@mic-nsw.com.au</a></div>
-    <div class="foot-social-row" style="margin-top:16px">
+    <div class="mnav-contact-row" style="margin-top:12px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5L12 13l8.5-6.5"/></svg><a href="mailto:info@mic-nsw.com.au" style="color:rgba(255,255,255,.85);overflow-wrap:anywhere">info@mic-nsw.com.au</a></div>
+    <div class="foot-social-row" style="margin-top:20px">
       <a href="https://wa.me/61470640083" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 004.1 17.4L3 21.5l4.2-1.1A11 11 0 0020.5 3.5zm-8.5 17a9 9 0 01-4.6-1.3l-.3-.2-2.7.7.7-2.6-.2-.3A9 9 0 1120 12a9 9 0 01-8 8.5zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1s-.7.9-.8 1-.3.2-.6.1a7.4 7.4 0 01-2.2-1.4 8.3 8.3 0 01-1.5-1.9c-.2-.3 0-.4.1-.6l.5-.6c.1-.2.1-.3 0-.5l-.9-2.1c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3s-1 1-1 2.4 1 2.8 1.2 3a12.5 12.5 0 004.7 3.7c.6.3 1.2.4 1.6.5a3.8 3.8 0 001.8.1 2.9 2.9 0 001.9-1.3c.2-.4.2-.7.1-.8l-.5-.2z"/></svg></a>
-      <a href="https://www.facebook.com/micnsw" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5H16l.4-3H13.5V8.4c0-.9.2-1.5 1.5-1.5h1.6V4.3C16.3 4.2 15.2 4 14 4c-2.5 0-4.2 1.5-4.2 4.3v2.2H7v3h2.8V21h3.7z"/></svg></a>
-      <a href="https://www.instagram.com/micnsw" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg></a>
+      <a href="https://www.facebook.com/micnsw" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 21v-7h2.4l.4-3h-2.8V8.7c0-.9.3-1.4 1.4-1.4h1.6V4.7c-.3 0-1.2-.1-2.3-.1-2.4 0-4 1.4-4 4.1V11H7.4v3h2.5v7h3.3z"/></svg></a>
+      <a href="https://www.instagram.com/micnsw" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg></a>
     </div>
   </div>
 </div>
@@ -605,7 +603,7 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
       <a href="#quote" style="display:inline-block;margin-top:14px;font-size:.88rem;font-weight:600;color:var(--brass2)">Book a Free Consultation →</a>
     </div>
     <div>
-      <img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Custom kitchen renovation by MIC NSW, a licensed Sydney renovation specialist" width="800" height="600" loading="eager" fetchpriority="high" decoding="async" style="border-radius:var(--radius);width:100%;aspect-ratio:4/3;object-fit:cover">
+      <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Contemporary kitchen renovation with warm joinery and stone finishes in Sydney" width="800" height="600" loading="eager" fetchpriority="high" decoding="async" style="border-radius:var(--radius);width:100%;aspect-ratio:4/3;object-fit:cover">
     </div>
   </div>
 </section>
@@ -658,7 +656,7 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
     <p style="margin-top:12px;max-width:640px;color:var(--ink2)">From a single-room refresh to a full home transformation, MIC NSW manages every stage under one team — clear scope, licensed trades and a transparent process from design to handover.</p>
     <div class="svc-grid" style="margin-top:24px">
       <article class="svc-card">
-        <img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Kitchen renovations Sydney by MIC NSW" width="640" height="400" loading="lazy" decoding="async">
+        <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Modern kitchen renovation with custom cabinetry and island seating in Sydney" width="640" height="400" loading="lazy" decoding="async">
         <div class="body">
           <h3>Kitchen Renovations</h3>
           <p style="font-size:.9rem;color:var(--ink2)">Custom cabinetry, stone or laminate benchtops, splashbacks and appliance installation. Suited to homeowners wanting a kitchen designed around how they actually cook and entertain.</p>
@@ -666,7 +664,7 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
         </div>
       </article>
       <article class="svc-card">
-        <img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Bathroom renovations Sydney by MIC NSW" width="640" height="400" loading="lazy" decoding="async">
+        <img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Contemporary bathroom renovation with frameless shower and brushed brass fixtures" width="640" height="400" loading="lazy" decoding="async">
         <div class="body">
           <h3>Bathroom Renovations</h3>
           <p style="font-size:.9rem;color:var(--ink2)">Waterproofing, tiling, vanities, tapware and fixtures for ensuites and family bathrooms. Ideal for a full bathroom transformation or a focused refresh.</p>
@@ -674,7 +672,7 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
         </div>
       </article>
       <article class="svc-card">
-        <img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Home renovations Sydney by MIC NSW" width="640" height="400" loading="lazy" decoding="async">
+        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Open-plan home renovation with contemporary living, dining and kitchen finishes" width="640" height="400" loading="lazy" decoding="async">
         <div class="body">
           <h3>Home Renovations</h3>
           <p style="font-size:.9rem;color:var(--ink2)">Full-home and multi-room renovations, including laundry renovations and custom joinery, coordinated under one point of contact. Suited to homeowners planning more than one space at once.</p>
@@ -682,7 +680,7 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
         </div>
       </article>
       <article class="svc-card">
-        <img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Commercial renovations Sydney by MIC NSW" width="640" height="400" loading="lazy" decoding="async">
+        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Contemporary commercial fit-out with refined lighting and workspace finishes" width="640" height="400" loading="lazy" decoding="async">
         <div class="body">
           <h3>Commercial Renovations</h3>
           <p style="font-size:.9rem;color:var(--ink2)">Office and retail fit-outs with compliance-ready finishes and professional project management. Suited to business owners needing minimal disruption and clear timelines.</p>
@@ -707,9 +705,49 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
         </div>
       </div>
       <div class="design-card" style="cursor:default">
-        <div class="img-wrap"><img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Interactive kitchen design planner preview" width="640" height="400" loading="lazy" decoding="async"><span class="tag">Live 3D preview</span></div>
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Kitchen design inspiration with layered lighting and contemporary joinery" width="640" height="400" loading="lazy" decoding="async"><span class="tag">Live 3D preview</span></div>
         <div class="body"><h3>Design Your Kitchen or Bathroom</h3><p style="margin-top:8px;font-size:.92rem;color:var(--ink2)">Layout, materials, hardware and appliances with a live estimate that responds to every selection.</p></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="bathroom-inspiration">
+  <div class="container">
+    <div class="bathroom-inspiration-intro">
+      <span class="eyebrow">Bathroom Design Inspiration</span>
+      <h2 style="margin-top:10px">Contemporary Sydney bathroom ideas for modern homes</h2>
+      <p>Explore three popular bathroom directions inspired by the layouts, finishes and wellness-focused details commonly seen across contemporary Sydney renovations — designed to feel elevated, practical and easy to personalise in the MIC NSW bathroom planner.</p>
+    </div>
+    <div class="design-cards">
+      <article class="design-card">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Spa-inspired ensuite with frameless shower, floating vanity and warm stone finishes" width="640" height="400" loading="lazy" decoding="async"><span class="tag bath">Spa-inspired ensuite</span></div>
+        <div class="body">
+          <h3>Warm, hotel-style ensuite retreat</h3>
+          <p>Create a calming daily ritual with a frameless walk-in shower, floating vanity, layered lighting and warm stone or porcelain surfaces paired with brushed bronze tapware.</p>
+          <span class="go">Ideal for couples wanting a relaxed, premium ensuite feel</span>
+        </div>
+      </article>
+      <article class="design-card">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Compact family bathroom with wall-hung vanity, mirrored storage and large format tiles" width="640" height="400" loading="lazy" decoding="async"><span class="tag bath">Compact family bathroom</span></div>
+        <div class="body">
+          <h3>Smart layout for busy family homes</h3>
+          <p>Maximise a smaller footprint with a wall-hung vanity, mirrored storage, oversized tiles and a durable shower-bath layout that feels brighter, cleaner and easier to maintain.</p>
+          <span class="go">Perfect for practical family upgrades in Sydney homes</span>
+        </div>
+      </article>
+      <article class="design-card">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1616594039964-3b1b0d8c8c6d?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Luxury bathroom concept with freestanding bath, statement stone and double vanity" width="640" height="400" loading="lazy" decoding="async"><span class="tag bath">Luxury bathroom concept</span></div>
+        <div class="body">
+          <h3>Statement finishes with a resort feel</h3>
+          <p>Think sculptural freestanding bath, custom double vanity, feature stone and mood lighting — a refined concept for homeowners wanting a bold, architectural bathroom finish.</p>
+          <span class="go">Designed for premium renovations with standout material selections</span>
+        </div>
+      </article>
+    </div>
+    <div class="bathroom-inspiration-actions">
+      <a href="#planner/bathroom" class="btn btn-brass" data-open-planner="bathroom">Start Bathroom Design</a>
+      <a href="#quote" class="btn btn-outline">Discuss Your Bathroom Project</a>
     </div>
   </div>
 </section>
@@ -752,14 +790,14 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
       <p>A guide to the type of renovation work undertaken across Greater Sydney. Images below are illustrative of the style of work, not confirmed MIC NSW project photography.</p>
     </div>
     <div class="cap-grid">
-      <div class="cap-tile cap-1"><img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Kitchen renovation style" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Kitchen Renovations</span></div></div>
-      <div class="cap-tile cap-2"><img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Bathroom renovation style" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Bathroom Renovations</span></div></div>
-      <div class="cap-tile cap-3"><img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Laundry renovation style" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Laundry Renovations</span></div></div>
-      <div class="cap-tile cap-4"><img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Full home renovation style" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Full Home Renovations</span></div></div>
-      <div class="cap-tile cap-5"><img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Commercial fit-out style" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Commercial Fit-outs</span></div></div>
-      <div class="cap-tile"><img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Custom joinery style" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Custom Joinery</span></div></div>
-      <div class="cap-tile"><img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Outdoor living renovation style" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Outdoor Living</span></div></div>
-      <div class="cap-tile"><img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Internal alterations style" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Internal Alterations</span></div></div>
+      <div class="cap-tile cap-1"><img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Modern kitchen renovation style with stone island and soft timber cabinetry" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Kitchen Renovations</span></div></div>
+      <div class="cap-tile cap-2"><img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Modern bathroom renovation style with frameless glass and floating vanity" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Bathroom Renovations</span></div></div>
+      <div class="cap-tile cap-3"><img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Laundry renovation style with full-height cabinetry and integrated storage" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Laundry Renovations</span></div></div>
+      <div class="cap-tile cap-4"><img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Full home renovation style with open living layout and refined finishes" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Full Home Renovations</span></div></div>
+      <div class="cap-tile cap-5"><img src="https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Commercial fit-out style with contemporary joinery and collaborative spaces" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Commercial Fit-outs</span></div></div>
+      <div class="cap-tile"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Custom joinery style with tailored shelving and premium interior detailing" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Custom Joinery</span></div></div>
+      <div class="cap-tile"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Outdoor living renovation style with contemporary entertaining zone and seamless flow" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Outdoor Living</span></div></div>
+      <div class="cap-tile"><img src="https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Internal alterations style with architectural detailing and updated circulation" width="640" height="400" loading="lazy" decoding="async"><div class="cap-label"><span>Internal Alterations</span></div></div>
     </div>
     <p style="margin-top:16px;font-size:.8rem;color:var(--ink2)">Individual project photography is added as it is verified — <a href="#quote" style="color:var(--brass2);font-weight:600">get in touch</a> to see recent work relevant to your renovation.</p>
   </div>
@@ -885,23 +923,10 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
 </section>
 </main>
 
-<section class="section site-map-section" id="site-map" aria-labelledby="siteMapTitle">
-  <div class="container">
-    <span class="eyebrow">Site map</span>
-    <h2 id="siteMapTitle" style="margin-top:10px">Explore MIC NSW</h2>
-    <p class="site-map-intro">Quick access to renovation services, planning tools, packages and contact information.</p>
-    <nav class="site-map-grid" aria-label="Website sitemap">
-      <div class="site-map-group"><h3>Company</h3><a href="#home">Home</a><a href="#about">About MIC NSW</a><a href="#process">Our Process</a><a href="#faq">Frequently Asked Questions</a></div>
-      <div class="site-map-group"><h3>Renovations</h3><a href="#services">Services</a><a href="#projects">What We Renovate</a><a href="#packages">Renovation Packages</a><a href="#quote">Request a Quote</a></div>
-      <div class="site-map-group"><h3>Design Studio</h3><a href="#design">Design Studio Overview</a><a href="#planner/kitchen" data-open-planner="kitchen">Kitchen Planner</a><a href="#planner/bathroom" data-open-planner="bathroom">Bathroom Planner</a></div>
-      <div class="site-map-group"><h3>Contact</h3><a href="tel:+61470640083">+61 470 640 083</a><a href="mailto:info@mic-nsw.com.au">info@mic-nsw.com.au</a><a href="https://wa.me/61470640083" target="_blank" rel="noopener">WhatsApp</a></div>
-    </nav>
-  </div>
-</section>
 
 <footer>
   <div class="container foot-grid">
-    <div><a href="#home" class="site-brand" aria-label="MIC NSW home"><img class="site-logo" src="https://mic-nsw.com.au/front/images/logo2.png" alt="MIC NSW logo" width="120" height="36" decoding="async" style="filter:brightness(0) invert(1)"></a>
+    <div><a href="#home" class="site-brand" aria-label="MIC NSW home"><img class="site-logo" src="https://mic-nsw.com.au/front/images/logo2.png" alt="MIC NSW logo" width="120" height="36" decoding="async" ></a>
       <p style="color:rgba(255,255,255,.55);margin-top:12px;font-size:.86rem">Sydney's licensed kitchen, bathroom and home renovation specialists.</p>
       <ul class="foot-contact-list">
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5c0 8.3 6.7 15 15 15l3-4-6-3-2 2c-2.5-1.2-4.8-3.5-6-6l2-2-3-6-4 3z"/></svg><a href="tel:+61470640083" style="color:rgba(255,255,255,.85)">+61 470 640 083</a></li>
@@ -911,8 +936,8 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
       </ul>
       <div class="foot-social-row">
         <a href="https://wa.me/61470640083" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 004.1 17.4L3 21.5l4.2-1.1A11 11 0 0020.5 3.5zm-8.5 17a9 9 0 01-4.6-1.3l-.3-.2-2.7.7.7-2.6-.2-.3A9 9 0 1120 12a9 9 0 01-8 8.5zm5-6.7c-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1s-.7.9-.8 1-.3.2-.6.1a7.4 7.4 0 01-2.2-1.4 8.3 8.3 0 01-1.5-1.9c-.2-.3 0-.4.1-.6l.5-.6c.1-.2.1-.3 0-.5l-.9-2.1c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3s-1 1-1 2.4 1 2.8 1.2 3a12.5 12.5 0 004.7 3.7c.6.3 1.2.4 1.6.5a3.8 3.8 0 001.8.1 2.9 2.9 0 001.9-1.3c.2-.4.2-.7.1-.8l-.5-.2z"/></svg></a>
-        <a href="https://www.facebook.com/micnsw" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5H16l.4-3H13.5V8.4c0-.9.2-1.5 1.5-1.5h1.6V4.3C16.3 4.2 15.2 4 14 4c-2.5 0-4.2 1.5-4.2 4.3v2.2H7v3h2.8V21h3.7z"/></svg></a>
-        <a href="https://www.instagram.com/micnsw" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.facebook.com/micnsw" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 21v-7h2.4l.4-3h-2.8V8.7c0-.9.3-1.4 1.4-1.4h1.6V4.7c-.3 0-1.2-.1-2.3-.1-2.4 0-4 1.4-4 4.1V11H7.4v3h2.5v7h3.3z"/></svg></a>
+        <a href="https://www.instagram.com/micnsw" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg></a>
       </div></div>
     <div><h3>Services</h3><ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
       <li><a href="#planner/kitchen" data-open-planner="kitchen">Kitchen Renovations</a></li>
