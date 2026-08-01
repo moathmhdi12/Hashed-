@@ -728,7 +728,7 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
         </div>
         <h3>Smart Quote Summary</h3>
         <div class="big" id="sumPrice">$0</div>
-        <div class="sub">Design is free · No pricing applied</div>
+        <div class="sub">Indicative Sydney pricing · Live updates</div>
       </div>
       <div class="sum-b" id="sumBody"></div>
       <div class="sum-f">
@@ -1073,9 +1073,9 @@ const KITCHEN_ALLOWANCE = {
   luxury:{base:6,wall:5,tall:1,pantry:1,corner:1,drawerBanks:3,drawersPer:4,door:'poly',handle:'bar-brass',hinge:'soft',bench:'taj',splash:'stone',sink:'blanco',mixer:'sussex',light:'full',oven:'none',cook:'none',hood:'none',mw:'none',fridge:'f900'}
 };
 const BATHROOM_ALLOWANCE = {
-  essential:{vanity:'wall',tap:'caroma',screen:'semi',bath:'none',vColor:'white'},
-  signature:{vanity:'wall',tap:'phoenix',screen:'frame',bath:'none',vColor:'white'},
-  luxury:{vanity:'free',tap:'sussex',screen:'frame',bath:'free',vColor:'oak'}
+  essential:{vanity:'wall',tap:'caroma',screen:'semi',bath:'none',basin:'integrated',cabinet:'single',mirror:'std',showerHead:'basic',storage:'none',vColor:'white'},
+  signature:{vanity:'wall',tap:'phoenix',screen:'frame',bath:'none',basin:'under',cabinet:'double',mirror:'led',showerHead:'rain',storage:'cab',vColor:'white'},
+  luxury:{vanity:'free',tap:'sussex',screen:'frame',bath:'free',basin:'vessel',cabinet:'linen',mirror:'full',showerHead:'dual',storage:'bench',vColor:'oak'}
 };
 
 const AppConfig = {
@@ -1089,15 +1089,15 @@ const AppConfig = {
     {id:7,t:'Review',s:'Quote',d:'Itemised estimate indicative — request your MIC NSW quote.'}
   ],
   bathroomSteps:[
-    {id:1,t:'Layout',s:'Plan',d:'Bathroom layout style.'},
-    {id:2,t:'Room Size',s:'Dimensions',d:'Set room size.'},
-    {id:3,t:'Vanity',s:'Style',d:'Vanity configuration.'},
-    {id:4,t:'Colour',s:'Finish',d:'Vanity colour.'},
-    {id:5,t:'Tapware',s:'Mixers',d:'Tapware finish.'},
-    {id:6,t:'Shower',s:'Screen',d:'Shower enclosure.'},
-    {id:7,t:'Bath',s:'Optional',d:'Add a bath or skip.'},
-    {id:8,t:'Tiles',s:'Surfaces',d:'Wall and floor tiles.'},
-    {id:9,t:'Review',s:'Quote',d:'Review and quote.'}
+    {id:1,t:'Layout',s:'Plan',d:'Pick a floor plan that suits your bathroom flow and plumbing.'},
+    {id:2,t:'Room Size',s:'Dimensions',d:'Set the overall footprint before choosing products.'},
+    {id:3,t:'Vanity & Basin',s:'Storage',d:'Choose the vanity profile, basin shape and cabinet storage.'},
+    {id:4,t:'Colour & Mirror',s:'Finish',d:'Select vanity colour, mirror style and a cohesive finish.'},
+    {id:5,t:'Tapware',s:'Fixtures',d:'Choose tapware and shower head options.'},
+    {id:6,t:'Shower & Storage',s:'Enclosure',d:'Pick the shower screen and extra storage add-ons.'},
+    {id:7,t:'Bath & Extras',s:'Optional',d:'Add a bath or keep the room streamlined.'},
+    {id:8,t:'Tiles',s:'Surfaces',d:'Choose wall and floor tiles for the full look.'},
+    {id:9,t:'Review',s:'Quote',d:'Review your full bathroom design and request a quote.'}
   ],
   layoutsK:[{id:'straight',name:'Straight Line',desc:'Single run'},{id:'galley',name:'Galley',desc:'Two parallel runs'},{id:'lshape',name:'L-Shape',desc:'Two walls'},{id:'corner',name:'L + Corner Tall',desc:'L with tall corner'},{id:'ushape',name:'U-Shape',desc:'Three walls'},{id:'island',name:'Island',desc:'Run + island'}],
   layoutsB:[{id:'standard',name:'Standard'},{id:'wetroom',name:'Wet Room'},{id:'ensuite',name:'Ensuite'}],
@@ -1121,6 +1121,11 @@ const AppConfig = {
   vanC:[{id:'white',name:'White',hex:'#F4F2ED'},{id:'oak',name:'Oak',hex:'#C9A876'},{id:'black',name:'Black',hex:'#26282A'}],
   screens:[{id:'semi',name:'Semi-frameless',mod:0},{id:'frame',name:'Frameless',mod:620}],
   baths:[{id:'none',name:'No Bath',mod:0},{id:'free',name:'Freestanding',mod:1800}],
+  basins:[{id:'integrated',brand:'Caroma',name:'Integrated Basin',mod:420},{id:'under',brand:'Roca',name:'Undermount Basin',mod:560},{id:'counter',brand:'Roca',name:'Countertop Basin',mod:690},{id:'vessel',brand:'Duravit',name:'Vessel Basin',mod:780}],
+  cabinets:[{id:'none',name:'No extra cabinet',mod:0},{id:'single',name:'Single vanity cabinet',mod:620},{id:'double',name:'Double vanity cabinet',mod:900},{id:'linen',name:'Linen storage cabinet',mod:980}],
+  mirrors:[{id:'none',name:'No mirror',mod:0},{id:'std',name:'Framed mirror',mod:240},{id:'led',name:'LED mirror',mod:560},{id:'full',name:'Full-height mirror',mod:780}],
+  showerHeads:[{id:'basic',name:'Standard shower mixer',mod:0},{id:'rain',name:'Rain shower head',mod:420},{id:'dual',name:'Dual outlet shower',mod:780}],
+  storage:[{id:'none',name:'No extra storage',mod:0},{id:'cab',name:'Wall cabinet',mod:640},{id:'niche',name:'Recessed niche',mod:340},{id:'bench',name:'Storage bench',mod:920}],
   wTiles:[{id:'sub',name:'Subway',hex:'#F7F6F2'},{id:'mar',name:'Marble-look',hex:'#EAE6DC'}],
   fTiles:[{id:'gry',name:'Grey',hex:'#D8D2C4'},{id:'stn',name:'Stone',hex:'#C8C2B4'}]
 };
@@ -1163,8 +1168,8 @@ const kitchen = reactive({
 const bathroom = reactive({
   step:1, done:{}, pkg:'essential',
   layout:'standard', w:2.4, d:2.0, h:2.4,
-  vanity:'wall', vColor:'white',
-  tap:'caroma', screen:'semi', bath:'none',
+  vanity:'wall', vColor:'white', basin:'integrated', cabinet:'single', mirror:'std',
+  tap:'caroma', screen:'semi', bath:'none', showerHead:'basic', storage:'none',
   wTile:'sub', fTile:'gry'
 });
 const app = reactive({ mode:'kitchen', ready:false });
@@ -1176,7 +1181,7 @@ window.MICPlanner.setPackage = function(mode, pkgId){
   if(mode==='bathroom'){
     bathroom.pkg = pkgId;
     const a = BATHROOM_ALLOWANCE[pkgId];
-    if(a){ bathroom.vanity=a.vanity; bathroom.tap=a.tap; bathroom.screen=a.screen; bathroom.bath=a.bath; bathroom.vColor=a.vColor; }
+    if(a){ bathroom.vanity=a.vanity; bathroom.tap=a.tap; bathroom.screen=a.screen; bathroom.bath=a.bath; bathroom.basin=a.basin; bathroom.cabinet=a.cabinet; bathroom.mirror=a.mirror; bathroom.showerHead=a.showerHead; bathroom.storage=a.storage; bathroom.vColor=a.vColor; }
   } else {
     kitchen.pkg = pkgId;
     const a = KITCHEN_ALLOWANCE[pkgId];
@@ -1224,7 +1229,7 @@ function calcKitchen() {
   const allowSp = find(AppConfig.splash, allow.splash).mod;
   const sp = Math.max(0, spMod - allowSp) * k.benchLm;
   const bulk = k.bulkhead ? P.bulkhead * k.benchLm : 0;
-  const kick = 0;
+  const kick = k.kickboard ? 0 : 0;
   const sinkMod = find(AppConfig.sinks, k.sink).mod;
   const allowSink = find(AppConfig.sinks, allow.sink).mod;
   const sink = Math.max(0, sinkMod - allowSink);
@@ -1237,28 +1242,44 @@ function calcKitchen() {
   else light = find(AppConfig.lights, k.light).mod;
   const allowLight = allow.light === 'led' ? P.lightLed * k.benchLm : find(AppConfig.lights, allow.light).mod;
   light = Math.max(0, light - allowLight);
-  const base = 0;
-  const upgrades = 0;
-  const total = 0;
+  const base = BASE_KITCHEN[k.pkg] || BASE_KITCHEN.essential;
+  const upgrades = cab + drawers + doorUp + handleUp + hingeUp + bench + sp + bulk + sink + mixer + apps + light;
+  const total = base + upgrades;
   return { total, base, upgrades, cab, drawers, doorUp, handleUp, hingeUp, bench, sp, bulk, kick, sink, mixer, apps, light, nDoors };
 }
 function calcBathroom() {
-  const base = 0;
+  const base = BASE_BATHROOM[bathroom.pkg] || BASE_BATHROOM.essential;
   const allow = BATHROOM_ALLOWANCE[bathroom.pkg] || BATHROOM_ALLOWANCE.essential;
   let t = 0;
   const vanMod = find(AppConfig.vanS, bathroom.vanity).mod;
   const allowVan = find(AppConfig.vanS, allow.vanity).mod;
   t += Math.max(0, vanMod - allowVan);
+  const basinMod = find(AppConfig.basins, bathroom.basin).mod;
+  const allowBasin = find(AppConfig.basins, allow.basin).mod;
+  t += Math.max(0, basinMod - allowBasin);
+  const cabinetMod = find(AppConfig.cabinets, bathroom.cabinet).mod;
+  const allowCabinet = find(AppConfig.cabinets, allow.cabinet).mod;
+  t += Math.max(0, cabinetMod - allowCabinet);
+  const mirrorMod = find(AppConfig.mirrors, bathroom.mirror).mod;
+  const allowMirror = find(AppConfig.mirrors, allow.mirror).mod;
+  t += Math.max(0, mirrorMod - allowMirror);
   const tapMod = find(AppConfig.mixers, bathroom.tap).mod;
   const allowTap = find(AppConfig.mixers, allow.tap).mod;
   t += Math.max(0, tapMod - allowTap);
+  const showerHeadMod = find(AppConfig.showerHeads, bathroom.showerHead).mod;
+  const allowShowerHead = find(AppConfig.showerHeads, allow.showerHead).mod;
+  t += Math.max(0, showerHeadMod - allowShowerHead);
   const scrMod = find(AppConfig.screens, bathroom.screen).mod;
   const allowScr = find(AppConfig.screens, allow.screen).mod;
   t += Math.max(0, scrMod - allowScr);
+  const storageMod = find(AppConfig.storage, bathroom.storage).mod;
+  const allowStorage = find(AppConfig.storage, allow.storage).mod;
+  t += Math.max(0, storageMod - allowStorage);
   const bathMod = find(AppConfig.baths, bathroom.bath).mod;
   const allowBath = find(AppConfig.baths, allow.bath).mod;
   t += Math.max(0, bathMod - allowBath);
-  return { total: t, base: base, upgrades: t };
+  const total = base + t;
+  return { total, base, upgrades: t };
 }
 
 let scene, camera, renderer, controls, root, threeReady = false;
@@ -1532,7 +1553,11 @@ function buildBath3D() {
   const vc=find(AppConfig.vanC,b.vColor).hex;
   MeshPool.box('vanity',1.0,0.55,0.45,vc,0.7,0.35,0.35);
   MeshPool.box('vtop',1.05,0.03,0.48,'#fff',0.7,0.64,0.35);
-  MeshPool.box('basin',0.32,0.05,0.32,'#fff',0.7,0.68,0.35);
+  const basinW=b.basin==='counter'?0.36:b.basin==='vessel'?0.28:0.32;
+  const basinD=b.basin==='counter'?0.36:0.32;
+  MeshPool.box('basin',basinW,0.05,basinD,'#fff',0.7,0.68,0.35);
+  if(b.cabinet!=='none'){MeshPool.box('cabinet',0.72,0.7,0.45,vc,1.28,0.36,0.35);} 
+  if(b.mirror!=='none'){MeshPool.box('mirror',0.72,0.9,0.02,'#f7f4ea',0.7,1.1,0.14,'stone');}
   const th=find(AppConfig.mixers,b.tap).hex||'#ccc';
   MeshPool.box('tap',0.03,0.18,0.03,th,0.7,0.78,0.22);
   MeshPool.box('screen',0.02,1.8,0.9,th,fw-0.5,0.95,0.5);
@@ -1629,8 +1654,13 @@ function getDesignSummaryData(){
   const b=bathroom;
   const selectedProducts=[];
   if(b.vanity!=='wall') selectedProducts.push(find(AppConfig.vanS,b.vanity).name);
+  if(b.basin!=='integrated') selectedProducts.push(find(AppConfig.basins,b.basin).name);
+  if(b.cabinet!=='single') selectedProducts.push(find(AppConfig.cabinets,b.cabinet).name);
+  if(b.mirror!=='std') selectedProducts.push(find(AppConfig.mirrors,b.mirror).name);
   if(b.tap!=='caroma') selectedProducts.push(find(AppConfig.mixers,b.tap).name);
+  if(b.showerHead!=='basic') selectedProducts.push(find(AppConfig.showerHeads,b.showerHead).name);
   if(b.screen!=='semi') selectedProducts.push(find(AppConfig.screens,b.screen).name);
+  if(b.storage!=='none') selectedProducts.push(find(AppConfig.storage,b.storage).name);
   if(b.bath!=='none') selectedProducts.push(find(AppConfig.baths,b.bath).name);
   const colourLabel=find(AppConfig.vanC,b.vColor).name;
   return {
@@ -1642,8 +1672,13 @@ function getDesignSummaryData(){
     quickSummary:[
       {label:'Layout', value:find(AppConfig.layoutsB,b.layout).name},
       {label:'Vanity', value:find(AppConfig.vanS,b.vanity).name},
+      {label:'Basin', value:find(AppConfig.basins,b.basin).name},
+      {label:'Cabinet', value:find(AppConfig.cabinets,b.cabinet).name},
+      {label:'Mirror', value:find(AppConfig.mirrors,b.mirror).name},
       {label:'Tapware', value:find(AppConfig.mixers,b.tap).name},
+      {label:'Shower Head', value:find(AppConfig.showerHeads,b.showerHead).name},
       {label:'Shower Screen', value:find(AppConfig.screens,b.screen).name},
+      {label:'Storage', value:find(AppConfig.storage,b.storage).name},
       {label:'Bath', value:find(AppConfig.baths,b.bath).name},
       {label:'Tiles', value:`${find(AppConfig.wTiles,b.wTile).name}/${find(AppConfig.fTiles,b.fTile).name}`},
       {label:'Selected Products', value:`${selectedProducts.length} saved`},
@@ -1655,19 +1690,20 @@ function getDesignSummaryData(){
 
 function renderSummary(){
   const data=getDesignSummaryData();
-  $('sumPrice').textContent=money(0);
+  const estimate = app.mode==='kitchen' ? calcKitchen().total : calcBathroom().total;
+  $('sumPrice').textContent=money(estimate);
   $('sumBody').innerHTML=`<div class="quote-card">
-    <div class="quote-chip">What happens next?</div>
-    <h4>Your design is ready</h4>
-    <p>We review your selections, assess plumbing and electrical requirements, then prepare your fixed quotation.</p>
+    <div class="quote-chip">Indicative Sydney pricing</div>
+    <h4>Design estimate ready</h4>
+    <p>Based on your selected products, finishes and scope, this estimate updates live as you refine the design.</p>
     <ul class="quote-list">
-      <li>We review your selections</li>
-      <li>Assess plumbing</li>
-      <li>Assess electrical</li>
-      <li>Assess site conditions</li>
-      <li>Prepare a fixed quotation</li>
+      <li>Selected products and finishes</li>
+      <li>Plumbing and electrical scope</li>
+      <li>Room size and cabinetry scope</li>
+      <li>Site conditions and installation needs</li>
+      <li>Final fixed quotation after review</li>
     </ul>
-    <div class="quote-info">Prices are not shown during the design process. Your final quotation is prepared after reviewing your design, measurements, plumbing, electrical requirements and site conditions.</div>
+    <div class="quote-info">Indicative pricing for Sydney supply and installation planning. Final pricing is confirmed after site review, measurements, product availability and trade scope.</div>
   </div>
   <div class="quick-summary">
     <div class="quick-summary__head">
@@ -1759,20 +1795,20 @@ function renderContent(){
           ${find(C.layoutsK,k.layout).name} · ${k.w}×${k.d}m<br>
           ${k.base} base · ${k.wall} wall · ${k.tall} tall · ${k.pantry} pantry<br>
           ${k.color==='custom'?'Custom '+k.customHex:find(C.colors,k.color).name} · ${find(C.benches,k.bench).brand}<br>
-          <strong style="font-size:1.05rem">Design is free · No pricing applied</strong>
+          <strong style="font-size:1.05rem">Indicative estimate · ${money(calcKitchen().total)}</strong>
         </div>
         <div class="tip" style="margin-top:10px">Submit your design for a fixed quotation after our review.</div>`;
     }
   } else {
     if(s.step===1) h=`<div class="grid">${C.layoutsB.map(l=>card(l,b.layout===l.id,`data-b="layout" data-v="${l.id}"`)).join('')}</div>`;
     if(s.step===2) h=`<div class="dims">${dimHTML('Width','w',b.w,1.8,4,.1)}${dimHTML('Depth','d',b.d,1.5,3.5,.1)}</div>`;
-    if(s.step===3) h=`<div class="grid">${C.vanS.map(x=>card(x,b.vanity===x.id,`data-b="vanity" data-v="${x.id}"`)).join('')}</div>`;
-    if(s.step===4) h=`<div class="grid">${C.vanC.map(x=>card(x,b.vColor===x.id,`data-b="vColor" data-v="${x.id}"`)).join('')}</div>`;
-    if(s.step===5) h=`<div class="grid">${C.mixers.map(x=>card(x,b.tap===x.id,`data-b="tap" data-v="${x.id}"`)).join('')}</div>`;
-    if(s.step===6) h=`<div class="grid">${C.screens.map(x=>card(x,b.screen===x.id,`data-b="screen" data-v="${x.id}"`)).join('')}</div>`;
-    if(s.step===7) h=`<div class="grid">${C.baths.map(x=>card(x,b.bath===x.id,`data-b="bath" data-v="${x.id}"`)).join('')}</div>`;
-    if(s.step===8) h=`<div class="grid">${C.wTiles.map(x=>card(x,b.wTile===x.id,`data-b="wTile" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:8px">${C.fTiles.map(x=>card(x,b.fTile===x.id,`data-b="fTile" data-v="${x.id}"`)).join('')}</div>`;
-    if(s.step===9){h=`<div class="tip"><strong>Your bathroom design is ready.</strong> Submit it for a fixed quotation after our review.</div>`;}
+    if(s.step===3) h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Vanity & basin</p><div class="grid">${C.vanS.map(x=>card(x,b.vanity===x.id,`data-b="vanity" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:6px">${C.basins.map(x=>card(x,b.basin===x.id,`data-b="basin" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:6px">${C.cabinets.map(x=>card(x,b.cabinet===x.id,`data-b="cabinet" data-v="${x.id}"`)).join('')}</div>`;
+    if(s.step===4) h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Colour & mirror</p><div class="grid">${C.vanC.map(x=>card(x,b.vColor===x.id,`data-b="vColor" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:6px">${C.mirrors.map(x=>card(x,b.mirror===x.id,`data-b="mirror" data-v="${x.id}"`)).join('')}</div>`;
+    if(s.step===5) h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Tapware & shower</p><div class="grid">${C.mixers.map(x=>card(x,b.tap===x.id,`data-b="tap" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:6px">${C.showerHeads.map(x=>card(x,b.showerHead===x.id,`data-b="showerHead" data-v="${x.id}"`)).join('')}</div>`;
+    if(s.step===6) h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Shower & storage</p><div class="grid">${C.screens.map(x=>card(x,b.screen===x.id,`data-b="screen" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:6px">${C.storage.map(x=>card(x,b.storage===x.id,`data-b="storage" data-v="${x.id}"`)).join('')}</div>`;
+    if(s.step===7) h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Bath & extras</p><div class="grid">${C.baths.map(x=>card(x,b.bath===x.id,`data-b="bath" data-v="${x.id}"`)).join('')}</div>`;
+    if(s.step===8) h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Wall & floor tiles</p><div class="grid">${C.wTiles.map(x=>card(x,b.wTile===x.id,`data-b="wTile" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:8px">${C.fTiles.map(x=>card(x,b.fTile===x.id,`data-b="fTile" data-v="${x.id}"`)).join('')}</div>`;
+    if(s.step===9){h=`<div class="tip"><strong>Your bathroom design is ready.</strong> Indicative Sydney estimate <strong>${money(calcBathroom().total)}</strong> based on the selections below.</div>`;}
   }
   $('content').innerHTML=h;
   $('btnBack').disabled=s.step===1;
@@ -1875,12 +1911,12 @@ function quoteMsg(){
     const packageLabel=PKG_LABEL[k.pkg]||'Essential';
     const colourLabel=k.color==='custom'?`Custom ${k.customHex}`:find(AppConfig.colors,k.color).name;
     const selections=[find(AppConfig.layoutsK,k.layout).name,`${k.base} base / ${k.wall} wall / ${k.tall} tall / ${k.pantry} pantry / ${k.corner} corner`,`${k.benchLm.toFixed(1)} lm benchtop`,colourLabel,packageLabel].join(' · ');
-    return ['Kitchen design request — MIC NSW','Design total: $0','Package: '+packageLabel,'Selections: '+selections].join('\n');
+    return ['Kitchen design request — MIC NSW','Design total: '+money(calcKitchen().total),'Package: '+packageLabel,'Selections: '+selections].join('\n');
   }
   const b=bathroom;
   const packageLabel=PKG_LABEL[b.pkg]||'Essential';
-  const selections=[find(AppConfig.layoutsB,b.layout).name,find(AppConfig.vanS,b.vanity).name,find(AppConfig.mixers,b.tap).name,find(AppConfig.screens,b.screen).name,find(AppConfig.baths,b.bath).name,find(AppConfig.vanC,b.vColor).name].join(' · ');
-  return ['Bathroom design request — MIC NSW','Design total: $0','Package: '+packageLabel,'Selections: '+selections].join('\n');
+  const selections=[find(AppConfig.layoutsB,b.layout).name,find(AppConfig.vanS,b.vanity).name,find(AppConfig.basins,b.basin).name,find(AppConfig.cabinets,b.cabinet).name,find(AppConfig.mixers,b.tap).name,find(AppConfig.showerHeads,b.showerHead).name,find(AppConfig.screens,b.screen).name,find(AppConfig.storage,b.storage).name,find(AppConfig.baths,b.bath).name,find(AppConfig.vanC,b.vColor).name].join(' · ');
+  return ['Bathroom design request — MIC NSW','Design total: '+money(calcBathroom().total),'Package: '+packageLabel,'Selections: '+selections].join('\n');
 }
 
 function init(){
