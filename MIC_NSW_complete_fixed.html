@@ -9,6 +9,7 @@
 <meta name="geo.region" content="AU-NSW">
 <meta name="geo.placename" content="Sydney">
 <meta name="theme-color" content="#1C1F1A">
+<script>if('scrollRestoration' in history){history.scrollRestoration='manual';}try{window.scrollTo({top:0,left:0,behavior:'instant'});}catch(e){window.scrollTo(0,0);}</script>
 <link rel="canonical" href="https://mic-nsw.com.au/">
 <link rel="icon" href="https://mic-nsw.com.au/front/images/logo2.png">
 <link rel="preconnect" href="https://mic-nsw.com.au" crossorigin>
@@ -1243,7 +1244,9 @@ function handleRoute(){
   closePlannerViewOnly();
   var sectionId = hash.replace('#','') || 'home';
   var section = document.getElementById(sectionId);
-  if(section){
+  if(sectionId === 'home'){
+    try{ window.scrollTo({top:0, left:0, behavior:'instant'}); }catch(e){ window.scrollTo(0,0); }
+  } else if(section){
     section.scrollIntoView({behavior:'smooth',block:'start'});
   } else {
     window.scrollTo(0, savedScroll||0);
