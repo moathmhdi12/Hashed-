@@ -45,15 +45,22 @@ img{max-width:100%;height:auto;display:block}a{color:inherit;text-decoration:non
 .primary-nav{display:none}.primary-nav ul{display:flex;gap:16px;flex-wrap:nowrap}
 .primary-nav a{font-size:.84rem;font-weight:500;color:var(--ink2);white-space:nowrap;transition:color .15s}.primary-nav a:hover,.primary-nav a.active{color:var(--brass2)}
 .header-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
-.hamburger{width:44px;height:44px;min-width:44px;border:1px solid var(--line2);border-radius:50%;background:transparent;cursor:pointer;display:grid;place-items:center;font-size:1.1rem;color:var(--ink)}
+.hamburger{width:44px;height:44px;min-width:44px;border:1px solid rgba(185,131,59,.24);border-radius:50%;background:linear-gradient(135deg,var(--stone-light),var(--stone));box-shadow:0 10px 26px -16px rgba(25,28,23,.28);cursor:pointer;display:grid;place-items:center;padding:0;color:var(--brass2);transition:transform .2s,box-shadow .2s,border-color .2s,background .2s}
+.hamburger:hover,.hamburger:focus-visible{transform:translateY(-1px);box-shadow:0 16px 30px -16px rgba(25,28,23,.32);border-color:rgba(185,131,59,.4);background:linear-gradient(135deg,#fffdf7,var(--stone))}
+.hamburger svg{width:18px;height:18px;display:block}
+.hamburger svg path{stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;fill:none}
 @media(min-width:1024px){.primary-nav{display:block}.hamburger{display:none}.site-brand img.site-logo{height:36px;max-width:130px}}
 @media(max-width:1023px){.header-actions .btn-outline{display:none}}
 @media(max-width:420px){.header-actions .btn-brass{display:none}}
-.mobile-nav{position:fixed;inset:0;z-index:1100;background:linear-gradient(165deg,#1a1d18 0%,#2a2e28 100%);color:#fff;display:flex;flex-direction:column;padding:20px;padding-top:max(20px,var(--safe-t));padding-bottom:max(20px,var(--safe-b));padding-left:max(20px,var(--safe-l));padding-right:max(20px,var(--safe-r));transform:translateY(-105%);visibility:hidden;transition:.35s;overflow-y:auto;-webkit-overflow-scrolling:touch;height:100dvh;height:100vh}
+.mobile-nav{position:fixed;inset:0;z-index:1100;background:linear-gradient(145deg,#f8f1e4 0%,#fffdf8 100%);color:var(--ink);display:flex;flex-direction:column;padding:20px;padding-top:max(20px,var(--safe-t));padding-bottom:max(20px,var(--safe-b));padding-left:max(20px,var(--safe-l));padding-right:max(20px,var(--safe-r));transform:translateY(-105%);visibility:hidden;transition:.35s;overflow-y:auto;-webkit-overflow-scrolling:touch;height:100dvh;height:100vh}
 .mobile-nav.open{transform:none;visibility:visible}
-.mobile-nav .site-brand img.site-logo{height:30px;filter:brightness(0) invert(1)}
-.mobile-nav a.mnav{display:flex;align-items:center;min-height:48px;color:rgba(255,255,255,.92);font-size:1.1rem;font-weight:500;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);transition:color .15s}
-.mobile-nav a.mnav:hover,.mobile-nav a.mnav:focus{color:var(--brass3)}
+.mobile-nav .site-brand img.site-logo{height:30px;filter:none}
+.mobile-nav a.mnav{display:flex;align-items:center;min-height:48px;color:var(--ink2);font-size:1.1rem;font-weight:600;padding:4px 0;border-bottom:1px solid rgba(25,28,23,.08);transition:color .15s}
+.mobile-nav a.mnav:hover,.mobile-nav a.mnav:focus{color:var(--brass2)}
+.mobile-nav .menu-close{width:44px;height:44px;min-width:44px;border:1px solid rgba(25,28,23,.12);border-radius:50%;background:rgba(255,255,255,.9);color:var(--ink);display:grid;place-items:center;box-shadow:0 8px 22px -16px rgba(25,28,23,.3);transition:transform .2s,border-color .2s,color .2s}
+.mobile-nav .menu-close:hover,.mobile-nav .menu-close:focus-visible{transform:translateY(-1px);border-color:rgba(185,131,59,.35);color:var(--brass2)}
+.mobile-nav .menu-close svg{width:16px;height:16px;display:block}
+.mobile-nav .menu-close svg path{stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;fill:none}
 .hero{padding:110px 0 48px;padding-top:calc(90px + var(--safe-t));background:linear-gradient(165deg,var(--stone),var(--white))}
 .hero-grid{display:grid;gap:28px;min-width:0}
 @media(min-width:900px){.hero-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:36px}}
@@ -308,14 +315,22 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
     <div class="header-actions">
       <a href="#design" class="btn btn-brass">Start Designing</a>
       <a href="#quote" class="btn btn-outline">Get a Quote</a>
-      <button type="button" class="hamburger" id="menuOpen" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">☰</button>
+      <button type="button" class="hamburger" id="menuOpen" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </button>
     </div>
   </div>
 </header>
 <div class="mobile-nav" id="mobileNav" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Site menu">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
     <a href="#home" class="site-brand" aria-label="MIC NSW"><img class="site-logo" src="https://mic-nsw.com.au/front/images/logo2.png" alt="MIC NSW logo" width="100" height="30" decoding="async"></a>
-    <button type="button" id="menuClose" aria-label="Close menu" style="color:#fff;background:transparent;border:1px solid rgba(255,255,255,.3);width:44px;height:44px;border-radius:50%;font-size:1.1rem">✕</button>
+    <button type="button" id="menuClose" class="menu-close" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
   </div>
   <ul style="list-style:none;display:flex;flex-direction:column;gap:2px;overflow-y:auto;flex:1">
     <li><a href="#home" class="mnav">Home</a></li>
@@ -328,13 +343,13 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
     <li><a href="#faq" class="mnav">FAQ</a></li>
     <li><a href="#quote" class="mnav">Contact</a></li>
   </ul>
-  <div style="border-top:1px solid rgba(255,255,255,.15);margin-top:12px;padding-top:14px;display:flex;flex-direction:column;gap:10px;font-size:.9rem">
-    <a href="tel:+61470640083" style="color:rgba(255,255,255,.85)">Phone: +61 470 640 083</a>
-    <a href="mailto:info@mic-nsw.com.au" style="color:rgba(255,255,255,.85);overflow-wrap:anywhere">Email: info@mic-nsw.com.au</a>
+  <div style="border-top:1px solid rgba(25,28,23,.12);margin-top:12px;padding-top:14px;display:flex;flex-direction:column;gap:10px;font-size:.9rem">
+    <a href="tel:+61470640083" style="color:var(--ink2)">Phone: +61 470 640 083</a>
+    <a href="mailto:info@mic-nsw.com.au" style="color:var(--ink2);overflow-wrap:anywhere">Email: info@mic-nsw.com.au</a>
     <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:4px">
-      <a href="https://wa.me/61470640083" target="_blank" rel="noopener" style="color:#fff;font-weight:600">WhatsApp</a>
-      <a href="https://www.facebook.com/micnsw" target="_blank" rel="noopener noreferrer" style="color:#fff;font-weight:600">Facebook</a>
-      <a href="https://www.instagram.com/micnsw" target="_blank" rel="noopener noreferrer" style="color:#fff;font-weight:600">Instagram</a>
+      <a href="https://wa.me/61470640083" target="_blank" rel="noopener" style="color:var(--ink);font-weight:600">WhatsApp</a>
+      <a href="https://www.facebook.com/micnsw" target="_blank" rel="noopener noreferrer" style="color:var(--ink);font-weight:600">Facebook</a>
+      <a href="https://www.instagram.com/micnsw" target="_blank" rel="noopener noreferrer" style="color:var(--ink);font-weight:600">Instagram</a>
     </div>
   </div>
 </div>
