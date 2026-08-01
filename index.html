@@ -745,9 +745,9 @@ section[id],#home,#about,#services,#studio,#packages,#process,#projects,#faq,#co
 <div id="planner-view" aria-hidden="true">
 <div class="shell">
   <header class="topbar">
-    <a href="#design" data-exit-planner class="back">← Back</a>
+    <a href="#studio" data-exit-planner class="back">← Back</a>
     <div class="brand"><img class="site-logo" src="https://mic-nsw.com.au/front/images/logo2.png" alt="MIC NSW" width="80" height="26" decoding="async"></div>
-    <a href="#quote" data-exit-to-quote class="cta">Get a Quote</a>
+    <a href="#contact" data-exit-to-quote class="cta">Get a Quote</a>
   </header>
   <nav class="modes" role="tablist">
     <button type="button" class="mode on" data-mode="kitchen" role="tab">Kitchen</button>
@@ -1070,7 +1070,7 @@ function renderPackages(type){
    '<p style="font-size:.7rem;color:var(--ink2);margin-bottom:14px">'+p.note+'</p>'+
    '<div style="display:flex;flex-direction:column;gap:8px;margin-top:auto">'+
    '<button type="button" class="btn '+(p.featured?'btn-brass':'btn-outline')+' btn-block" data-open-planner="'+type+'" data-package="'+p.id+'">Design This Package</button>'+
-   '<a href="#quote" class="btn btn-outline btn-block" data-request-quote="'+type+'" data-package-name="'+p.name+'">Request a Quote</a>'+
+   '<a href="#contact" class="btn btn-outline btn-block" data-request-quote="'+type+'" data-package-name="'+p.name+'">Request a Quote</a>'+ 
    '</div></article>';
  }).join('');
  if(window.MICRouter&&window.MICRouter.bindPlannerTriggers){window.MICRouter.bindPlannerTriggers(grid);}
