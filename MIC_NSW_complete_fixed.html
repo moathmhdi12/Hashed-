@@ -130,6 +130,7 @@ h3{font-family:var(--fd);font-size:1.15rem;font-weight:600}
 @media(min-width:800px){.process-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .process-card{padding:20px;background:var(--stone);border:1px solid var(--line);border-radius:var(--radius);min-width:0}
 .cta-band{background:var(--ink);color:#fff;padding:52px 0;text-align:center}.cta-band h2{color:#fff}
+.final-cta{background:var(--ink);color:#fff;padding:52px 0;text-align:center}.final-cta h2{color:#fff}.final-cta-eyebrow{color:var(--brass3)}.final-cta-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.btn.final-cta-call{border-color:rgba(255,255,255,.35);color:#fff;background:transparent}.btn.final-cta-call:hover{border-color:rgba(255,255,255,.7);background:rgba(255,255,255,.08)}
 .contact-grid{display:grid;gap:24px;min-width:0}
 @media(min-width:800px){.contact-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}}
 .contact-form input,.contact-form select,.contact-form textarea{width:100%;min-width:0;min-height:48px;padding:12px 14px;border:1.5px solid var(--line2);border-radius:10px;margin-bottom:12px;font-size:16px;background:#fff}
@@ -953,14 +954,15 @@ section.section,.hero,.trust-bar,.reassure-strip,footer{opacity:1}
   </div>
 </section>
 
-<section class="cta-band" id="cta">
-  <div class="container">
-    <h2>Ready to transform your home?</h2>
+<section class="final-cta" id="cta" aria-labelledby="finalCtaTitle">
+  <div class="container final-cta-inner">
+    <span class="eyebrow final-cta-eyebrow">READY TO START?</span>
+    <h2 id="finalCtaTitle">Ready to transform your home?</h2>
     <p style="color:rgba(255,255,255,.7);margin:12px auto 24px;max-width:460px">Whether you're planning a new kitchen, bathroom or complete home renovation, our experienced Sydney team is ready to help.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
-      <a href="#planner/kitchen" class="btn btn-brass" data-open-planner="kitchen" aria-label="Open the kitchen design planner">Start Designing</a>
-      <a href="#quote" class="btn btn-light">Request Free Quote</a>
-      <a href="tel:+61470640083" class="btn btn-outline" style="border-color:rgba(255,255,255,.35);color:#fff">Call Now</a>
+    <div class="final-cta-actions">
+      <a href="#planner/kitchen" class="btn btn-brass" data-open-planner="kitchen">Start Designing</a>
+      <a href="#quote" class="btn btn-light">Get Free Quote</a>
+      <a href="tel:+61470640083" class="btn final-cta-call">Call Us Now</a>
     </div>
   </div>
 </section>
