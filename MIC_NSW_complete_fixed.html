@@ -1652,6 +1652,7 @@ window.MICPlanner.setPlannerMode = function(mode, options){
   options = options || {};
   mode = mode === 'bathroom' ? 'bathroom' : 'kitchen';
   app.mode = mode;
+  document.title = mode==='bathroom' ? 'Bathroom Design Planner | MIC NSW' : 'Kitchen Design Planner | MIC NSW';
   document.querySelectorAll('#planner-view .mode').forEach(function(tab){
     var isActive = tab.dataset.mode === mode;
     tab.classList.toggle('on', isActive);
