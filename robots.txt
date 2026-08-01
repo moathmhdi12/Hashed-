@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /en/
+Allow: /
+
+Sitemap: https://mic-nsw.com.au/sitemap.xml
