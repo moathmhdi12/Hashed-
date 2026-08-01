@@ -913,6 +913,23 @@ function closePlanner(hash){
   },40);
 }
 
+function getPlannerModeFromHash(hash){
+  var h=(hash||location.hash||'').replace(/^#/,'');
+  var parts=h.split('/').filter(Boolean);
+  if(parts[0]==='planner' && parts[1]==='bathroom') return 'bathroom';
+  return 'kitchen';
+}
+
+function switchPlannerType(mode, pkg){
+  var normalized=mode==='bathroom'?'bathroom':'kitchen';
+  var targetHash='#planner/'+normalized;
+  if(location.hash===targetHash){
+    openPlanner(normalized, pkg);
+    return;
+  }
+  try{ window.location.hash = targetHash; }catch(err){ location.hash = targetHash; }
+}
+
 function scrollToId(id){
   if(!id) return false;
   id = id.replace(/^#/,'');
@@ -928,13 +945,12 @@ function scrollToId(id){
   return true;
 }
 
-function parseRoute(){
+function handleRoute(){
   var raw = location.hash || '#home';
   var h = raw.replace(/^#/,'');
   var parts = h.split('/').filter(Boolean);
   if(parts[0]==='planner'){
-    var mode = parts[1];
-    if(mode!=='kitchen' && mode!=='bathroom') mode='kitchen';
+    var mode = getPlannerModeFromHash(raw);
     openPlanner(mode, parts[2]||'');
     return;
   }
@@ -945,7 +961,8 @@ function parseRoute(){
   scrollToId(parts[0]||'home');
 }
 
-window.addEventListener('hashchange', parseRoute);
+var parseRoute = handleRoute;
+window.addEventListener('hashchange', handleRoute);
 
 function bindPlannerTriggers(root){
   (root||document).querySelectorAll('[data-open-planner]').forEach(function(el){
@@ -992,10 +1009,10 @@ document.addEventListener('DOMContentLoaded', function(){
     var quoteEl = e.target.closest && e.target.closest('[data-exit-to-quote]');
     if(quoteEl){e.preventDefault();closePlanner('#contact');}
   });
-  if((location.hash||'').indexOf('#planner')===0) parseRoute();
+  if((location.hash||'').indexOf('#planner')===0 || (location.hash||'').indexOf('#')===0) handleRoute();
 });
 
-window.MICRouter={openPlanner:openPlanner,closePlanner:closePlanner,bindPlannerTriggers:bindPlannerTriggers};
+window.MICRouter={openPlanner:openPlanner,closePlanner:closePlanner,bindPlannerTriggers:bindPlannerTriggers,switchPlannerType:switchPlannerType,handleRoute:handleRoute};
 
 document.addEventListener('click', function(e){
   var a = e.target.closest && e.target.closest('a[href^="#"]');
@@ -2189,7 +2206,16 @@ function prev(){if(st().step>1) st().step--;}
 
 function bind(){
   document.querySelectorAll('.mode').forEach(tab=>{
-    tab.onclick=()=>{document.querySelectorAll('.mode').forEach(t=>t.classList.remove('on'));tab.classList.add('on');app.mode=tab.dataset.mode;};
+    tab.addEventListener('click', function(){
+      document.querySelectorAll('.mode').forEach(t=>t.classList.remove('on'));
+      tab.classList.add('on');
+      app.mode = tab.dataset.mode === 'bathroom' ? 'bathroom' : 'kitchen';
+      if(window.MICRouter && window.MICRouter.switchPlannerType){
+        window.MICRouter.switchPlannerType(app.mode);
+      } else {
+        switchPlannerType(app.mode);
+      }
+    });
   });
   $('zIn').onclick=()=>{if(!camera)return;camera.position.multiplyScalar(0.88);if(controls)controls.update();};
   $('zOut').onclick=()=>{if(!camera)return;camera.position.multiplyScalar(1.14);if(controls)controls.update();};
