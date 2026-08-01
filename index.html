@@ -243,7 +243,8 @@
       #planner-view .preview-card__frame .preview-floor { min-height: 180px; }
       #planner-view .preview-card__frame .preview-side { min-height: 180px; }
       #planner-view .preview-card__label { margin-top: 0.7rem; font-size: 0.84rem; color: var(--text-muted); }
-      #planner-view .preview-card__scene { width: 100%; height: 100%; min-height: 220px; }
+      #planner-view .preview-card__scene { position: relative; width: 100%; height: 100%; min-height: 220px; overflow: hidden; }
+      #planner-view .preview-card__scene canvas { width: 100%; height: 100%; display: block; }
       #planner-view .planner-help { padding: 1rem; background: var(--white); border: 1px solid var(--line); border-radius: 1rem; box-shadow: var(--shadow); }
       #planner-view .planner-options { display: grid; gap: 0.7rem; }
       #planner-view .option-card { border: 1px solid var(--line); border-radius: 0.95rem; padding: 0.85rem; background: var(--white); cursor: pointer; }
@@ -273,6 +274,8 @@
         .hero__media img { min-height: 320px; }
         .section { padding: 3.3rem 0; }
         .hero__grid, .feature-grid, .services-grid, .projects-grid, .packages-grid, .process-grid, .why-grid, .quote-grid, .footer-grid, .design-studio-grid { grid-template-columns: 1fr; }
+        #planner-view { overflow: auto; }
+        #planner-view .planner-shell { min-height: auto; }
         #planner-view .planner-top { flex-direction: column; align-items: flex-start; }
         #planner-view .planner-toolbar { flex-direction: column; align-items: flex-start; }
         #planner-view .planner-toolbar__mode { flex-wrap: wrap; }
@@ -284,6 +287,7 @@
         #planner-view .planner-main .planner-options { order: 2; }
         #planner-view .planner-main .planner-help { order: 3; }
         #planner-view .preview-card__frame { grid-template-columns: 1fr; }
+        #planner-view .preview-card__frame > div { min-height: 260px; }
         #planner-view .preview-card__scene { min-height: 240px; }
         #planner-view .planner-nav { flex-direction: column-reverse; }
         #planner-view .planner-nav button { width: 100%; }
@@ -890,8 +894,15 @@
         bathroom: document.getElementById('package-grid-bathroom')
       };
       const defaultTitle = 'MIC NSW | Kitchen & Bathroom Renovations Sydney';
+     const previewState = {
+       threeReady: false,
+       threeBootstrapped: false,
+       scenes: {},
+       resizeBound: false
+     };
+     let threePreviewPromise = null;
 
-const plannerConfig = {
+     const plannerConfig = {
         kitchen: {
           title: 'Kitchen Planner',
           steps: [
@@ -995,6 +1006,9 @@ const plannerConfig = {
       function setMode(mode) {
         state.mode = mode;
         state.step = 0;
+        if (document.body.classList.contains('planner-open')) {
+          window.history.replaceState(null, '', `#planner/${mode}`);
+        }
         renderPlanner();
       }
 
@@ -1087,12 +1101,240 @@ const plannerConfig = {
         plannerNext.textContent = state.step === config.steps.length - 1 ? 'Done' : 'Next';
       }
 
-      function renderPreview() {
-        const mode = state.mode;
+      function getPreviewFallbackMarkup(mode, finish, side) {
         const styleText = mode === 'kitchen' ? 'Kitchen' : 'Bathroom';
         const previewLabel = `${styleText} • ${getModeState().layout}`;
-        previewScene.innerHTML = `<div style="position:absolute; inset:16px; border-radius:1rem; background:linear-gradient(135deg, #fffdf7, #ded0b7); border:1px solid rgba(28,31,26,0.12);"></div><div style="position:absolute; left:24px; right:24px; bottom:24px; height:70px; border-radius:1rem; background:${getModeState().finish === 'stone' ? '#c38d52' : getModeState().finish === 'timber' ? '#8e6745' : '#6d6a64'}; opacity:0.85;"></div><div style="position:absolute; left:24px; top:24px; width:84px; height:84px; border-radius:0.8rem; background:rgba(255,255,255,0.7); border:1px solid rgba(28,31,26,0.14);"></div><div style="position:absolute; right:24px; top:24px; width:110px; height:110px; border-radius:0.8rem; background:rgba(255,255,255,0.5); border:1px solid rgba(28,31,26,0.14);"></div><div style="position:absolute; left:24px; bottom:24px; font-family:var(--font-label); font-size:0.74rem; color:var(--ink);">${previewLabel}</div>`;
-        previewSceneSide.innerHTML = `<div style="position:absolute; inset:16px; border-radius:1rem; background:linear-gradient(135deg, #f5ebdd, #efdfc6); border:1px solid rgba(28,31,26,0.12);"></div><div style="position:absolute; left:24px; right:24px; top:24px; height:92px; border-radius:0.8rem; background:${getModeState().finish === 'stone' ? '#b77d41' : getModeState().finish === 'timber' ? '#7d5839' : '#5f6260'}; opacity:0.8;"></div><div style="position:absolute; left:24px; bottom:24px; width:40%; height:70px; border-radius:0.8rem; background:rgba(255,255,255,0.7); border:1px solid rgba(28,31,26,0.14);"></div><div style="position:absolute; right:24px; bottom:24px; width:35%; height:60px; border-radius:0.8rem; background:rgba(255,255,255,0.6); border:1px solid rgba(28,31,26,0.14);"></div>`;
+        if (side) {
+          const finishColor = finish === 'stone' ? '#b77d41' : finish === 'timber' ? '#7d5839' : '#5f6260';
+          return `<div style="position:absolute; inset:16px; border-radius:1rem; background:linear-gradient(135deg, #f5ebdd, #efdfc6); border:1px solid rgba(28,31,26,0.12);"></div><div style="position:absolute; left:24px; right:24px; top:24px; height:92px; border-radius:0.8rem; background:${finishColor}; opacity:0.8;"></div><div style="position:absolute; left:24px; bottom:24px; width:40%; height:70px; border-radius:0.8rem; background:rgba(255,255,255,0.7); border:1px solid rgba(28,31,26,0.14);"></div><div style="position:absolute; right:24px; bottom:24px; width:35%; height:60px; border-radius:0.8rem; background:rgba(255,255,255,0.6); border:1px solid rgba(28,31,26,0.14);"></div><div style="position:absolute; left:24px; bottom:24px; font-family:var(--font-label); font-size:0.74rem; color:var(--ink);">${previewLabel}</div>`;
+        }
+        const finishColor = finish === 'stone' ? '#c38d52' : finish === 'timber' ? '#8e6745' : '#6d6a64';
+        return `<div style="position:absolute; inset:16px; border-radius:1rem; background:linear-gradient(135deg, #fffdf7, #ded0b7); border:1px solid rgba(28,31,26,0.12);"></div><div style="position:absolute; left:24px; right:24px; bottom:24px; height:70px; border-radius:1rem; background:${finishColor}; opacity:0.85;"></div><div style="position:absolute; left:24px; top:24px; width:84px; height:84px; border-radius:0.8rem; background:rgba(255,255,255,0.7); border:1px solid rgba(28,31,26,0.14);"></div><div style="position:absolute; right:24px; top:24px; width:110px; height:110px; border-radius:0.8rem; background:rgba(255,255,255,0.5); border:1px solid rgba(28,31,26,0.14);"></div><div style="position:absolute; left:24px; bottom:24px; font-family:var(--font-label); font-size:0.74rem; color:var(--ink);">${previewLabel}</div>`;
+      }
+
+      function loadPreviewScript(src) {
+        return new Promise((resolve, reject) => {
+          const existing = document.querySelector(`script[src="${src}"]`);
+          if (existing) {
+            if (existing.dataset.loaded === 'true') {
+              resolve();
+              return;
+            }
+            existing.addEventListener('load', () => resolve(), { once: true });
+            existing.addEventListener('error', () => reject(new Error(`Preview script failed to load: ${src}`)), { once: true });
+            return;
+          }
+          const script = document.createElement('script');
+          script.src = src;
+          script.async = true;
+          script.addEventListener('load', () => {
+            script.dataset.loaded = 'true';
+            resolve();
+          }, { once: true });
+          script.addEventListener('error', () => reject(new Error(`Preview script failed to load: ${src}`)), { once: true });
+          document.head.appendChild(script);
+        });
+      }
+
+      function ensureThreePreview() {
+        if (previewState.threeReady) {
+          return Promise.resolve(true);
+        }
+        if (previewState.threeBootstrapped) {
+          return Promise.resolve(false);
+        }
+        if (threePreviewPromise) {
+          return threePreviewPromise;
+        }
+        threePreviewPromise = Promise.all([
+          loadPreviewScript('https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js'),
+          loadPreviewScript('https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/controls/OrbitControls.js')
+        ])
+          .then(() => {
+            previewState.threeReady = Boolean(window.THREE && window.THREE.OrbitControls);
+            previewState.threeBootstrapped = true;
+            return previewState.threeReady;
+          })
+          .catch(() => {
+            previewState.threeReady = false;
+            previewState.threeBootstrapped = true;
+            return false;
+          });
+        return threePreviewPromise;
+      }
+
+      function createThreePreviewScene(container, sceneType) {
+        if (!window.THREE) {
+          return null;
+        }
+        const width = container.clientWidth || 320;
+        const height = container.clientHeight || 220;
+        const renderer = new window.THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(width, height);
+        container.appendChild(renderer.domElement);
+
+        const scene = new window.THREE.Scene();
+        scene.background = null;
+        const camera = new window.THREE.PerspectiveCamera(42, width / height, 0.1, 50);
+        camera.position.set(sceneType === 'main' ? 4.2 : 4.2, 3.1, 5.4);
+        camera.lookAt(0, 0.9, 0);
+
+        const controls = new window.THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.enablePan = false;
+        controls.enableRotate = false;
+        controls.enableZoom = false;
+        controls.target.set(0, 0.9, 0);
+
+        const ambientLight = new window.THREE.AmbientLight(0xffffff, 1.1);
+        const directionalLight = new window.THREE.DirectionalLight(0xffffff, 1.4);
+        directionalLight.position.set(4, 6, 4);
+        scene.add(ambientLight, directionalLight);
+
+        return { renderer, scene, camera, controls, room: new window.THREE.Group() };
+      }
+
+      function updateThreePreviewScene(sceneData, mode, layout, finish, packageLevel, sceneType) {
+        if (!sceneData || !window.THREE) {
+          return;
+        }
+        const palette = {
+          finish: finish === 'stone' ? 0xc58c3c : finish === 'timber' ? 0x8d5b32 : 0x5d6260,
+          accent: finish === 'stone' ? 0xe7d0a5 : finish === 'timber' ? 0xb98553 : 0x7f8781,
+          base: mode === 'kitchen' ? 0xf3e7d9 : 0xece0d0
+        };
+        const room = sceneData.room;
+        room.clear();
+
+        const floor = new window.THREE.Mesh(
+          new window.THREE.BoxGeometry(8, 0.25, 8),
+          new window.THREE.MeshStandardMaterial({ color: 0xe8dec9, roughness: 0.92 })
+        );
+        floor.position.set(0, -0.13, 0);
+        room.add(floor);
+
+        const wall = new window.THREE.Mesh(
+          new window.THREE.BoxGeometry(6.2, 2.8, 0.2),
+          new window.THREE.MeshStandardMaterial({ color: 0xf7efe1, roughness: 0.95 })
+        );
+        wall.position.set(0, 1.4, -1.1);
+        room.add(wall);
+
+        const counterMaterial = new window.THREE.MeshStandardMaterial({ color: palette.finish, roughness: 0.42, metalness: 0.07 });
+        const accentMaterial = new window.THREE.MeshStandardMaterial({ color: palette.accent, roughness: 0.35, metalness: 0.05 });
+        const baseMaterial = new window.THREE.MeshStandardMaterial({ color: palette.base, roughness: 0.7 });
+
+        if (mode === 'kitchen') {
+          const cabinetDepth = layout === 'compact' ? 1.0 : layout === 'open' ? 1.2 : 1.15;
+          const cabinetWidth = layout === 'compact' ? 1.45 : layout === 'open' ? 2.2 : 2.0;
+          const cabinet = new window.THREE.Mesh(new window.THREE.BoxGeometry(cabinetWidth, 0.9, cabinetDepth), counterMaterial);
+          cabinet.position.set(layout === 'compact' ? -0.2 : 0.15, 0.45, 0.1);
+          room.add(cabinet);
+
+          const countertop = new window.THREE.Mesh(new window.THREE.BoxGeometry(cabinetWidth + 0.2, 0.16, cabinetDepth + 0.2), accentMaterial);
+          countertop.position.set(cabinet.position.x, 0.95, cabinet.position.z);
+          room.add(countertop);
+
+          if (layout === 'open' || layout === 'family') {
+            const island = new window.THREE.Mesh(new window.THREE.BoxGeometry(1.7, 0.7, 1.1), counterMaterial);
+            island.position.set(1.15, 0.35, 0.95);
+            room.add(island);
+            const islandTop = new window.THREE.Mesh(new window.THREE.BoxGeometry(1.9, 0.15, 1.3), accentMaterial);
+            islandTop.position.set(1.15, 0.76, 0.95);
+            room.add(islandTop);
+          }
+
+          if (packageLevel === 'luxury') {
+            const tallCabinet = new window.THREE.Mesh(new window.THREE.BoxGeometry(0.7, 1.6, 0.7), baseMaterial);
+            tallCabinet.position.set(-1.25, 0.8, 0.8);
+            room.add(tallCabinet);
+          }
+        } else {
+          const vanity = new window.THREE.Mesh(new window.THREE.BoxGeometry(2.0, 0.95, 1.15), counterMaterial);
+          vanity.position.set(0.3, 0.45, 0.1);
+          room.add(vanity);
+
+          const mirror = new window.THREE.Mesh(new window.THREE.BoxGeometry(1.1, 1.1, 0.1), accentMaterial);
+          mirror.position.set(0.3, 1.25, 0.58);
+          room.add(mirror);
+
+          const tub = new window.THREE.Mesh(new window.THREE.CylinderGeometry(0.9, 0.9, 0.95, 24), baseMaterial);
+          tub.position.set(-1.15, 0.47, 0.8);
+          tub.rotation.z = Math.PI / 2;
+          room.add(tub);
+        }
+
+        if (sceneType === 'side') {
+          room.rotation.y = -0.35;
+          room.position.set(0.15, 0.05, 0.15);
+        } else {
+          room.rotation.y = 0.1;
+          room.position.set(0, 0, 0);
+        }
+
+        sceneData.scene.add(room);
+        sceneData.controls.update();
+        sceneData.renderer.render(sceneData.scene, sceneData.camera);
+      }
+
+      function resizeThreePreview() {
+        if (!previewState || !previewState.scenes) {
+          return;
+        }
+        Object.values(previewState.scenes).forEach(sceneData => {
+          if (!sceneData || !sceneData.renderer) {
+            return;
+          }
+          const width = sceneData.renderer.domElement.parentElement.clientWidth || 320;
+          const height = sceneData.renderer.domElement.parentElement.clientHeight || 220;
+          sceneData.renderer.setSize(width, height);
+          sceneData.camera.aspect = width / height;
+          sceneData.camera.updateProjectionMatrix();
+          sceneData.renderer.render(sceneData.scene, sceneData.camera);
+        });
+      }
+
+      function renderPreviewFallback() {
+        const mode = state.mode;
+        const finish = getModeState().finish;
+        previewScene.innerHTML = getPreviewFallbackMarkup(mode, finish, false);
+        previewSceneSide.innerHTML = getPreviewFallbackMarkup(mode, finish, true);
+      }
+
+      function renderPreview() {
+        const mode = state.mode;
+        const finish = getModeState().finish;
+        const packageLevel = getModeState().package;
+        const layout = getModeState().layout;
+        renderPreviewFallback();
+
+        if (!previewState.resizeBound) {
+          window.addEventListener('resize', resizeThreePreview);
+          previewState.resizeBound = true;
+        }
+
+        ensureThreePreview().then(ready => {
+          if (!ready) {
+            return;
+          }
+          if (!previewState.scenes.main) {
+            previewState.scenes.main = createThreePreviewScene(previewScene, 'main');
+          }
+          if (!previewState.scenes.side) {
+            previewState.scenes.side = createThreePreviewScene(previewSceneSide, 'side');
+          }
+          if (previewState.scenes.main) {
+            previewScene.innerHTML = '';
+            previewScene.appendChild(previewState.scenes.main.renderer.domElement);
+            updateThreePreviewScene(previewState.scenes.main, mode, layout, finish, packageLevel, 'main');
+          }
+          if (previewState.scenes.side) {
+            previewSceneSide.innerHTML = '';
+            previewSceneSide.appendChild(previewState.scenes.side.renderer.domElement);
+            updateThreePreviewScene(previewState.scenes.side, mode, layout, finish, packageLevel, 'side');
+          }
+        });
       }
 
       function openPlanner(mode = state.mode) {
@@ -1150,7 +1392,12 @@ const plannerConfig = {
         }
       });
       plannerModeButtons.forEach(button => {
-        button.addEventListener('click', () => setMode(button.dataset.modeSwitch));
+        button.addEventListener('click', () => {
+          setMode(button.dataset.modeSwitch);
+          if (document.body.classList.contains('planner-open')) {
+            window.history.replaceState(null, '', `#planner/${button.dataset.modeSwitch}`);
+          }
+        });
       });
       quotePlannerButtons.forEach(button => {
         button.addEventListener('click', () => {
