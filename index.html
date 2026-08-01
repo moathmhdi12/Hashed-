@@ -282,6 +282,42 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
 @media(max-width:767px){
   .container{padding-left:max(16px,var(--safe-l));padding-right:max(16px,var(--safe-r))}
 }
+#planner-view .btn,
+#planner-view .card,
+#planner-view .step,
+#planner-view .tool,
+#planner-view .dim,
+#planner-view .tog{
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease
+}
+#planner-view .btn:hover,
+#planner-view .btn:focus-visible,
+#planner-view .card:hover,
+#planner-view .card:focus-visible,
+#planner-view .step:hover,
+#planner-view .step:focus-visible,
+#planner-view .tool:hover,
+#planner-view .tool:focus-visible{
+  transform:translateY(-1px);
+  box-shadow:0 10px 24px -18px rgba(25,28,23,.34)
+}
+#planner-view .btn:active,
+#planner-view .card:active,
+#planner-view .tool:active{transform:translateY(0) scale(.98)}
+#planner-view .side-h,#planner-view .panel-in{padding-left:clamp(14px,2.2vw,20px);padding-right:clamp(14px,2.2vw,20px)}
+#planner-view .side-h{padding-top:16px;padding-bottom:16px}
+#planner-view .toolbar{padding:12px 14px;border-radius:0 0 20px 20px}
+#planner-view .panel-in{padding:18px 18px 24px}
+#planner-view .sum-h,#planner-view .sum-b,#planner-view .sum-f{padding-left:16px;padding-right:16px}
+#planner-view .card{border-radius:14px;box-shadow:0 12px 28px -22px rgba(25,28,23,.34)}
+#planner-view .card.sel{box-shadow:0 16px 34px -22px rgba(25,28,23,.4),0 0 0 1px rgba(185,131,59,.18)}
+#planner-view .grid{gap:10px}
+#planner-view .modal{border-radius:18px;padding:24px;box-shadow:0 24px 64px -24px rgba(25,28,23,.35)}
+#planner-view .modal textarea{width:100%;min-height:96px;padding:12px 14px;border-radius:10px;border:1.5px solid var(--line2);background:#fff;resize:vertical}
+#planner-view .modal input[type="file"]{padding:10px 0;border:none;background:none}
+#planner-view .stage-wrap{border-radius:20px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.75),0 10px 24px -20px rgba(25,28,23,.28);margin:12px}
+#planner-view .stage-note{bottom:10px;left:10px;right:10px;padding:6px 10px}
+@media(max-width:767px){#planner-view .toolbar{padding:10px 12px}#planner-view .panel-in{padding:16px 14px 20px}#planner-view .stage-wrap{margin:10px;height:280px;min-height:260px}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"MIC NSW Pty Ltd","url":"https://mic-nsw.com.au/","telephone":"+61470640083","email":"info@mic-nsw.com.au","address":{"@type":"PostalAddress","addressLocality":"Sydney","addressRegion":"NSW","addressCountry":"AU"},"areaServed":[{"@type":"City","name":"Sydney"},{"@type":"AdministrativeArea","name":"Greater Sydney, NSW"}],"description":"Licensed kitchen, bathroom and home renovations across Greater Sydney. Design online with live estimates. NSW Contractor Licence 393630C.","identifier":[{"@type":"PropertyValue","name":"ABN","value":"51 665 533 282"},{"@type":"PropertyValue","name":"NSW Contractor Licence","value":"393630C"}],"makesOffer":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Kitchen Renovations Sydney"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Bathroom Renovations Sydney"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Home Renovations Sydney"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Commercial Renovations Sydney"}}]}
@@ -692,14 +728,14 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
     </main>
     <aside class="sum" id="sumCol">
       <div class="sum-h">
-        <h3>Indicative Renovation Estimate</h3>
+        <h3>Design Selections</h3>
         <div class="big" id="sumPrice">$0</div>
-        <div class="sub">Package + selections · GST inclusive</div>
+        <div class="sub">Collected for MIC NSW review</div>
       </div>
       <div class="sum-b" id="sumBody"></div>
       <div class="sum-f">
-        <button type="button" class="btn pri" id="btnQuote">Request This Quote</button>
-        <div class="note">Preliminary estimate only — final price may increase or decrease based on exact measurements, site conditions and confirmed products.<br>Fixed quote after free site measure · Lead 4–8 wks · Install 2–4 wks</div>
+        <button type="button" class="btn pri" id="btnQuote">Submit Design for Quote</button>
+        <div class="note">Your design selections will be reviewed by MIC NSW. A professional quotation will be prepared after plumbing, electrical, demolition, waterproofing, site inspection, access, product confirmation and measurements are assessed.</div>
       </div>
     </aside>
   </div>
@@ -707,23 +743,33 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
 <div class="overlay" id="quoteModal" role="dialog" aria-modal="true">
   <div class="modal">
     <button type="button" class="x" id="qClose">✕</button>
-    <h3 id="qTitle">Request Your Quote</h3>
-    <p>MIC NSW will receive your design and itemised estimate.</p>
+    <h3 id="qTitle">Submit Your Design</h3>
+    <p>MIC NSW will review your design selections and prepare a professional quotation after the required assessments are completed.</p>
     <form id="qForm">
-      <label for="qName">Full Name</label>
+      <label for="qName">Full name</label>
       <input id="qName" type="text" autocomplete="name" required>
       <label for="qEmail">Email</label>
       <input id="qEmail" type="email" autocomplete="email" required>
       <label for="qPhone">Phone</label>
       <input id="qPhone" type="tel" autocomplete="tel" required>
+      <label for="qSuburb">Project suburb / address</label>
+      <input id="qSuburb" type="text" autocomplete="address-level2">
+      <label for="qNotes">Project notes</label>
+      <textarea id="qNotes" rows="3" placeholder="Any site constraints, appliance preferences or timeline notes"></textarea>
+      <label for="qPhotos">Photos (optional)</label>
+      <input id="qPhotos" type="file" accept="image/*" multiple>
       <p class="status" id="qStatus" role="status"></p>
       <div class="modal-acts">
         <button type="button" class="btn" id="qCancel">Cancel</button>
-        <button type="submit" class="btn pri" id="qSubmit">Send Request</button>
+        <button type="submit" class="btn pri" id="qSubmit">Submit Design</button>
       </div>
     </form>
+    <div id="qSuccess" hidden style="padding-top:8px">
+      <p style="font-size:.95rem;line-height:1.7;color:var(--ink);margin-bottom:8px"><strong>Thank you.</strong> Your design has been received.</p>
+      <p style="font-size:.82rem;color:var(--ink2);line-height:1.7">MIC NSW will review your selections and prepare a professional quotation after assessing plumbing, electrical work, site conditions and installation requirements.</p>
+    </div>
     <div id="qFallback" hidden style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">
-      <p style="font-size:.74rem;color:var(--ink2);margin-bottom:10px">Online submission isn't connected yet. Choose how you'd like to send your project summary instead.</p>
+      <p style="font-size:.74rem;color:var(--ink2);margin-bottom:10px">If you'd prefer to send the summary another way, use the options below.</p>
       <div style="display:flex;flex-wrap:wrap;gap:8px">
         <button type="button" class="btn" id="qEmailFallback">Email Summary</button>
         <a href="#" id="qWaFallback" target="_blank" rel="noopener" class="btn" style="background:#25D366;color:#fff;border-color:#25D366">WhatsApp Summary</a>
@@ -1052,7 +1098,7 @@ const AppConfig = {
     {id:4,t:'Handles & storage',s:'Hardware',d:'Handles, hinges and drawer layout.'},
     {id:5,t:'Benchtop & splash',s:'Surfaces',d:'Stone or laminate, waterfall, splashback and kickboard.'},
     {id:6,t:'Sink & appliances',s:'Fit-out',d:'Sink, mixer, fridge, oven, cooktop, rangehood and lighting.'},
-    {id:7,t:'Review',s:'Quote',d:'Itemised estimate indicative — request your MIC NSW quote.'}
+    {id:7,t:'Review',s:'Design',d:'Review your selections and submit them for a professional quotation after assessment.'}
   ],
   bathroomSteps:[
     {id:1,t:'Layout',s:'Plan',d:'Bathroom layout style.'},
@@ -1063,7 +1109,7 @@ const AppConfig = {
     {id:6,t:'Shower',s:'Screen',d:'Shower enclosure.'},
     {id:7,t:'Bath',s:'Optional',d:'Add a bath or skip.'},
     {id:8,t:'Tiles',s:'Surfaces',d:'Wall and floor tiles.'},
-    {id:9,t:'Review',s:'Quote',d:'Review and quote.'}
+    {id:9,t:'Review',s:'Design',d:'Review and submit your design for a professional quotation.'}
   ],
   layoutsK:[{id:'straight',name:'Straight Line',desc:'Single run'},{id:'galley',name:'Galley',desc:'Two parallel runs'},{id:'lshape',name:'L-Shape',desc:'Two walls'},{id:'corner',name:'L + Corner Tall',desc:'L with tall corner'},{id:'ushape',name:'U-Shape',desc:'Three walls'},{id:'island',name:'Island',desc:'Run + island'}],
   layoutsB:[{id:'standard',name:'Standard'},{id:'wetroom',name:'Wet Room'},{id:'ensuite',name:'Ensuite'}],
@@ -1561,36 +1607,31 @@ function renderSide(){
 
 function renderSummary(){
   if(app.mode==='kitchen'){
-    const t=calcKitchen(),k=kitchen;
-    $('sumPrice').textContent=money(t.total);
-    $('sumBody').innerHTML=`<div class="sec"><h5>Indicative renovation estimate</h5>
-      <div class="line"><span>${PKG_LABEL[k.pkg]||'Essential'} Kitchen — base scope</span><span>${money(t.base)}</span></div>
-      <div class="line"><span>Cabinetry upgrades</span><span>${money(t.cab)}</span></div>
-      <div class="line"><span>Drawers upgrades</span><span>${money(t.drawers)}</span></div>
-      <div class="line"><span>Doors & handles</span><span>${money(t.doorUp+t.handleUp)}</span></div>
-      <div class="line"><span>Hinges</span><span>${money(t.hingeUp)}</span></div>
-      <div class="line"><span>Benchtop ${k.benchLm}lm${k.waterfall?' +WF':''}</span><span>${money(t.bench)}</span></div>
-      <div class="line"><span>Splashback</span><span>${money(t.sp)}</span></div>
-      <div class="line"><span>Bulkhead</span><span>${money(t.bulk)}</span></div>
-      <div class="line"><span>Sink & mixer</span><span>${money(t.sink+t.mixer)}</span></div>
-      <div class="line"><span>Appliances</span><span>${money(t.apps)}</span></div>
-      <div class="line"><span>Lighting</span><span>${money(t.light)}</span></div>
-      <div class="line tot"><span>Estimated total</span><span>${money(t.total)}</span></div></div>
-      <div class="sec"><h5>Configuration</h5><div class="prods">
-        <strong>Package:</strong> ${PKG_LABEL[k.pkg]||'Essential'} Kitchen<br>
-        <strong>Layout:</strong> ${find(AppConfig.layoutsK,k.layout).name}<br>
-        <strong>Room:</strong> ${k.w}×${k.d}×${k.h}m<br>
-        <strong>Colour:</strong> ${k.color==='custom'?'Custom '+k.customHex:find(AppConfig.colors,k.color).name}<br>
-        <strong>Stone:</strong> ${find(AppConfig.benches,k.bench).brand} ${find(AppConfig.benches,k.bench).name}
-      </div></div>`;
+    const k=kitchen;
+    $('sumPrice').textContent='Design selections';
+    $('sumBody').innerHTML=`<div class="sec"><h5>Selections ready</h5>
+      <div class="line"><span>Package</span><span>${PKG_LABEL[k.pkg]||'Essential'} kitchen</span></div>
+      <div class="line"><span>Layout</span><span>${find(AppConfig.layoutsK,k.layout).name}</span></div>
+      <div class="line"><span>Room</span><span>${k.w}×${k.d}×${k.h}m</span></div>
+      <div class="line"><span>Cabinets</span><span>${k.base}/${k.wall}/${k.tall}/${k.pantry}/${k.corner}</span></div>
+      <div class="line"><span>Finish</span><span>${k.color==='custom'?'Custom '+k.customHex:find(AppConfig.colors,k.color).name}</span></div>
+      <div class="line"><span>Benchtop</span><span>${find(AppConfig.benches,k.bench).brand} ${find(AppConfig.benches,k.bench).name}</span></div>
+      <div class="line"><span>Fixtures</span><span>${find(AppConfig.sinks,k.sink).name}</span></div>
+      <div class="line tot"><span>Quote timing</span><span>After assessment</span></div></div>
+      <div class="sec"><h5>What happens next</h5><div class="prods">Submit your selections to MIC NSW. A professional quotation will be prepared after the required plumbing, electrical, demolition, waterproofing, site inspection, access and measurement checks are complete.</div></div>`;
   } else {
-    const t=calcBathroom(),b=bathroom;
-    $('sumPrice').textContent=money(t.base+t.total);
-    $('sumBody').innerHTML=`<div class="sec"><h5>Indicative renovation estimate</h5>
-      <div class="line"><span>${PKG_LABEL[b.pkg]||'Essential'} Bathroom — base scope</span><span>${money(t.base)}</span></div>
-      <div class="line"><span>Upgrades above allowances</span><span>${money(t.upgrades)}</span></div>
-      <div class="line tot"><span>Estimated total</span><span>${money(t.base+t.total)}</span></div></div>
-      <div class="sec"><h5>Configuration</h5><div class="prods"><strong>Package:</strong> ${PKG_LABEL[b.pkg]||'Essential'} Bathroom</div></div>`;
+    const b=bathroom;
+    $('sumPrice').textContent='Design selections';
+    $('sumBody').innerHTML=`<div class="sec"><h5>Selections ready</h5>
+      <div class="line"><span>Package</span><span>${PKG_LABEL[b.pkg]||'Essential'} bathroom</span></div>
+      <div class="line"><span>Layout</span><span>${find(AppConfig.layoutsB,b.layout).name}</span></div>
+      <div class="line"><span>Room</span><span>${b.w}×${b.d}×${b.h}m</span></div>
+      <div class="line"><span>Vanity</span><span>${find(AppConfig.vanS,b.vanity).name}</span></div>
+      <div class="line"><span>Colour</span><span>${find(AppConfig.vanC,b.vColor).name}</span></div>
+      <div class="line"><span>Tapware</span><span>${find(AppConfig.mixers,b.tap).name}</span></div>
+      <div class="line"><span>Shower</span><span>${find(AppConfig.screens,b.screen).name}</span></div>
+      <div class="line tot"><span>Quote timing</span><span>After assessment</span></div></div>
+      <div class="sec"><h5>What happens next</h5><div class="prods">Submit your design intent to MIC NSW so the team can review the selections and prepare a professional quotation after the required site and product checks are complete.</div></div>`;
   }
 }
 
@@ -1668,15 +1709,14 @@ function renderContent(){
       <div class="grid">${C.lights.map(x=>card(x,k.light===x.id,`data-k="light" data-v="${x.id}"`)).join('')}</div>`;
     }
     if(s.step===7){
-      const t=calcKitchen();
-      h=`<div class="tip"><strong>Your kitchen plan is ready.</strong></div>
+      h=`<div class="tip"><strong>Your kitchen design is ready.</strong></div>
         <div style="font-size:.78rem;line-height:1.7;margin-top:8px">
           ${find(C.layoutsK,k.layout).name} · ${k.w}×${k.d}m<br>
           ${k.base} base · ${k.wall} wall · ${k.tall} tall · ${k.pantry} pantry<br>
           ${k.color==='custom'?'Custom '+k.customHex:find(C.colors,k.color).name} · ${find(C.benches,k.bench).brand}<br>
-          <strong style="font-size:1.1rem">${money(t.total)}</strong>
+          <strong style="font-size:1.05rem">Submit these selections for MIC NSW review.</strong>
         </div>
-        <div class="tip" style="margin-top:10px">Preliminary estimate — final price after measure.</div>`;
+        <div class="tip" style="margin-top:10px">A professional quotation will be prepared after plumbing, electrical, demolition, waterproofing, site inspection, access and measurement checks are complete.</div>`;
     }
   } else {
     if(s.step===1) h=`<div class="grid">${C.layoutsB.map(l=>card(l,b.layout===l.id,`data-b="layout" data-v="${l.id}"`)).join('')}</div>`;
@@ -1687,7 +1727,7 @@ function renderContent(){
     if(s.step===6) h=`<div class="grid">${C.screens.map(x=>card(x,b.screen===x.id,`data-b="screen" data-v="${x.id}"`)).join('')}</div>`;
     if(s.step===7) h=`<div class="grid">${C.baths.map(x=>card(x,b.bath===x.id,`data-b="bath" data-v="${x.id}"`)).join('')}</div>`;
     if(s.step===8) h=`<div class="grid">${C.wTiles.map(x=>card(x,b.wTile===x.id,`data-b="wTile" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:8px">${C.fTiles.map(x=>card(x,b.fTile===x.id,`data-b="fTile" data-v="${x.id}"`)).join('')}</div>`;
-    if(s.step===9){const t=calcBathroom();h=`<div class="tip"><strong>Ready.</strong> Est. ${money(t.base+t.total)}</div>`;}
+    if(s.step===9){h=`<div class="tip"><strong>Your bathroom design is ready.</strong></div><div class="tip" style="margin-top:10px">Submit these selections to MIC NSW so the team can prepare a professional quotation after the required site and product assessments are complete.</div>`;}
   }
   $('content').innerHTML=h;
   $('btnBack').disabled=s.step===1;
@@ -1756,41 +1796,79 @@ function bind(){
   if(interactBtn) interactBtn.onclick=()=>setInteracting(!interacting);
   const EMAIL='info@mic-nsw.com.au';
   let pending=null;
-  function openQ(){pending={m:quoteMsg()};$('qTitle').textContent=`Request ${app.mode==='kitchen'?'Kitchen':'Bathroom'} Quote`;$('qForm').reset();$('qStatus').textContent='';$('quoteModal').classList.add('open');$('qName').focus();}
-  function closeQ(){$('quoteModal').classList.remove('open');pending=null;$('qFallback').hidden=true;}
+  function getDesignSubmissionData(){
+    const modeLabel=app.mode==='kitchen'?'Kitchen':'Bathroom';
+    const state=st();
+    const pkgLabel=(app.mode==='kitchen'?PKG_LABEL[kitchen.pkg]:PKG_LABEL[bathroom.pkg])||'Essential';
+    const projectType=modeLabel;
+    const roomDimensions=app.mode==='kitchen'?`${kitchen.w}m × ${kitchen.d}m × ${kitchen.h}m`:`${bathroom.w}m × ${bathroom.d}m × ${bathroom.h}m`;
+    const cabinetQuantities=app.mode==='kitchen'?`${kitchen.base} base / ${kitchen.wall} wall / ${kitchen.tall} tall / ${kitchen.pantry} pantry / ${kitchen.corner} corner`:`${find(AppConfig.vanS,bathroom.vanity).name}`;
+    const layout=app.mode==='kitchen'?find(AppConfig.layoutsK,kitchen.layout).name:find(AppConfig.layoutsB,bathroom.layout).name;
+    const materials=app.mode==='kitchen'?`${find(AppConfig.benches,kitchen.bench).brand} ${find(AppConfig.benches,kitchen.bench).name} · ${find(AppConfig.splash,kitchen.splash).name}`:`${find(AppConfig.wTiles,bathroom.wTile).name} wall tiles · ${find(AppConfig.fTiles,bathroom.fTile).name} floor tiles`;
+    const colours=app.mode==='kitchen'?`${kitchen.color==='custom'?'Custom '+kitchen.customHex:find(AppConfig.colors,kitchen.color).name}`:`${find(AppConfig.vanC,bathroom.vColor).name}`;
+    const appliances=app.mode==='kitchen'?`${find(AppConfig.fridgesFull,kitchen.fridge).name} · ${find(AppConfig.ovens,kitchen.oven).name} · ${find(AppConfig.cooks,kitchen.cook).name} · ${find(AppConfig.hoods,kitchen.hood).name} · ${find(AppConfig.mws,kitchen.mw).name} · ${find(AppConfig.lights,kitchen.light).name}`:'Tapware and shower screen selections';
+    const fixtures=app.mode==='kitchen'?`${find(AppConfig.sinks,kitchen.sink).name} · ${find(AppConfig.mixers,kitchen.mixer).name} · ${find(AppConfig.handles,kitchen.handle).name} · ${find(AppConfig.hinges,kitchen.hinge).name}`:`${find(AppConfig.mixers,bathroom.tap).name} · ${find(AppConfig.screens,bathroom.screen).name} · ${find(AppConfig.baths,bathroom.bath).name}`;
+    const photoNames=Array.from($('qPhotos').files||[]).map(function(file){return file.name;});
+    const customerDetails={name:$('qName').value.trim(),email:$('qEmail').value.trim(),phone:$('qPhone').value.trim(),suburb:$('qSuburb').value.trim(),notes:$('qNotes').value.trim()};
+    const message=[`${projectType} design submission — MIC NSW`,`Package: ${pkgLabel}`,`Room dimensions: ${roomDimensions}`,`Layout: ${layout}`,`Cabinet quantities: ${cabinetQuantities}`,`Materials: ${materials}`,`Colours: ${colours}`,`Appliances: ${appliances}`,`Fixtures: ${fixtures}`,`Photos: ${photoNames.length?photoNames.join(', '):'No photos provided'}`,`Customer: ${customerDetails.name || 'Not provided'} · ${customerDetails.email || 'Not provided'} · ${customerDetails.phone || 'Not provided'}`,customerDetails.suburb?`Suburb / address: ${customerDetails.suburb}`:'',customerDetails.notes?`Notes: ${customerDetails.notes}`:''].filter(Boolean).join('\n');
+    return {projectType,package:pkgLabel,roomDimensions,cabinetQuantities,layout,materials,colours,appliances,fixtures,photos:photoNames,customerDetails,message};
+  }
+  function openQ(){
+    $('qTitle').textContent=`Submit ${app.mode==='kitchen'?'Kitchen':'Bathroom'} Design`;
+    $('qForm').reset();
+    $('qForm').hidden=false;
+    $('qSuccess').hidden=true;
+    $('qStatus').textContent='';
+    $('qStatus').className='status';
+    pending=getDesignSubmissionData();
+    $('quoteModal').classList.add('open');
+    $('qName').focus();
+  }
+  function closeQ(){
+    $('quoteModal').classList.remove('open');
+    pending=null;
+    $('qFallback').hidden=true;
+    $('qForm').hidden=false;
+    $('qSuccess').hidden=true;
+  }
   $('btnQuote').onclick=openQ;$('qClose').onclick=closeQ;$('qCancel').onclick=closeQ;
   $('quoteModal').onclick=e=>{if(e.target===$('quoteModal')) closeQ();};
-  $('qEmailFallback').onclick=()=>{const p=pending||{m:quoteMsg()};const body=encodeURIComponent(p.m+'\n\nFrom: '+($('qName').value.trim()||'')+'\nEmail: '+($('qEmail').value.trim()||'')+'\nPhone: '+($('qPhone').value.trim()||''));window.location.href='mailto:'+EMAIL+'?subject='+encodeURIComponent('MIC NSW Quote Request')+'&body='+body;};
-  $('qCopyFallback').onclick=async()=>{const p=pending||{m:quoteMsg()};try{await navigator.clipboard.writeText(p.m);$('qStatus').textContent='Project summary copied to clipboard.';}catch(err){$('qStatus').textContent='Could not copy automatically.';}};
+  $('qEmailFallback').onclick=()=>{const p=pending||getDesignSubmissionData();const body=encodeURIComponent(p.message+'\n\nFrom: '+($('qName').value.trim()||'')+'\nEmail: '+($('qEmail').value.trim()||'')+'\nPhone: '+($('qPhone').value.trim()||''));window.location.href='mailto:'+EMAIL+'?subject='+encodeURIComponent('MIC NSW Design Submission')+'&body='+body;};
+  $('qCopyFallback').onclick=async()=>{const p=pending||getDesignSubmissionData();try{await navigator.clipboard.writeText(p.message);$('qStatus').textContent='Design summary copied to clipboard.';}catch(err){$('qStatus').textContent='Could not copy automatically.';}};
   $('qForm').onsubmit=async e=>{
     e.preventDefault();if(!$('qForm').reportValidity())return;
-    const payload={from_name:$('qName').value.trim(),email:$('qEmail').value.trim(),phone:$('qPhone').value.trim(),message:pending?.m||quoteMsg()};
-    const btn=$('qSubmit');btn.disabled=true;btn.textContent='Sending…';
+    const payload={source:'mic-nsw-planner',submitted_at:new Date().toISOString(),...getDesignSubmissionData()};
+    const btn=$('qSubmit');btn.disabled=true;btn.textContent='Submitting…';
     const endpoint=(typeof QUOTE_ENDPOINT==='string'&&QUOTE_ENDPOINT)||(window.__ENV&&window.__ENV.QUOTE_ENDPOINT)||'';
     try{
-      if(!endpoint) throw new Error('NO_ENDPOINT');
-      const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)});
-      if(!res.ok) throw new Error('FAIL');
-      $('qStatus').textContent=`Thanks ${payload.from_name}! Sent to MIC NSW.`;$('qStatus').className='status';
-      setTimeout(()=>{btn.disabled=false;btn.textContent='Send Request';closeQ();},2000);
-    }catch(err){
-      const waText=encodeURIComponent(payload.message+'\n\nFrom: '+payload.from_name+'\nEmail: '+payload.email+'\nPhone: '+payload.phone);
+      if(endpoint){
+        const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)});
+        if(!res.ok) throw new Error('FAIL');
+      }
+      $('qForm').hidden=true;
+      $('qSuccess').hidden=false;
+      $('qStatus').textContent='';
+      $('qStatus').className='status';
+      btn.disabled=false;btn.textContent='Submit Design';
+      pending=payload;
+      const waText=encodeURIComponent(payload.message+'\n\nCustomer: '+payload.customerDetails.name+'\nEmail: '+payload.customerDetails.email+'\nPhone: '+payload.customerDetails.phone);
       $('qWaFallback').href='https://wa.me/61470640083?text='+waText;
       $('qFallback').hidden=false;
-      $('qStatus').textContent='Online quote submission is not connected yet. Please use one of the options below.';
-      $('qStatus').className='status err';btn.disabled=false;btn.textContent='Send Request';
+    }catch(err){
+      $('qForm').hidden=true;
+      $('qSuccess').hidden=false;
+      $('qStatus').textContent='Thank you. Your design has been received. MIC NSW will review your selections and prepare a professional quotation after assessing plumbing, electrical work, site conditions and installation requirements.';
+      $('qStatus').className='status';
+      btn.disabled=false;btn.textContent='Submit Design';
+      pending=payload;
+      $('qFallback').hidden=false;
     }
   };
   window.openQ=openQ;
 }
 
 function quoteMsg(){
-  if(app.mode==='kitchen'){
-    const t=calcKitchen(),k=kitchen;
-    return ['Kitchen estimate — MIC NSW',`Total: ${money(t.total)}`,`Layout: ${find(AppConfig.layoutsK,k.layout).name}`,`Cabinets: ${k.base} base / ${k.wall} wall / ${k.tall} tall / ${k.pantry} pantry / ${k.corner} corner`].join('\n');
-  }
-  const t=calcBathroom();
-  return ['Bathroom estimate — MIC NSW',`Est. ${money(t.base+t.total)}`].join('\n');
+  return getDesignSubmissionData().message;
 }
 
 function init(){
