@@ -1242,13 +1242,13 @@ function calcKitchen() {
   else light = find(AppConfig.lights, k.light).mod;
   const allowLight = allow.light === 'led' ? P.lightLed * k.benchLm : find(AppConfig.lights, allow.light).mod;
   light = Math.max(0, light - allowLight);
-  const base = BASE_KITCHEN[k.pkg] || BASE_KITCHEN.essential;
+  const base = 3000;
   const upgrades = cab + drawers + doorUp + handleUp + hingeUp + bench + sp + bulk + sink + mixer + apps + light;
   const total = base + upgrades;
   return { total, base, upgrades, cab, drawers, doorUp, handleUp, hingeUp, bench, sp, bulk, kick, sink, mixer, apps, light, nDoors };
 }
 function calcBathroom() {
-  const base = BASE_BATHROOM[bathroom.pkg] || BASE_BATHROOM.essential;
+  const base = 3000;
   const allow = BATHROOM_ALLOWANCE[bathroom.pkg] || BATHROOM_ALLOWANCE.essential;
   let t = 0;
   const vanMod = find(AppConfig.vanS, bathroom.vanity).mod;
@@ -1560,7 +1560,26 @@ function buildBath3D() {
   if(b.mirror!=='none'){MeshPool.box('mirror',0.72,0.9,0.02,'#f7f4ea',0.7,1.1,0.14,'stone');}
   const th=find(AppConfig.mixers,b.tap).hex||'#ccc';
   MeshPool.box('tap',0.03,0.18,0.03,th,0.7,0.78,0.22);
-  MeshPool.box('screen',0.02,1.8,0.9,th,fw-0.5,0.95,0.5);
+  const showerFrameHex=vc;
+  MeshPool.box('shower-base',1.1,0.03,1.0,'#e7e2d3',fw-0.85,0.05,fd-0.55);
+  if(b.screen==='semi'){
+    MeshPool.box('screen',0.03,1.5,0.9,'#f7fbff',fw-0.72,0.8,fd-0.55,'glass');
+    MeshPool.box('screen-frame',0.04,1.5,0.02,showerFrameHex,fw-0.63,0.8,fd-0.55,'metal');
+  } else {
+    MeshPool.box('screen',0.03,1.5,0.9,showerFrameHex,fw-0.72,0.8,fd-0.55,'metal');
+    MeshPool.box('screen-glass',0.02,1.4,0.84,'#f7fbff',fw-0.70,0.8,fd-0.55,'glass');
+  }
+  const showerHeadHex=b.showerHead==='dual'?th:b.showerHead==='rain'?showerFrameHex:'#c8b8a4';
+  if(b.showerHead==='basic'){
+    MeshPool.box('shower-head',0.07,0.07,0.07,showerHeadHex,fw-0.52,1.2,fd-0.72,'metal');
+  } else if(b.showerHead==='rain'){
+    MeshPool.box('shower-head',0.16,0.06,0.16,showerHeadHex,fw-0.52,1.18,fd-0.72,'metal');
+    MeshPool.box('shower-arm',0.04,0.22,0.04,showerHeadHex,fw-0.52,1.02,fd-0.72,'metal');
+  } else if(b.showerHead==='dual'){
+    MeshPool.box('shower-head-a',0.07,0.07,0.07,showerHeadHex,fw-0.58,1.2,fd-0.68,'metal');
+    MeshPool.box('shower-head-b',0.07,0.07,0.07,showerHeadHex,fw-0.46,1.2,fd-0.68,'metal');
+    MeshPool.box('shower-arm',0.12,0.04,0.04,showerHeadHex,fw-0.52,1.16,fd-0.68,'metal');
+  }
   if(b.bath!=='none') MeshPool.box('bath',1.5,0.45,0.7,'#fff',fw/2,0.25,fd-0.5);
   const bTargetKey=fw+','+fd;
   if(controls&&bTargetKey!==lastBathTargetKey){lastBathTargetKey=bTargetKey;controls.target.set(fw/2,0.8,fd/2);}
@@ -1688,20 +1707,105 @@ function getDesignSummaryData(){
   };
 }
 
+function getKitchenServiceBreakdown(){
+  const k=kitchen;
+  const allow=KITCHEN_ALLOWANCE[k.pkg]||KITCHEN_ALLOWANCE.essential;
+  const items=[];
+  const addLine=(label,amount)=>{ if(amount>0) items.push({label,amount}); };
+  const extraBase=Math.max(0,k.base-allow.base);
+  const extraWall=Math.max(0,k.wall-allow.wall);
+  const extraTall=Math.max(0,k.tall-allow.tall);
+  const extraPantry=Math.max(0,k.pantry-allow.pantry);
+  const extraCorner=Math.max(0,k.corner-allow.corner);
+  addLine(`Cabinet modules`, extraBase*P.base + extraWall*P.wall + extraTall*P.tall + extraPantry*P.pantry + extraCorner*P.corner);
+  const extraBanks=Math.max(0,k.drawerBanks-allow.drawerBanks);
+  const extraPer=Math.max(0,k.drawersPer-allow.drawersPer);
+  addLine(`Drawer storage`, extraBanks*P.drawerBank + extraPer*Math.max(k.drawerBanks,1)*P.drawerExtra);
+  const doorMod=find(AppConfig.doors,k.door).mod;
+  const allowDoorMod=find(AppConfig.doors,allow.door).mod;
+  addLine(`Door profile · ${find(AppConfig.doors,k.door).name}`, Math.max(0,doorMod-allowDoorMod)*(k.base+k.wall+k.tall+k.pantry+k.corner));
+  const handleMod=find(AppConfig.handles,k.handle).mod;
+  const allowHandleMod=find(AppConfig.handles,allow.handle).mod;
+  addLine(`Handle finish · ${find(AppConfig.handles,k.handle).name}`, Math.max(0,handleMod-allowHandleMod)*(k.base+k.wall+k.tall+k.pantry+k.corner));
+  const hingeUp=(find(AppConfig.hinges,k.hinge).mod||0)*(k.base+k.wall+k.tall+k.pantry+k.corner);
+  if(hingeUp>0) items.push({label:`Hinge upgrade · ${find(AppConfig.hinges,k.hinge).name}`,amount:hingeUp});
+  const benchMod=find(AppConfig.benches,k.bench).mod;
+  const allowBenchMod=find(AppConfig.benches,allow.bench).mod;
+  const bench=Math.max(0,benchMod-allowBenchMod)*k.benchLm + (k.waterfall?benchMod*P.waterfall:0);
+  if(bench>0) items.push({label:`Benchtop · ${find(AppConfig.benches,k.bench).name}`,amount:bench});
+  const splashMod=find(AppConfig.splash,k.splash).mod;
+  const allowSplashMod=find(AppConfig.splash,allow.splash).mod;
+  const splash=Math.max(0,splashMod-allowSplashMod)*k.benchLm;
+  if(splash>0) items.push({label:`Splashback · ${find(AppConfig.splash,k.splash).name}`,amount:splash});
+  if(k.bulkhead) items.push({label:'Bulkhead upgrade',amount:P.bulkhead*k.benchLm});
+  const sinkMod=find(AppConfig.sinks,k.sink).mod;
+  const allowSinkMod=find(AppConfig.sinks,allow.sink).mod;
+  const sink=Math.max(0,sinkMod-allowSinkMod);
+  if(sink>0) items.push({label:`Sink · ${find(AppConfig.sinks,k.sink).name}`,amount:sink});
+  const mixerMod=find(AppConfig.mixers,k.mixer).mod;
+  const allowMixerMod=find(AppConfig.mixers,allow.mixer).mod;
+  const mixer=Math.max(0,mixerMod-allowMixerMod);
+  if(mixer>0) items.push({label:`Mixer · ${find(AppConfig.mixers,k.mixer).name}`,amount:mixer});
+  const apps=find(AppConfig.ovens,k.oven).mod + find(AppConfig.cooks,k.cook).mod + find(AppConfig.hoods,k.hood).mod + find(AppConfig.mws,k.mw).mod;
+  if(apps>0) items.push({label:'Appliance fit-out',amount:apps});
+  let light=0;
+  if (k.light==='led') light=P.lightLed*k.benchLm;
+  else light=find(AppConfig.lights,k.light).mod;
+  const allowLight=allow.light==='led'?P.lightLed*k.benchLm:find(AppConfig.lights,allow.light).mod;
+  light=Math.max(0,light-allowLight);
+  if(light>0) items.push({label:`Lighting · ${find(AppConfig.lights,k.light).name}`,amount:light});
+  return items;
+}
+function getBathroomServiceBreakdown(){
+  const b=bathroom;
+  const allow=BATHROOM_ALLOWANCE[b.pkg]||BATHROOM_ALLOWANCE.essential;
+  const items=[];
+  const addLine=(label,amount)=>{ if(amount>0) items.push({label,amount}); };
+  const vanMod=find(AppConfig.vanS,b.vanity).mod;
+  const allowVan=find(AppConfig.vanS,allow.vanity).mod;
+  addLine(`Vanity · ${find(AppConfig.vanS,b.vanity).name}`, Math.max(0,vanMod-allowVan));
+  const basinMod=find(AppConfig.basins,b.basin).mod;
+  const allowBasin=find(AppConfig.basins,allow.basin).mod;
+  addLine(`Basin · ${find(AppConfig.basins,b.basin).name}`, Math.max(0,basinMod-allowBasin));
+  const cabinetMod=find(AppConfig.cabinets,b.cabinet).mod;
+  const allowCabinet=find(AppConfig.cabinets,allow.cabinet).mod;
+  addLine(`Cabinet · ${find(AppConfig.cabinets,b.cabinet).name}`, Math.max(0,cabinetMod-allowCabinet));
+  const mirrorMod=find(AppConfig.mirrors,b.mirror).mod;
+  const allowMirror=find(AppConfig.mirrors,allow.mirror).mod;
+  addLine(`Mirror · ${find(AppConfig.mirrors,b.mirror).name}`, Math.max(0,mirrorMod-allowMirror));
+  const tapMod=find(AppConfig.mixers,b.tap).mod;
+  const allowTap=find(AppConfig.mixers,allow.tap).mod;
+  addLine(`Tapware · ${find(AppConfig.mixers,b.tap).name}`, Math.max(0,tapMod-allowTap));
+  const showerMod=find(AppConfig.showerHeads,b.showerHead).mod;
+  const allowShower=find(AppConfig.showerHeads,allow.showerHead).mod;
+  addLine(`Shower head · ${find(AppConfig.showerHeads,b.showerHead).name}`, Math.max(0,showerMod-allowShower));
+  const screenMod=find(AppConfig.screens,b.screen).mod;
+  const allowScreen=find(AppConfig.screens,allow.screen).mod;
+  addLine(`Shower screen · ${find(AppConfig.screens,b.screen).name}`, Math.max(0,screenMod-allowScreen));
+  const storageMod=find(AppConfig.storage,b.storage).mod;
+  const allowStorage=find(AppConfig.storage,allow.storage).mod;
+  addLine(`Storage · ${find(AppConfig.storage,b.storage).name}`, Math.max(0,storageMod-allowStorage));
+  const bathMod=find(AppConfig.baths,b.bath).mod;
+  const allowBath=find(AppConfig.baths,allow.bath).mod;
+  addLine(`Bath · ${find(AppConfig.baths,b.bath).name}`, Math.max(0,bathMod-allowBath));
+  return items;
+}
+function getLiveEstimateBreakdown(){
+  const base=[{label:'Base estimate',amount:3000}];
+  const items=app.mode==='kitchen'?getKitchenServiceBreakdown():getBathroomServiceBreakdown();
+  return base.concat(items);
+}
 function renderSummary(){
   const data=getDesignSummaryData();
   const estimate = app.mode==='kitchen' ? calcKitchen().total : calcBathroom().total;
+  const breakdown=getLiveEstimateBreakdown();
   $('sumPrice').textContent=money(estimate);
   $('sumBody').innerHTML=`<div class="quote-card">
     <div class="quote-chip">Indicative Sydney pricing</div>
     <h4>Design estimate ready</h4>
     <p>Based on your selected products, finishes and scope, this estimate updates live as you refine the design.</p>
     <ul class="quote-list">
-      <li>Selected products and finishes</li>
-      <li>Plumbing and electrical scope</li>
-      <li>Room size and cabinetry scope</li>
-      <li>Site conditions and installation needs</li>
-      <li>Final fixed quotation after review</li>
+      ${breakdown.map(item=>`<li style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span>${item.label}</span><strong>${money(item.amount)}</strong></li>`).join('')}
     </ul>
     <div class="quote-info">Indicative pricing for Sydney supply and installation planning. Final pricing is confirmed after site review, measurements, product availability and trade scope.</div>
   </div>
