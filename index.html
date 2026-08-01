@@ -1228,13 +1228,13 @@ function calcKitchen() {
   else light = find(AppConfig.lights, k.light).mod;
   const allowLight = allow.light === 'led' ? P.lightLed * k.benchLm : find(AppConfig.lights, allow.light).mod;
   light = Math.max(0, light - allowLight);
-  const base = BASE_KITCHEN[k.pkg] || BASE_KITCHEN.essential;
-  const upgrades = cab + drawers + doorUp + handleUp + hingeUp + bench + sp + bulk + kick + sink + mixer + apps + light;
-  const total = base + upgrades;
+  const base = 0;
+  const upgrades = 0;
+  const total = 0;
   return { total, base, upgrades, cab, drawers, doorUp, handleUp, hingeUp, bench, sp, bulk, kick, sink, mixer, apps, light, nDoors };
 }
 function calcBathroom() {
-  const base = BASE_BATHROOM[bathroom.pkg] || BASE_BATHROOM.essential;
+  const base = 0;
   const allow = BATHROOM_ALLOWANCE[bathroom.pkg] || BATHROOM_ALLOWANCE.essential;
   let t = 0;
   const vanMod = find(AppConfig.vanS, bathroom.vanity).mod;
