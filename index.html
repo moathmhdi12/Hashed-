@@ -1168,6 +1168,7 @@ const AppConfig = {
 const $ = id => document.getElementById(id);
 const clamp = (v,a,c) => Math.max(a, Math.min(c, v));
 const find = (list, id) => (list || []).find(x => x.id === id) || (list && list[0]) || {};
+const getOption = (list, id) => (list || []).find(x => x.id === id) || null;
 
 let renderScheduled = false;
 function scheduleRender() {
@@ -1188,23 +1189,23 @@ function reactive(obj) {
 
 const kitchen = reactive({
   step:1, done:{}, pkg:'custom',
-  layout:'lshape', w:3.6, d:3.0, h:2.7, benchLm:4.2,
-  base:4, wall:3, tall:1, pantry:0, corner:0,
-  pantrySide:'right', tallSide:'left', drawerOn:'first', islandSeating:true, islandCook:false, islandSize:'medium', baseDoors:'auto', wallDoors:'auto', pantryStyle:'standard', fridgePanel:'both',
-  drawerBanks:1, drawersPer:2,
+  layout:'', w:0, d:0, h:0, benchLm:0,
+  base:0, wall:0, tall:0, pantry:0, corner:0,
+  pantrySide:'right', tallSide:'left', drawerOn:'first', islandSeating:false, islandCook:false, islandSize:'medium', baseDoors:'auto', wallDoors:'auto', pantryStyle:'standard', fridgePanel:'both',
+  drawerBanks:0, drawersPer:0,
   door:'flat', color:'white', customHex:'#C4B5A0', customStone:'',
-  handle:'bar-black', bench:'lam', waterfall:false,
-  splash:'tile', bulkhead:false, kickboard:true, hinge:'soft',
-  sink:'abey1', mixer:'caroma',
-  fridge:'f600', oven:'none', cook:'none', hood:'none', mw:'none',
+  handle:'none', bench:'none', waterfall:false,
+  splash:'none', bulkhead:false, kickboard:true, hinge:'std',
+  sink:'none', mixer:'none',
+  fridge:'none', oven:'none', cook:'none', hood:'none', mw:'none',
   light:'none'
 });
 const bathroom = reactive({
   step:1, done:{}, pkg:'custom',
-  layout:'standard', w:2.4, d:2.0, h:2.4,
-  vanity:'wall', vColor:'white', basin:'integrated', cabinet:'single', mirror:'std',
+  layout:'', w:0, d:0, h:0,
+  vanity:'wall', vColor:'white', basin:'integrated', cabinet:'none', mirror:'none',
   tap:'caroma', screen:'semi', bath:'none', showerHead:'basic', storage:'none',
-  wTile:'sub', fTile:'gry'
+  wTile:'none', fTile:'none'
 });
 const app = reactive({ mode:'kitchen', ready:false });
 const pricingState = reactive({ projectType:'kitchen', selectedItems:{}, quantities:{}, services:{}, location:'westernSydney', subtotalExGST:0, gst:0, totalIncGST:0, estimateMinimum:0, estimateMaximum:0, hasIncompleteSelections:false });
@@ -1293,9 +1294,9 @@ function calculateKitchenProducts(){
   const addLine = (label, amount) => { if(amount>0) breakdown.push({label, amount}); };
   const basePackagePrice = k.pkg && k.pkg !== 'custom' ? (BASE_KITCHEN[k.pkg] || 0) : 0;
   if(basePackagePrice){ subtotal += basePackagePrice; addLine(`Package · ${PKG_LABEL[k.pkg]||'Package'}`, basePackagePrice); }
-  const layoutRecord = pricingData.kitchen.layouts[k.layout] || pricingData.kitchen.layouts.lshape;
-  const layoutCost = getPricingCost(layoutRecord, {applyLocation:true});
-  if(layoutCost>0){ subtotal += layoutCost; addLine(`Layout · ${find(AppConfig.layoutsK, k.layout).name}`, layoutCost); }
+  const layoutRecord = k.layout ? (pricingData.kitchen.layouts[k.layout] || pricingData.kitchen.layouts.lshape) : null;
+  const layoutCost = layoutRecord ? getPricingCost(layoutRecord, {applyLocation:true}) : 0;
+  if(layoutCost>0){ subtotal += layoutCost; const layoutOption = getOption(AppConfig.layoutsK, k.layout); addLine(`Layout · ${layoutOption ? layoutOption.name : 'Layout'}`, layoutCost); }
   const cabinetKeys = [{key:'base',included:allow.base||0,record:pricingData.kitchen.cabinets.base},{key:'wall',included:allow.wall||0,record:pricingData.kitchen.cabinets.wall},{key:'tall',included:allow.tall||0,record:pricingData.kitchen.cabinets.tall},{key:'pantry',included:allow.pantry||0,record:pricingData.kitchen.cabinets.pantry},{key:'corner',included:allow.corner||0,record:pricingData.kitchen.cabinets.corner}];
   cabinetKeys.forEach(function(item){ const quantity = Math.max(0, Number(k[item.key]) || 0); const extra = Math.max(0, quantity - (item.included || 0)); if(extra>0){ const cost = getPricingCost(item.record, {applyLocation:true, quantity:extra}); subtotal += cost; addLine('Cabinet modules', cost); }});
   const drawerBanks = Math.max(0, Number(k.drawerBanks) || 0);
@@ -1355,9 +1356,9 @@ function calculateBathroomProducts(){
   const addLine = (label, amount) => { if(amount>0) breakdown.push({label, amount}); };
   const basePackagePrice = b.pkg && b.pkg !== 'custom' ? (BASE_BATHROOM[b.pkg] || 0) : 0;
   if(basePackagePrice){ subtotal += basePackagePrice; addLine(`Package · ${PKG_LABEL[b.pkg]||'Package'}`, basePackagePrice); }
-  const layoutRecord = pricingData.bathroom.layouts[b.layout] || pricingData.bathroom.layouts.standard;
-  const layoutCost = getPricingCost(layoutRecord, {applyLocation:true});
-  if(layoutCost>0){ subtotal += layoutCost; addLine(`Layout · ${find(AppConfig.layoutsB, b.layout).name}`, layoutCost); }
+  const layoutRecord = b.layout ? (pricingData.bathroom.layouts[b.layout] || pricingData.bathroom.layouts.standard) : null;
+  const layoutCost = layoutRecord ? getPricingCost(layoutRecord, {applyLocation:true}) : 0;
+  if(layoutCost>0){ subtotal += layoutCost; const layoutOption = getOption(AppConfig.layoutsB, b.layout); addLine(`Layout · ${layoutOption ? layoutOption.name : 'Layout'}`, layoutCost); }
   const vanityRecord = pricingData.bathroom.vanities[b.vanity] || pricingData.bathroom.vanities.wall;
   const allowVanityRecord = pricingData.bathroom.vanities[allow.vanity] || pricingData.bathroom.vanities.wall;
   const vanityCost = Math.max(0, getPricingCost(vanityRecord, {applyLocation:true}) - getPricingCost(allowVanityRecord, {applyLocation:true}));
@@ -1793,9 +1794,10 @@ function getDesignSummaryData(){
     const cabinetPieces=`${k.base} base · ${k.wall} wall · ${k.tall} tall · ${k.pantry} pantry · ${k.corner} corner`;
     const doorCount=k.base+k.wall+k.tall+k.pantry+k.corner;
     const drawerCount=k.drawerBanks*Math.max(k.drawersPer,1);
+    const layoutOption = getOption(AppConfig.layoutsK, k.layout);
     return {
       packageLabel:(k.pkg==='custom'?'Custom':(PKG_LABEL[k.pkg]||'Custom')),
-      layoutLabel:find(AppConfig.layoutsK,k.layout).name,
+      layoutLabel:layoutOption ? layoutOption.name : 'No layout selected',
       colourLabel,
       selectedProductsLabel:selectedProducts.length?selectedProducts.slice(0,3).join(' · '):'No upgrades selected',
       selectedProductsCount:selectedProducts.length,
@@ -1831,9 +1833,10 @@ function getDesignSummaryData(){
   if(b.storage!=='none') selectedProducts.push(find(AppConfig.storage,b.storage).name);
   if(b.bath!=='none') selectedProducts.push(find(AppConfig.baths,b.bath).name);
   const colourLabel=find(AppConfig.vanC,b.vColor).name;
+  const layoutOption = getOption(AppConfig.layoutsB, b.layout);
   return {
     packageLabel:(b.pkg==='custom'?'Custom':(PKG_LABEL[b.pkg]||'Custom')),
-    layoutLabel:find(AppConfig.layoutsB,b.layout).name,
+    layoutLabel:layoutOption ? layoutOption.name : 'No layout selected',
     colourLabel,
     selectedProductsLabel:selectedProducts.length?selectedProducts.slice(0,3).join(' · '):'No upgrades selected',
     selectedProductsCount:selectedProducts.length,
@@ -2172,12 +2175,14 @@ function quoteMsg(){
     const k=kitchen;
     const packageLabel=(k.pkg==='custom'?'Custom':(PKG_LABEL[k.pkg]||'Custom'));
     const colourLabel=k.color==='custom'?`Custom ${k.customHex}`:find(AppConfig.colors,k.color).name;
-    const selections=[find(AppConfig.layoutsK,k.layout).name,`${k.base} base / ${k.wall} wall / ${k.tall} tall / ${k.pantry} pantry / ${k.corner} corner`,`${k.benchLm.toFixed(1)} lm benchtop`,colourLabel,packageLabel].join(' · ');
+    const layoutLabel=getOption(AppConfig.layoutsK,k.layout)?getOption(AppConfig.layoutsK,k.layout).name:'No layout selected';
+    const selections=[layoutLabel,`${k.base} base / ${k.wall} wall / ${k.tall} tall / ${k.pantry} pantry / ${k.corner} corner`,`${k.benchLm.toFixed(1)} lm benchtop`,colourLabel,packageLabel].join(' · ');
     return ['Kitchen design request — MIC NSW','Design total: '+money(calcKitchen().totalIncGST),'Package: '+packageLabel,'Selections: '+selections].join('\n');
   }
   const b=bathroom;
   const packageLabel=(b.pkg==='custom'?'Custom':(PKG_LABEL[b.pkg]||'Custom'));
-  const selections=[find(AppConfig.layoutsB,b.layout).name,find(AppConfig.vanS,b.vanity).name,find(AppConfig.basins,b.basin).name,find(AppConfig.cabinets,b.cabinet).name,find(AppConfig.mixers,b.tap).name,find(AppConfig.showerHeads,b.showerHead).name,find(AppConfig.screens,b.screen).name,find(AppConfig.storage,b.storage).name,find(AppConfig.baths,b.bath).name,find(AppConfig.vanC,b.vColor).name].join(' · ');
+  const layoutLabel=getOption(AppConfig.layoutsB,b.layout)?getOption(AppConfig.layoutsB,b.layout).name:'No layout selected';
+  const selections=[layoutLabel,find(AppConfig.vanS,b.vanity).name,find(AppConfig.basins,b.basin).name,find(AppConfig.cabinets,b.cabinet).name,find(AppConfig.mixers,b.tap).name,find(AppConfig.showerHeads,b.showerHead).name,find(AppConfig.screens,b.screen).name,find(AppConfig.storage,b.storage).name,find(AppConfig.baths,b.bath).name,find(AppConfig.vanC,b.vColor).name].join(' · ');
   return ['Bathroom design request — MIC NSW','Design total: '+money(calcBathroom().totalIncGST),'Package: '+packageLabel,'Selections: '+selections].join('\n');
 }
 
