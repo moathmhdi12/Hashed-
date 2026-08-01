@@ -18,8 +18,9 @@
   if('scrollRestoration' in history) history.scrollRestoration='manual';
   var navEntry=performance.getEntriesByType&&performance.getEntriesByType('navigation')[0];
   var isReload=(navEntry&&navEntry.type==='reload')||(performance.navigation&&performance.navigation.type===1);
-  window.__MIC_FORCE_HOME_ON_RELOAD=!!isReload;
-  if(isReload){
+  var isFirstLoad=(navEntry&&navEntry.type==='navigate')||(performance.navigation&&performance.navigation.type===0);
+  window.__MIC_FORCE_HOME_ON_RELOAD=!!(isReload||isFirstLoad);
+  if(isReload||isFirstLoad){
     try{history.replaceState(null,'',location.pathname+location.search+'#home');}catch(e){location.hash='home';}
   }
   try{window.scrollTo({top:0,left:0,behavior:'auto'});}catch(e){window.scrollTo(0,0);}
@@ -1084,7 +1085,7 @@ p,li,label,.meta,.price,.line,.prods{overflow-wrap:anywhere}
 <li><a href="#services">Commercial Fit-outs</a></li>
 </ul></div>
 <div><h3>Company</h3><ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
-<li><a href="#about">About</a></li><li><a href="#why-choose">Why Choose Us</a></li>
+<li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#why-choose">Why Choose Us</a></li>
 <li><a href="#packages">Packages</a></li><li><a href="#faq">FAQ</a></li>
 </ul></div>
 <div><h3>Resources</h3><ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
