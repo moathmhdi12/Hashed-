@@ -105,6 +105,8 @@ h3{font-family:var(--fd);font-size:1.15rem;font-weight:600}
 .svc-card{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff;box-shadow:var(--sh);display:flex;flex-direction:column;min-width:0}
 .svc-card img{width:100%;aspect-ratio:16/10;object-fit:cover}
 .svc-card .body{padding:20px;display:flex;flex-direction:column;flex:1;gap:8px}
+.svc-story{display:grid;gap:8px;margin-top:4px}
+.svc-story p{font-size:.9rem;color:var(--ink2)}
 .process-grid{display:grid;gap:12px;min-width:0}
 @media(min-width:800px){.process-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .process-card{padding:20px;background:var(--stone);border:1px solid var(--line);border-radius:var(--radius);min-width:0}
@@ -348,10 +350,10 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
       <li><a href="#home" data-nav>Home</a></li>
       <li><a href="#about" data-nav>About</a></li>
       <li><a href="#services" data-nav>Services</a></li>
+      <li><a href="#why-choose" data-nav>Why Choose Us</a></li>
       <li><a href="#projects" data-nav>Our Work</a></li>
       <li><a href="#packages" data-nav>Packages</a></li>
       <li><a href="#design" data-nav>Design Studio</a></li>
-      <li><a href="#why-choose" data-nav>Why Choose Us</a></li>
       <li><a href="#process" data-nav>Process</a></li>
       <li><a href="#faq" data-nav>FAQ</a></li>
       <li><a href="#quote" data-nav>Contact</a></li>
@@ -380,10 +382,10 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
     <li><a href="#home" class="mnav">Home</a></li>
     <li><a href="#about" class="mnav">About</a></li>
     <li><a href="#services" class="mnav">Services</a></li>
+    <li><a href="#why-choose" class="mnav">Why Choose Us</a></li>
     <li><a href="#projects" class="mnav">Our Work</a></li>
     <li><a href="#packages" class="mnav">Packages</a></li>
     <li><a href="#design" class="mnav">Design Studio</a></li>
-    <li><a href="#why-choose" class="mnav">Why Choose Us</a></li>
     <li><a href="#process" class="mnav">Process</a></li>
     <li><a href="#faq" class="mnav">FAQ</a></li>
     <li><a href="#quote" class="mnav">Contact</a></li>
@@ -435,39 +437,51 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
 <section class="section" id="services">
   <div class="container">
     <span class="eyebrow">Services</span>
-    <h2 style="margin-top:10px">Specialist renovations across Greater Sydney</h2>
-    <p style="margin-top:12px;max-width:640px;color:var(--ink2)">From modern kitchen and bathroom makeovers to complete home overhauls, MIC NSW transforms Sydney homes with innovative design, superior craftsmanship and a clear, transparent process.</p>
+    <h2 style="margin-top:10px">Thoughtful renovations for kitchens, bathrooms and full-home spaces</h2>
+    <p style="margin-top:12px;max-width:640px;color:var(--ink2)">From modern kitchen and bathroom makeovers to complete home overhauls, MIC NSW transforms Sydney homes with innovative design, superior craftsmanship and a clear, transparent process that feels calm from the first consultation to the final handover.</p>
     <div class="svc-grid" style="margin-top:24px">
       <article class="svc-card">
         <img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Kitchen renovations Sydney by MIC NSW" width="640" height="400" loading="lazy" decoding="async">
         <div class="body">
           <h3>Kitchen Renovations</h3>
-          <p style="font-size:.9rem;color:var(--ink2)">Modern kitchen makeovers with custom cabinetry, premium benchtops, splashbacks and coordinated installation — designed for how you cook and live.</p>
-          <a href="#planner/kitchen" class="btn btn-outline btn-block" data-open-planner="kitchen" style="margin-top:auto">Design Your Kitchen</a>
+          <p style="font-size:.9rem;color:var(--ink2)">Bespoke kitchen renovations in Sydney designed around daily routines, entertaining, storage and lasting quality.</p>
+          <div class="svc-story">
+            <p>We transform compact kitchens into highly functional spaces and reimagine open-plan layouts with premium cabinetry, durable benchtops and a seamless flow between cooking, dining and living.</p>
+            <p>Every detail is considered, from appliance placement to lighting and finishes, so the result feels effortless as well as beautifully built.</p>
+          </div>
         </div>
       </article>
       <article class="svc-card">
         <img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Bathroom renovations Sydney by MIC NSW" width="640" height="400" loading="lazy" decoding="async">
         <div class="body">
           <h3>Bathroom Renovations</h3>
-          <p style="font-size:.9rem;color:var(--ink2)">Complete bathroom transformations with waterproofing, quality tiling, vanities, tapware and fixtures for ensuites and family bathrooms.</p>
-          <a href="#planner/bathroom" class="btn btn-outline btn-block" data-open-planner="bathroom" style="margin-top:auto">Design Your Bathroom</a>
+          <p style="font-size:.9rem;color:var(--ink2)">Elegant bathroom makeovers that balance comfort, practicality and long-term performance for everyday living.</p>
+          <div class="svc-story">
+            <p>Whether you are refreshing an ensuite, updating a family bathroom or creating a luxurious retreat, we focus on waterproofing, layout efficiency and timeless finishes that stand the test of time.</p>
+            <p>Our team coordinates fixtures, tiling, vanities and fittings so each space feels calm, refined and built to last.</p>
+          </div>
         </div>
       </article>
       <article class="svc-card">
         <img src="https://mic-nsw.com.au/img/image_contents/about-one-img-1.jpeg" alt="Home renovations Sydney by MIC NSW" width="640" height="400" loading="lazy" decoding="async">
         <div class="body">
           <h3>Home Renovations</h3>
-          <p style="font-size:.9rem;color:var(--ink2)">Full-home and multi-room renovations coordinated under one point of contact — including laundry renovations and custom joinery — tailored to your lifestyle.</p>
-          <a href="#quote" class="btn btn-outline btn-block" style="margin-top:auto">Request Quote</a>
+          <p style="font-size:.9rem;color:var(--ink2)">Thoughtful whole-home and multi-room renovations that bring harmony, function and value to your property.</p>
+          <div class="svc-story">
+            <p>We help homeowners reimagine living spaces with careful planning, cohesive materials and a clear project path from concept through to final handover.</p>
+            <p>From laundry upgrades to custom joinery and full-room transformations, every detail is coordinated to feel considered and connected.</p>
+          </div>
         </div>
       </article>
       <article class="svc-card">
         <img src="https://mic-nsw.com.au/img/image_contents/service2.webp" alt="Commercial renovations Sydney by MIC NSW" width="640" height="400" loading="lazy" decoding="async">
         <div class="body">
           <h3>Commercial Renovations</h3>
-          <p style="font-size:.9rem;color:var(--ink2)">Office and retail fit-outs with compliance-ready finishes, professional project management and clear communication from start to handover.</p>
-          <a href="#quote" class="btn btn-outline btn-block" style="margin-top:auto">Request Quote</a>
+          <p style="font-size:.9rem;color:var(--ink2)">Professional fit-outs and refurbishment projects designed to elevate workspaces with clarity and impact.</p>
+          <div class="svc-story">
+            <p>We deliver smart commercial renovations that balance presentation, compliance and everyday usability for offices, retail spaces and hospitality environments.</p>
+            <p>Our approach keeps the process efficient and collaborative, with dependable project management from planning to completion.</p>
+          </div>
         </div>
       </article>
     </div>
