@@ -1072,15 +1072,46 @@ const BASE_KITCHEN = {essential:16900,signature:24900,luxury:39900};
 const BASE_BATHROOM = {essential:19900,signature:26900,luxury:38900};
 
 const KITCHEN_ALLOWANCE = {
-  essential:{base:4,wall:3,tall:1,pantry:0,corner:0,drawerBanks:1,drawersPer:2,door:'flat',handle:'bar-black',hinge:'soft',bench:'lam',splash:'tile',sink:'abey1',mixer:'caroma',light:'none',oven:'none',cook:'none',hood:'none',mw:'none',fridge:'f600'},
-  signature:{base:5,wall:4,tall:1,pantry:1,corner:0,drawerBanks:2,drawersPer:3,door:'shaker',handle:'bar-brass',hinge:'soft',bench:'eng',splash:'tile',sink:'abey2',mixer:'phoenix',light:'led',oven:'none',cook:'none',hood:'none',mw:'none',fridge:'f600'},
-  luxury:{base:6,wall:5,tall:1,pantry:1,corner:1,drawerBanks:3,drawersPer:4,door:'poly',handle:'bar-brass',hinge:'soft',bench:'taj',splash:'stone',sink:'blanco',mixer:'sussex',light:'full',oven:'none',cook:'none',hood:'none',mw:'none',fridge:'f900'}
+  custom:{base:0,wall:0,tall:0,pantry:0,corner:0,drawerBanks:0,drawersPer:0,door:'flat',handle:'none',hinge:'std',bench:'none',splash:'none',sink:'none',mixer:'none',light:'none',oven:'none',cook:'none',hood:'none',mw:'none',fridge:'none',color:'white'},
+  essential:{base:4,wall:3,tall:1,pantry:0,corner:0,drawerBanks:1,drawersPer:2,door:'flat',handle:'bar-black',hinge:'soft',bench:'lam',splash:'tile',sink:'abey1',mixer:'caroma',light:'none',oven:'none',cook:'none',hood:'none',mw:'none',fridge:'f600',color:'white'},
+  signature:{base:5,wall:4,tall:1,pantry:1,corner:0,drawerBanks:2,drawersPer:3,door:'shaker',handle:'bar-brass',hinge:'soft',bench:'eng',splash:'tile',sink:'abey2',mixer:'phoenix',light:'led',oven:'none',cook:'none',hood:'none',mw:'none',fridge:'f600',color:'white'},
+  luxury:{base:6,wall:5,tall:1,pantry:1,corner:1,drawerBanks:3,drawersPer:4,door:'poly',handle:'bar-brass',hinge:'soft',bench:'taj',splash:'stone',sink:'blanco',mixer:'sussex',light:'full',oven:'none',cook:'none',hood:'none',mw:'none',fridge:'f900',color:'white'}
 };
 const BATHROOM_ALLOWANCE = {
+  custom:{vanity:'wall',tap:'caroma',screen:'semi',bath:'none',basin:'integrated',cabinet:'none',mirror:'none',showerHead:'basic',storage:'none',vColor:'white'},
   essential:{vanity:'wall',tap:'caroma',screen:'semi',bath:'none',basin:'integrated',cabinet:'single',mirror:'std',showerHead:'basic',storage:'none',vColor:'white'},
   signature:{vanity:'wall',tap:'phoenix',screen:'frame',bath:'none',basin:'under',cabinet:'double',mirror:'led',showerHead:'rain',storage:'cab',vColor:'white'},
   luxury:{vanity:'free',tap:'sussex',screen:'frame',bath:'free',basin:'vessel',cabinet:'linen',mirror:'full',showerHead:'dual',storage:'bench',vColor:'oak'}
 };
+
+const pricingData = {
+  metadata:{currency:'AUD',region:'Greater Sydney',gstRate:0.10,lastUpdated:'2026-08-01',pricingType:'Typical Greater Sydney product and installation allowances'},
+  kitchen:{
+    layouts:{straight:{id:'kitchen-layout-straight',category:'layouts',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},galley:{id:'kitchen-layout-galley',category:'layouts',pricingMode:'single',productPrice:450,installationAllowance:180,pricingTier:'standard'},lshape:{id:'kitchen-layout-lshape',category:'layouts',pricingMode:'single',productPrice:680,installationAllowance:220,pricingTier:'standard'},corner:{id:'kitchen-layout-corner',category:'layouts',pricingMode:'single',productPrice:980,installationAllowance:260,pricingTier:'standard'},ushape:{id:'kitchen-layout-ushape',category:'layouts',pricingMode:'single',productPrice:1320,installationAllowance:320,pricingTier:'standard'},island:{id:'kitchen-layout-island',category:'layouts',pricingMode:'single',productPrice:1450,installationAllowance:380,pricingTier:'premium'}},
+    cabinets:{base:{id:'kitchen-cabinet-base',category:'cabinets',pricingMode:'quantity',productPrice:980,installationAllowance:90,pricingTier:'standard'},wall:{id:'kitchen-cabinet-wall',category:'cabinets',pricingMode:'quantity',productPrice:780,installationAllowance:70,pricingTier:'standard'},tall:{id:'kitchen-cabinet-tall',category:'cabinets',pricingMode:'quantity',productPrice:1240,installationAllowance:120,pricingTier:'standard'},pantry:{id:'kitchen-cabinet-pantry',category:'cabinets',pricingMode:'quantity',productPrice:1500,installationAllowance:130,pricingTier:'standard'},corner:{id:'kitchen-cabinet-corner',category:'cabinets',pricingMode:'quantity',productPrice:1420,installationAllowance:110,pricingTier:'standard'}},
+    cabinetMaterials:{flat:{id:'kitchen-cabinet-material-flat',category:'cabinetMaterials',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},shaker:{id:'kitchen-cabinet-material-shaker',category:'cabinetMaterials',pricingMode:'single',productPrice:140,installationAllowance:0,pricingTier:'standard'},poly:{id:'kitchen-cabinet-material-poly',category:'cabinetMaterials',pricingMode:'single',productPrice:260,installationAllowance:0,pricingTier:'premium'},handleless:{id:'kitchen-cabinet-material-handleless',category:'cabinetMaterials',pricingMode:'single',productPrice:180,installationAllowance:0,pricingTier:'premium'}},
+    cabinetFinishes:{white:{id:'kitchen-cabinet-finish-white',category:'cabinetFinishes',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},warmwhite:{id:'kitchen-cabinet-finish-warmwhite',category:'cabinetFinishes',pricingMode:'single',productPrice:85,installationAllowance:0,pricingTier:'standard'},black:{id:'kitchen-cabinet-finish-black',category:'cabinetFinishes',pricingMode:'single',productPrice:125,installationAllowance:0,pricingTier:'premium'},polywhite:{id:'kitchen-cabinet-finish-polywhite',category:'cabinetFinishes',pricingMode:'single',productPrice:180,installationAllowance:0,pricingTier:'premium'},sage:{id:'kitchen-cabinet-finish-sage',category:'cabinetFinishes',pricingMode:'single',productPrice:155,installationAllowance:0,pricingTier:'premium'},navy:{id:'kitchen-cabinet-finish-navy',category:'cabinetFinishes',pricingMode:'single',productPrice:145,installationAllowance:0,pricingTier:'premium'},oak:{id:'kitchen-cabinet-finish-oak',category:'cabinetFinishes',pricingMode:'single',productPrice:190,installationAllowance:0,pricingTier:'premium'},walnut:{id:'kitchen-cabinet-finish-walnut',category:'cabinetFinishes',pricingMode:'single',productPrice:210,installationAllowance:0,pricingTier:'premium'},charcoal:{id:'kitchen-cabinet-finish-charcoal',category:'cabinetFinishes',pricingMode:'single',productPrice:170,installationAllowance:0,pricingTier:'premium'},greige:{id:'kitchen-cabinet-finish-greige',category:'cabinetFinishes',pricingMode:'single',productPrice:110,installationAllowance:0,pricingTier:'standard'},custom:{id:'kitchen-cabinet-finish-custom',category:'cabinetFinishes',pricingMode:'single',productPrice:220,installationAllowance:0,pricingTier:'premium'}},
+    handles:{none:{id:'kitchen-handle-none',category:'handles',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},'bar-black':{id:'kitchen-handle-bar-black',category:'handles',pricingMode:'single',productPrice:18,installationAllowance:0,pricingTier:'standard'},'bar-brass':{id:'kitchen-handle-bar-brass',category:'handles',pricingMode:'single',productPrice:26,installationAllowance:0,pricingTier:'premium'},'bar-chrome':{id:'kitchen-handle-bar-chrome',category:'handles',pricingMode:'single',productPrice:22,installationAllowance:0,pricingTier:'standard'},'knob-brass':{id:'kitchen-handle-knob-brass',category:'handles',pricingMode:'single',productPrice:32,installationAllowance:0,pricingTier:'premium'},'rail-black':{id:'kitchen-handle-rail-black',category:'handles',pricingMode:'single',productPrice:24,installationAllowance:0,pricingTier:'premium'},'rail-ss':{id:'kitchen-handle-rail-ss',category:'handles',pricingMode:'single',productPrice:24,installationAllowance:0,pricingTier:'premium'}},
+    hardware:{std:{id:'kitchen-hardware-standard',category:'hardware',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},soft:{id:'kitchen-hardware-soft',category:'hardware',pricingMode:'single',productPrice:12,installationAllowance:0,pricingTier:'standard'},push:{id:'kitchen-hardware-push',category:'hardware',pricingMode:'single',productPrice:28,installationAllowance:0,pricingTier:'premium'},drawerBank:{id:'kitchen-drawer-bank',category:'hardware',pricingMode:'quantity',productPrice:320,installationAllowance:40,pricingTier:'standard'},drawerExtra:{id:'kitchen-drawer-extra',category:'hardware',pricingMode:'quantity',productPrice:120,installationAllowance:20,pricingTier:'standard'}},
+    benchtops:{none:{id:'kitchen-benchtop-none',category:'benchtops',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},lam:{id:'kitchen-benchtop-lam',category:'benchtops',pricingMode:'size',productPrice:95,installationAllowance:140,pricingTier:'budget'},eng:{id:'kitchen-benchtop-eng',category:'benchtops',pricingMode:'size',productPrice:380,installationAllowance:180,pricingTier:'standard'},taj:{id:'kitchen-benchtop-taj',category:'benchtops',pricingMode:'size',productPrice:680,installationAllowance:220,pricingTier:'premium'},super:{id:'kitchen-benchtop-super',category:'benchtops',pricingMode:'size',productPrice:720,installationAllowance:220,pricingTier:'premium'},carrara:{id:'kitchen-benchtop-carrara',category:'benchtops',pricingMode:'size',productPrice:650,installationAllowance:220,pricingTier:'premium'},calacatta:{id:'kitchen-benchtop-calacatta',category:'benchtops',pricingMode:'size',productPrice:780,installationAllowance:250,pricingTier:'luxury'},statuario:{id:'kitchen-benchtop-statuario',category:'benchtops',pricingMode:'size',productPrice:820,installationAllowance:260,pricingTier:'luxury'},dek:{id:'kitchen-benchtop-dek',category:'benchtops',pricingMode:'size',productPrice:580,installationAllowance:260,pricingTier:'premium'},'custom-stone':{id:'kitchen-benchtop-custom-stone',category:'benchtops',pricingMode:'size',productPrice:0,installationAllowance:320,pricingTier:'luxury'}},
+    splashbacks:{none:{id:'kitchen-splash-none',category:'splashbacks',pricingMode:'size',productPrice:0,installationAllowance:0,pricingTier:'standard'},tile:{id:'kitchen-splash-tile',category:'splashbacks',pricingMode:'size',productPrice:75,installationAllowance:100,pricingTier:'standard'},glass:{id:'kitchen-splash-glass',category:'splashbacks',pricingMode:'size',productPrice:140,installationAllowance:120,pricingTier:'premium'},stone:{id:'kitchen-splash-stone',category:'splashbacks',pricingMode:'size',productPrice:190,installationAllowance:140,pricingTier:'premium'}},
+    appliances:{fridge:{id:'kitchen-appliance-fridge',category:'appliances',pricingMode:'single',productPrice:0,installationAllowance:180,electricalAllowance:140,pricingTier:'standard'},oven:{id:'kitchen-appliance-oven',category:'appliances',pricingMode:'single',productPrice:799,installationAllowance:180,electricalAllowance:140,pricingTier:'standard'},cooktop:{id:'kitchen-appliance-cooktop',category:'appliances',pricingMode:'single',productPrice:899,installationAllowance:180,electricalAllowance:140,pricingTier:'standard'},rangehood:{id:'kitchen-appliance-rangehood',category:'appliances',pricingMode:'single',productPrice:449,installationAllowance:120,electricalAllowance:80,pricingTier:'standard'},microwave:{id:'kitchen-appliance-microwave',category:'appliances',pricingMode:'single',productPrice:599,installationAllowance:120,electricalAllowance:80,pricingTier:'standard'},lighting:{id:'kitchen-appliance-lighting',category:'appliances',pricingMode:'single',productPrice:55,installationAllowance:60,pricingTier:'standard'}},
+    sinks:{none:{id:'kitchen-sink-none',category:'sinks',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},abey1:{id:'kitchen-sink-abey1',category:'sinks',pricingMode:'single',productPrice:389,installationAllowance:140,plumbingAllowance:120,pricingTier:'standard'},abey2:{id:'kitchen-sink-abey2',category:'sinks',pricingMode:'single',productPrice:549,installationAllowance:160,plumbingAllowance:140,pricingTier:'standard'},blanco:{id:'kitchen-sink-blanco',category:'sinks',pricingMode:'single',productPrice:849,installationAllowance:180,plumbingAllowance:150,pricingTier:'premium'},oliveri:{id:'kitchen-sink-oliveri',category:'sinks',pricingMode:'single',productPrice:679,installationAllowance:170,plumbingAllowance:140,pricingTier:'premium'}},
+    tapware:{none:{id:'kitchen-tapware-none',category:'tapware',pricingMode:'single',productPrice:0,installationAllowance:0,plumbingAllowance:0,pricingTier:'standard'},caroma:{id:'kitchen-tapware-caroma',category:'tapware',pricingMode:'single',productPrice:189,installationAllowance:80,plumbingAllowance:90,pricingTier:'standard'},phoenix:{id:'kitchen-tapware-phoenix',category:'tapware',pricingMode:'single',productPrice:329,installationAllowance:90,plumbingAllowance:100,pricingTier:'premium'},sussex:{id:'kitchen-tapware-sussex',category:'tapware',pricingMode:'single',productPrice:420,installationAllowance:100,plumbingAllowance:110,pricingTier:'luxury'}},
+    lighting:{none:{id:'kitchen-lighting-none',category:'lighting',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},led:{id:'kitchen-lighting-led',category:'lighting',pricingMode:'single',productPrice:55,installationAllowance:60,pricingTier:'standard'},pend:{id:'kitchen-lighting-pend',category:'lighting',pricingMode:'single',productPrice:420,installationAllowance:80,pricingTier:'standard'},full:{id:'kitchen-lighting-full',category:'lighting',pricingMode:'single',productPrice:650,installationAllowance:120,pricingTier:'premium'}}},
+  bathroom:{layouts:{standard:{id:'bathroom-layout-standard',category:'layouts',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},wetroom:{id:'bathroom-layout-wetroom',category:'layouts',pricingMode:'single',productPrice:980,installationAllowance:220,pricingTier:'premium'},ensuite:{id:'bathroom-layout-ensuite',category:'layouts',pricingMode:'single',productPrice:640,installationAllowance:180,pricingTier:'standard'}},vanities:{wall:{id:'bathroom-vanity-wall',category:'vanities',pricingMode:'single',productPrice:0,installationAllowance:140,pricingTier:'standard'},free:{id:'bathroom-vanity-free',category:'vanities',pricingMode:'single',productPrice:900,installationAllowance:200,pricingTier:'premium'}},basins:{integrated:{id:'bathroom-basin-integrated',category:'basins',pricingMode:'single',productPrice:420,installationAllowance:120,plumbingAllowance:90,pricingTier:'standard'},under:{id:'bathroom-basin-under',category:'basins',pricingMode:'single',productPrice:560,installationAllowance:140,plumbingAllowance:100,pricingTier:'standard'},counter:{id:'bathroom-basin-counter',category:'basins',pricingMode:'single',productPrice:690,installationAllowance:150,plumbingAllowance:110,pricingTier:'premium'},vessel:{id:'bathroom-basin-vessel',category:'basins',pricingMode:'single',productPrice:780,installationAllowance:160,plumbingAllowance:110,pricingTier:'premium'}},baths:{none:{id:'bathroom-bath-none',category:'baths',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},free:{id:'bathroom-bath-free',category:'baths',pricingMode:'single',productPrice:1800,installationAllowance:260,plumbingAllowance:140,pricingTier:'premium'}},showers:{basic:{id:'bathroom-shower-basic',category:'showers',pricingMode:'single',productPrice:0,installationAllowance:120,plumbingAllowance:90,pricingTier:'standard'},rain:{id:'bathroom-shower-rain',category:'showers',pricingMode:'single',productPrice:420,installationAllowance:140,plumbingAllowance:100,pricingTier:'standard'},dual:{id:'bathroom-shower-dual',category:'showers',pricingMode:'single',productPrice:780,installationAllowance:180,plumbingAllowance:120,pricingTier:'premium'}},showerScreens:{semi:{id:'bathroom-screen-semi',category:'showerScreens',pricingMode:'single',productPrice:0,installationAllowance:180,pricingTier:'standard'},frame:{id:'bathroom-screen-frame',category:'showerScreens',pricingMode:'single',productPrice:620,installationAllowance:220,pricingTier:'premium'}},tapware:{caroma:{id:'bathroom-tapware-caroma',category:'tapware',pricingMode:'single',productPrice:189,installationAllowance:80,plumbingAllowance:90,pricingTier:'standard'},phoenix:{id:'bathroom-tapware-phoenix',category:'tapware',pricingMode:'single',productPrice:329,installationAllowance:100,plumbingAllowance:100,pricingTier:'premium'},sussex:{id:'bathroom-tapware-sussex',category:'tapware',pricingMode:'single',productPrice:420,installationAllowance:110,plumbingAllowance:110,pricingTier:'luxury'}},mirrors:{none:{id:'bathroom-mirror-none',category:'mirrors',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},std:{id:'bathroom-mirror-std',category:'mirrors',pricingMode:'single',productPrice:240,installationAllowance:100,pricingTier:'standard'},led:{id:'bathroom-mirror-led',category:'mirrors',pricingMode:'single',productPrice:560,installationAllowance:120,pricingTier:'premium'},full:{id:'bathroom-mirror-full',category:'mirrors',pricingMode:'single',productPrice:780,installationAllowance:140,pricingTier:'premium'}},cabinets:{none:{id:'bathroom-cabinet-none',category:'cabinets',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},single:{id:'bathroom-cabinet-single',category:'cabinets',pricingMode:'single',productPrice:620,installationAllowance:120,pricingTier:'standard'},double:{id:'bathroom-cabinet-double',category:'cabinets',pricingMode:'single',productPrice:900,installationAllowance:140,pricingTier:'standard'},linen:{id:'bathroom-cabinet-linen',category:'cabinets',pricingMode:'single',productPrice:980,installationAllowance:160,pricingTier:'premium'}},floorTiles:{gry:{id:'bathroom-floor-tile-gry',category:'floorTiles',pricingMode:'size',productPrice:42,installationAllowance:60,pricingTier:'standard'},stn:{id:'bathroom-floor-tile-stn',category:'floorTiles',pricingMode:'size',productPrice:68,installationAllowance:75,pricingTier:'premium'}},wallTiles:{sub:{id:'bathroom-wall-tile-sub',category:'wallTiles',pricingMode:'size',productPrice:38,installationAllowance:55,pricingTier:'standard'},mar:{id:'bathroom-wall-tile-mar',category:'wallTiles',pricingMode:'size',productPrice:58,installationAllowance:70,pricingTier:'premium'}},lighting:{none:{id:'bathroom-lighting-none',category:'lighting',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},led:{id:'bathroom-lighting-led',category:'lighting',pricingMode:'single',productPrice:140,installationAllowance:90,pricingTier:'standard'},full:{id:'bathroom-lighting-full',category:'lighting',pricingMode:'single',productPrice:260,installationAllowance:120,pricingTier:'premium'}},accessories:{none:{id:'bathroom-accessory-none',category:'accessories',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},cab:{id:'bathroom-accessory-cab',category:'accessories',pricingMode:'single',productPrice:640,installationAllowance:90,pricingTier:'standard'},niche:{id:'bathroom-accessory-niche',category:'accessories',pricingMode:'single',productPrice:340,installationAllowance:70,pricingTier:'standard'},bench:{id:'bathroom-accessory-bench',category:'accessories',pricingMode:'single',productPrice:920,installationAllowance:120,pricingTier:'premium'}}},
+  services:{demolition:{basic:{id:'service-demolition-basic',category:'demolition',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'}},wasteRemoval:{basic:{id:'service-waste-basic',category:'wasteRemoval',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'}},plumbing:{standard:{id:'service-plumbing-standard',category:'plumbing',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},relocation:{id:'service-plumbing-relocation',category:'plumbing',pricingMode:'single',productPrice:900,installationAllowance:260,pricingTier:'premium'}},electrical:{standard:{id:'service-electrical-standard',category:'electrical',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},major:{id:'service-electrical-major',category:'electrical',pricingMode:'single',productPrice:1200,installationAllowance:280,pricingTier:'premium'}},installation:{standard:{id:'service-installation-standard',category:'installation',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'}},waterproofing:{basic:{id:'service-waterproofing-basic',category:'waterproofing',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'},full:{id:'service-waterproofing-full',category:'waterproofing',pricingMode:'single',productPrice:1400,installationAllowance:180,pricingTier:'premium'}},tiling:{basic:{id:'service-tiling-basic',category:'tiling',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'}},painting:{basic:{id:'service-painting-basic',category:'painting',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'}},carpentry:{basic:{id:'service-carpentry-basic',category:'carpentry',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'}},cleaning:{basic:{id:'service-cleaning-basic',category:'cleaning',pricingMode:'single',productPrice:0,installationAllowance:0,pricingTier:'standard'}}},
+  locationZones:{westernSydney:{multiplier:1.00},parramattaInnerWest:{multiplier:1.03},hillsDistrict:{multiplier:1.04},sydneyCBD:{multiplier:1.08},northShore:{multiplier:1.08},easternSuburbs:{multiplier:1.10},northernBeaches:{multiplier:1.10},outerSydney:{multiplier:1.08}},
+  complexityAdjustments:{island:0.02,waterfall:0.02,plumbingRelocation:0.05,electricalWork:0.04},
+  estimateRange:{minimumVariance:0.05,maximumVariance:0.10}
+};
+const pricingAudit = [{optionId:'layout',category:'kitchen.layouts',pricingMode:'single',connected:true},{optionId:'base',category:'kitchen.cabinets',pricingMode:'quantity',connected:true},{optionId:'wall',category:'kitchen.cabinets',pricingMode:'quantity',connected:true},{optionId:'tall',category:'kitchen.cabinets',pricingMode:'quantity',connected:true},{optionId:'pantry',category:'kitchen.cabinets',pricingMode:'quantity',connected:true},{optionId:'corner',category:'kitchen.cabinets',pricingMode:'quantity',connected:true},{optionId:'door',category:'kitchen.cabinetMaterials',pricingMode:'single',connected:true},{optionId:'color',category:'kitchen.cabinetFinishes',pricingMode:'single',connected:true},{optionId:'handle',category:'kitchen.handles',pricingMode:'single',connected:true},{optionId:'hinge',category:'kitchen.hardware',pricingMode:'single',connected:true},{optionId:'drawerBanks',category:'kitchen.hardware',pricingMode:'quantity',connected:true},{optionId:'bench',category:'kitchen.benchtops',pricingMode:'size',connected:true},{optionId:'splash',category:'kitchen.splashbacks',pricingMode:'size',connected:true},{optionId:'sink',category:'kitchen.sinks',pricingMode:'single',connected:true},{optionId:'mixer',category:'kitchen.tapware',pricingMode:'single',connected:true},{optionId:'oven',category:'kitchen.appliances',pricingMode:'single',connected:true},{optionId:'cook',category:'kitchen.appliances',pricingMode:'single',connected:true},{optionId:'hood',category:'kitchen.appliances',pricingMode:'single',connected:true},{optionId:'mw',category:'kitchen.appliances',pricingMode:'single',connected:true},{optionId:'fridge',category:'kitchen.appliances',pricingMode:'single',connected:true},{optionId:'light',category:'kitchen.lighting',pricingMode:'single',connected:true},{optionId:'vanity',category:'bathroom.vanities',pricingMode:'single',connected:true},{optionId:'basin',category:'bathroom.basins',pricingMode:'single',connected:true},{optionId:'cabinet',category:'bathroom.cabinets',pricingMode:'single',connected:true},{optionId:'mirror',category:'bathroom.mirrors',pricingMode:'single',connected:true},{optionId:'tap',category:'bathroom.tapware',pricingMode:'single',connected:true},{optionId:'showerHead',category:'bathroom.showers',pricingMode:'single',connected:true},{optionId:'screen',category:'bathroom.showerScreens',pricingMode:'single',connected:true},{optionId:'bath',category:'bathroom.baths',pricingMode:'single',connected:true},{optionId:'wTile',category:'bathroom.wallTiles',pricingMode:'size',connected:true},{optionId:'fTile',category:'bathroom.floorTiles',pricingMode:'size',connected:true}];
+const pricingLookup = new Map();
+function buildPricingLookup(node){if(!node || typeof node!=='object') return; Object.keys(node).forEach(function(key){ const value = node[key]; if(value && typeof value==='object' && !Array.isArray(value)){ if(value.id || value.pricingId){ pricingLookup.set(value.id || value.pricingId, value); } buildPricingLookup(value); }});}
+buildPricingLookup(pricingData);
+function getPricingRecord(pricingId){ if(!pricingId) return null; const record = pricingLookup.get(pricingId); if(!record){ console.warn('Missing pricing record for selection: '+pricingId); } return record || null; }
+function formatAUD(value){ const safeValue = Number.isFinite(value) ? value : 0; return new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD',maximumFractionDigits:0}).format(safeValue); }
+const money = v => formatAUD(v);
 
 const AppConfig = {
   kitchenSteps:[
@@ -1136,7 +1167,6 @@ const AppConfig = {
 
 const $ = id => document.getElementById(id);
 const clamp = (v,a,c) => Math.max(a, Math.min(c, v));
-const money = v => '$' + Math.round(v || 0).toLocaleString('en-AU');
 const find = (list, id) => (list || []).find(x => x.id === id) || (list && list[0]) || {};
 
 let renderScheduled = false;
@@ -1177,11 +1207,12 @@ const bathroom = reactive({
   wTile:'sub', fTile:'gry'
 });
 const app = reactive({ mode:'kitchen', ready:false });
+const pricingState = reactive({ projectType:'kitchen', selectedItems:{}, quantities:{}, services:{}, location:'westernSydney', subtotalExGST:0, gst:0, totalIncGST:0, estimateMinimum:0, estimateMaximum:0, hasIncompleteSelections:false });
 
 window.MICPlanner = window.MICPlanner || {};
 window.MICPlanner.setPackage = function(mode, pkgId){
   pkgId = (pkgId||'').toLowerCase();
-  if(pkgId!=='essential' && pkgId!=='signature' && pkgId!=='luxury') return;
+  if(pkgId!=='custom' && pkgId!=='essential' && pkgId!=='signature' && pkgId!=='luxury') return;
   if(mode==='bathroom'){
     bathroom.pkg = pkgId;
     const a = BATHROOM_ALLOWANCE[pkgId];
@@ -1206,85 +1237,188 @@ function nSteps() { return steps().length; }
 function cabHex() { return kitchen.color === 'custom' ? kitchen.customHex : find(AppConfig.colors, kitchen.color).hex; }
 function markDone() { const s = st(); s.done = { ...s.done, [s.step]: 1 }; }
 
-function calcKitchen() {
+function calculateSingleSelectionCategory(selectionValue, records, fallbackKey){
+  const record = records && records[selectionValue] ? records[selectionValue] : (records && records[fallbackKey] ? records[fallbackKey] : null);
+  return record ? getPricingCost(record) : 0;
+}
+function calculateMultiSelectionCategory(selectionValue, records, fallbackKey){
+  const record = records && records[selectionValue] ? records[selectionValue] : (records && records[fallbackKey] ? records[fallbackKey] : null);
+  return record ? getPricingCost(record) : 0;
+}
+function calculateQuantityItem(record, quantity){
+  const unit = getPricingCost(record, {applyLocation:false});
+  return unit * Math.max(0, Number(quantity) || 0);
+}
+function calculateUpgradeDifference(selectedRecord, standardRecord, quantity){
+  const selectedCost = getPricingCost(selectedRecord, {applyLocation:false});
+  const standardCost = getPricingCost(standardRecord, {applyLocation:false});
+  return Math.max(0, selectedCost - standardCost) * Math.max(0, Number(quantity) || 0);
+}
+function getPricingCost(record, options){
+  if(!record) return 0;
+  const quantity = options && options.quantity ? options.quantity : 1;
+  const productPrice = Number(record.productPrice) || 0;
+  const labourCost = (Number(record.installationAllowance) || 0) + (Number(record.plumbingAllowance) || 0) + (Number(record.electricalAllowance) || 0) + (Number(record.deliveryAllowance) || 0);
+  const locationMultiplier = options && options.applyLocation === false ? 1 : calculateLocationAdjustment(pricingState);
+  return quantity * (productPrice + labourCost * locationMultiplier);
+}
+function getCurrentActiveSelections(){
+  const mode = app.mode === 'bathroom' ? 'bathroom' : 'kitchen';
+  if(mode==='kitchen'){
+    return {mode,package:kitchen.pkg,layout:kitchen.layout,base:kitchen.base,wall:kitchen.wall,tall:kitchen.tall,pantry:kitchen.pantry,corner:kitchen.corner,door:kitchen.door,color:kitchen.color,handle:kitchen.handle,hinge:kitchen.hinge,drawerBanks:kitchen.drawerBanks,drawersPer:kitchen.drawersPer,bench:kitchen.bench,waterfall:kitchen.waterfall,splash:kitchen.splash,bulkhead:kitchen.bulkhead,sink:kitchen.sink,mixer:kitchen.mixer,oven:kitchen.oven,cook:kitchen.cook,hood:kitchen.hood,mw:kitchen.mw,fridge:kitchen.fridge,light:kitchen.light,island:kitchen.layout==='island',islandSize:kitchen.islandSize,islandCook:kitchen.islandCook,islandSeating:kitchen.islandSeating,benchLm:kitchen.benchLm,roomArea:Math.max(kitchen.w, 2.2) * Math.max(kitchen.d, 2.2)};
+  }
+  return {mode,package:bathroom.pkg,layout:bathroom.layout,vanity:bathroom.vanity,basin:bathroom.basin,cabinet:bathroom.cabinet,mirror:bathroom.mirror,tap:bathroom.tap,showerHead:bathroom.showerHead,screen:bathroom.screen,storage:bathroom.storage,bath:bathroom.bath,wTile:bathroom.wTile,fTile:bathroom.fTile,roomArea:Math.max(bathroom.w, 1.8) * Math.max(bathroom.d, 1.5)};
+}
+function calculateLocationAdjustment(state){
+  const zone = pricingState.location || 'westernSydney';
+  return pricingData.locationZones[zone] && pricingData.locationZones[zone].multiplier ? pricingData.locationZones[zone].multiplier : 1;
+}
+function calculateComplexityAdjustment(state){
+  let multiplier = 1;
+  if(state.island) multiplier += pricingData.complexityAdjustments.island;
+  if(state.waterfall) multiplier += pricingData.complexityAdjustments.waterfall;
+  if(state.layout === 'wetroom' || state.layout === 'ensuite') multiplier += 0.01;
+  if(state.roomArea > 8) multiplier += 0.01;
+  if(state.oven && state.oven !== 'none') multiplier += 0.01;
+  if(state.cook && state.cook !== 'none') multiplier += 0.01;
+  if(state.bath && state.bath !== 'none') multiplier += 0.01;
+  return multiplier;
+}
+function calculateKitchenProducts(){
   const k = kitchen;
-  const allow = KITCHEN_ALLOWANCE[k.pkg] || KITCHEN_ALLOWANCE.essential;
-  const nDoors = k.base + k.wall + k.tall + k.pantry + k.corner;
-  const extraBase = Math.max(0, k.base - allow.base);
-  const extraWall = Math.max(0, k.wall - allow.wall);
-  const extraTall = Math.max(0, k.tall - allow.tall);
-  const extraPantry = Math.max(0, k.pantry - allow.pantry);
-  const extraCorner = Math.max(0, k.corner - allow.corner);
-  const cab = extraBase*P.base + extraWall*P.wall + extraTall*P.tall + extraPantry*P.pantry + extraCorner*P.corner;
-  const extraBanks = Math.max(0, k.drawerBanks - allow.drawerBanks);
-  const extraPer = Math.max(0, k.drawersPer - allow.drawersPer);
-  const drawers = extraBanks*P.drawerBank + extraPer * Math.max(k.drawerBanks,1) * P.drawerExtra;
-  const doorMod = find(AppConfig.doors, k.door).mod;
-  const allowDoorMod = find(AppConfig.doors, allow.door).mod;
-  const doorUp = Math.max(0, doorMod - allowDoorMod) * nDoors;
-  const handleMod = find(AppConfig.handles, k.handle).mod;
-  const allowHandleMod = find(AppConfig.handles, allow.handle).mod;
-  const handleUp = Math.max(0, handleMod - allowHandleMod) * nDoors;
-  const hingeUp = (find(AppConfig.hinges, k.hinge).mod || 0) * nDoors;
-  const br = find(AppConfig.benches, k.bench).mod;
-  const allowBr = find(AppConfig.benches, allow.bench).mod;
-  const bench = Math.max(0, br - allowBr) * k.benchLm + (k.waterfall ? br * P.waterfall : 0);
-  const spMod = find(AppConfig.splash, k.splash).mod;
-  const allowSp = find(AppConfig.splash, allow.splash).mod;
-  const sp = Math.max(0, spMod - allowSp) * k.benchLm;
-  const bulk = k.bulkhead ? P.bulkhead * k.benchLm : 0;
-  const kick = k.kickboard ? 0 : 0;
-  const sinkMod = find(AppConfig.sinks, k.sink).mod;
-  const allowSink = find(AppConfig.sinks, allow.sink).mod;
-  const sink = Math.max(0, sinkMod - allowSink);
-  const mixerMod = find(AppConfig.mixers, k.mixer).mod;
-  const allowMixer = find(AppConfig.mixers, allow.mixer).mod;
-  const mixer = Math.max(0, mixerMod - allowMixer);
-  const apps = find(AppConfig.ovens, k.oven).mod + find(AppConfig.cooks, k.cook).mod + find(AppConfig.hoods, k.hood).mod + find(AppConfig.mws, k.mw).mod;
-  let light = 0;
-  if (k.light === 'led') light = P.lightLed * k.benchLm;
-  else light = find(AppConfig.lights, k.light).mod;
-  const allowLight = allow.light === 'led' ? P.lightLed * k.benchLm : find(AppConfig.lights, allow.light).mod;
-  light = Math.max(0, light - allowLight);
-  const base = 3000;
-  const upgrades = cab + drawers + doorUp + handleUp + hingeUp + bench + sp + bulk + sink + mixer + apps + light;
-  const total = base + upgrades;
-  return { total, base, upgrades, cab, drawers, doorUp, handleUp, hingeUp, bench, sp, bulk, kick, sink, mixer, apps, light, nDoors };
+  const allow = KITCHEN_ALLOWANCE[k.pkg] || KITCHEN_ALLOWANCE.custom;
+  const breakdown = [];
+  let subtotal = 0;
+  const addLine = (label, amount) => { if(amount>0) breakdown.push({label, amount}); };
+  const basePackagePrice = k.pkg && k.pkg !== 'custom' ? (BASE_KITCHEN[k.pkg] || 0) : 0;
+  if(basePackagePrice){ subtotal += basePackagePrice; addLine(`Package · ${PKG_LABEL[k.pkg]||'Package'}`, basePackagePrice); }
+  const layoutRecord = pricingData.kitchen.layouts[k.layout] || pricingData.kitchen.layouts.lshape;
+  const layoutCost = getPricingCost(layoutRecord, {applyLocation:true});
+  if(layoutCost>0){ subtotal += layoutCost; addLine(`Layout · ${find(AppConfig.layoutsK, k.layout).name}`, layoutCost); }
+  const cabinetKeys = [{key:'base',included:allow.base||0,record:pricingData.kitchen.cabinets.base},{key:'wall',included:allow.wall||0,record:pricingData.kitchen.cabinets.wall},{key:'tall',included:allow.tall||0,record:pricingData.kitchen.cabinets.tall},{key:'pantry',included:allow.pantry||0,record:pricingData.kitchen.cabinets.pantry},{key:'corner',included:allow.corner||0,record:pricingData.kitchen.cabinets.corner}];
+  cabinetKeys.forEach(function(item){ const quantity = Math.max(0, Number(k[item.key]) || 0); const extra = Math.max(0, quantity - (item.included || 0)); if(extra>0){ const cost = getPricingCost(item.record, {applyLocation:true, quantity:extra}); subtotal += cost; addLine('Cabinet modules', cost); }});
+  const drawerBanks = Math.max(0, Number(k.drawerBanks) || 0);
+  const drawerExtra = Math.max(0, Number(k.drawersPer) || 0);
+  const extraDrawerBanks = Math.max(0, drawerBanks - (allow.drawerBanks || 0));
+  const extraDrawerPer = Math.max(0, drawerExtra - (allow.drawersPer || 0));
+  const drawerCost = getPricingCost(pricingData.kitchen.hardware.drawerBank, {applyLocation:true, quantity:extraDrawerBanks}) + getPricingCost(pricingData.kitchen.hardware.drawerExtra, {applyLocation:true, quantity:extraDrawerPer * Math.max(drawerBanks, 1)});
+  if(drawerCost>0){ subtotal += drawerCost; addLine('Drawer storage', drawerCost); }
+  const doorRecord = pricingData.kitchen.cabinetMaterials[k.door] || pricingData.kitchen.cabinetMaterials.flat;
+  const allowDoorRecord = pricingData.kitchen.cabinetMaterials[allow.door] || pricingData.kitchen.cabinetMaterials.flat;
+  const doorCost = calculateUpgradeDifference(doorRecord, allowDoorRecord, k.base + k.wall + k.tall + k.pantry + k.corner);
+  if(doorCost>0){ subtotal += doorCost; addLine(`Door profile · ${find(AppConfig.doors, k.door).name}`, doorCost); }
+  const finishRecord = pricingData.kitchen.cabinetFinishes[k.color] || pricingData.kitchen.cabinetFinishes.white;
+  const allowFinishRecord = pricingData.kitchen.cabinetFinishes[allow.color] || pricingData.kitchen.cabinetFinishes.white;
+  const finishCost = calculateUpgradeDifference(finishRecord, allowFinishRecord, k.base + k.wall + k.tall + k.pantry + k.corner);
+  if(finishCost>0){ subtotal += finishCost; addLine(`Finish · ${find(AppConfig.colors, k.color).name}`, finishCost); }
+  const handleRecord = pricingData.kitchen.handles[k.handle] || pricingData.kitchen.handles.none;
+  const allowHandleRecord = pricingData.kitchen.handles[allow.handle] || pricingData.kitchen.handles.none;
+  const handleCost = calculateUpgradeDifference(handleRecord, allowHandleRecord, k.base + k.wall + k.tall + k.pantry + k.corner);
+  if(handleCost>0){ subtotal += handleCost; addLine(`Handles · ${find(AppConfig.handles, k.handle).name}`, handleCost); }
+  const hingeRecord = pricingData.kitchen.hardware[k.hinge] || pricingData.kitchen.hardware.std;
+  const allowHingeRecord = pricingData.kitchen.hardware[allow.hinge] || pricingData.kitchen.hardware.std;
+  const hingeCost = calculateUpgradeDifference(hingeRecord, allowHingeRecord, k.base + k.wall + k.tall + k.pantry + k.corner);
+  if(hingeCost>0){ subtotal += hingeCost; addLine(`Hinges · ${find(AppConfig.hinges, k.hinge).name}`, hingeCost); }
+  const benchRecord = pricingData.kitchen.benchtops[k.bench] || pricingData.kitchen.benchtops.lam;
+  const allowBenchRecord = pricingData.kitchen.benchtops[allow.bench] || pricingData.kitchen.benchtops.lam;
+  const benchBase = getPricingCost(benchRecord, {applyLocation:true, quantity:Math.max(0, k.benchLm || 0)});
+  const allowBenchBase = getPricingCost(allowBenchRecord, {applyLocation:true, quantity:Math.max(0, k.benchLm || 0)});
+  const benchCost = Math.max(0, benchBase - allowBenchBase) + (k.waterfall ? getPricingCost(benchRecord, {applyLocation:true, quantity:0.85}) : 0);
+  if(benchCost>0){ subtotal += benchCost; addLine(`Benchtop · ${find(AppConfig.benches, k.bench).name}`, benchCost); }
+  const splashRecord = pricingData.kitchen.splashbacks[k.splash] || pricingData.kitchen.splashbacks.tile;
+  const allowSplashRecord = pricingData.kitchen.splashbacks[allow.splash] || pricingData.kitchen.splashbacks.tile;
+  const splashCost = Math.max(0, getPricingCost(splashRecord, {applyLocation:true, quantity:Math.max(0, k.benchLm || 0)}) - getPricingCost(allowSplashRecord, {applyLocation:true, quantity:Math.max(0, k.benchLm || 0)}));
+  if(splashCost>0){ subtotal += splashCost; addLine(`Splashback · ${find(AppConfig.splash, k.splash).name}`, splashCost); }
+  if(k.bulkhead){ const bulkCost = getPricingCost({productPrice:P.bulkhead, installationAllowance:0}, {applyLocation:true, quantity:k.benchLm || 0}); subtotal += bulkCost; addLine('Bulkhead upgrade', bulkCost); }
+  const sinkRecord = pricingData.kitchen.sinks[k.sink] || pricingData.kitchen.sinks.none;
+  const allowSinkRecord = pricingData.kitchen.sinks[allow.sink] || pricingData.kitchen.sinks.none;
+  const sinkCost = Math.max(0, getPricingCost(sinkRecord, {applyLocation:true}) - getPricingCost(allowSinkRecord, {applyLocation:true}));
+  if(sinkCost>0){ subtotal += sinkCost; addLine(`Sink · ${find(AppConfig.sinks, k.sink).name}`, sinkCost); }
+  const mixerRecord = pricingData.kitchen.tapware[k.mixer] || pricingData.kitchen.tapware.none;
+  const allowMixerRecord = pricingData.kitchen.tapware[allow.mixer] || pricingData.kitchen.tapware.none;
+  const mixerCost = Math.max(0, getPricingCost(mixerRecord, {applyLocation:true}) - getPricingCost(allowMixerRecord, {applyLocation:true}));
+  if(mixerCost>0){ subtotal += mixerCost; addLine(`Mixer · ${find(AppConfig.mixers, k.mixer).name}`, mixerCost); }
+  const applianceCost = [{value:k.oven, record:pricingData.kitchen.appliances.oven},{value:k.cook, record:pricingData.kitchen.appliances.cooktop},{value:k.hood, record:pricingData.kitchen.appliances.rangehood},{value:k.mw, record:pricingData.kitchen.appliances.microwave},{value:k.fridge, record:pricingData.kitchen.appliances.fridge}].reduce(function(total, item){ if(item.value && item.value !== 'none'){ return total + getPricingCost(item.record, {applyLocation:true}); } return total; }, 0);
+  if(applianceCost>0){ subtotal += applianceCost; addLine('Appliance fit-out', applianceCost); }
+  const lightRecord = pricingData.kitchen.lighting[k.light] || pricingData.kitchen.lighting.none;
+  const allowLightRecord = pricingData.kitchen.lighting[allow.light] || pricingData.kitchen.lighting.none;
+  const lightCost = Math.max(0, getPricingCost(lightRecord, {applyLocation:true}) - getPricingCost(allowLightRecord, {applyLocation:true}));
+  if(lightCost>0){ subtotal += lightCost; addLine(`Lighting · ${find(AppConfig.lights, k.light).name}`, lightCost); }
+  return {subtotal, breakdown};
 }
-function calcBathroom() {
-  const base = 3000;
-  const allow = BATHROOM_ALLOWANCE[bathroom.pkg] || BATHROOM_ALLOWANCE.essential;
-  let t = 0;
-  const vanMod = find(AppConfig.vanS, bathroom.vanity).mod;
-  const allowVan = find(AppConfig.vanS, allow.vanity).mod;
-  t += Math.max(0, vanMod - allowVan);
-  const basinMod = find(AppConfig.basins, bathroom.basin).mod;
-  const allowBasin = find(AppConfig.basins, allow.basin).mod;
-  t += Math.max(0, basinMod - allowBasin);
-  const cabinetMod = find(AppConfig.cabinets, bathroom.cabinet).mod;
-  const allowCabinet = find(AppConfig.cabinets, allow.cabinet).mod;
-  t += Math.max(0, cabinetMod - allowCabinet);
-  const mirrorMod = find(AppConfig.mirrors, bathroom.mirror).mod;
-  const allowMirror = find(AppConfig.mirrors, allow.mirror).mod;
-  t += Math.max(0, mirrorMod - allowMirror);
-  const tapMod = find(AppConfig.mixers, bathroom.tap).mod;
-  const allowTap = find(AppConfig.mixers, allow.tap).mod;
-  t += Math.max(0, tapMod - allowTap);
-  const showerHeadMod = find(AppConfig.showerHeads, bathroom.showerHead).mod;
-  const allowShowerHead = find(AppConfig.showerHeads, allow.showerHead).mod;
-  t += Math.max(0, showerHeadMod - allowShowerHead);
-  const scrMod = find(AppConfig.screens, bathroom.screen).mod;
-  const allowScr = find(AppConfig.screens, allow.screen).mod;
-  t += Math.max(0, scrMod - allowScr);
-  const storageMod = find(AppConfig.storage, bathroom.storage).mod;
-  const allowStorage = find(AppConfig.storage, allow.storage).mod;
-  t += Math.max(0, storageMod - allowStorage);
-  const bathMod = find(AppConfig.baths, bathroom.bath).mod;
-  const allowBath = find(AppConfig.baths, allow.bath).mod;
-  t += Math.max(0, bathMod - allowBath);
-  const total = base + t;
-  return { total, base, upgrades: t };
+function calculateBathroomProducts(){
+  const b = bathroom;
+  const allow = BATHROOM_ALLOWANCE[b.pkg] || BATHROOM_ALLOWANCE.custom;
+  const breakdown = [];
+  let subtotal = 0;
+  const addLine = (label, amount) => { if(amount>0) breakdown.push({label, amount}); };
+  const basePackagePrice = b.pkg && b.pkg !== 'custom' ? (BASE_BATHROOM[b.pkg] || 0) : 0;
+  if(basePackagePrice){ subtotal += basePackagePrice; addLine(`Package · ${PKG_LABEL[b.pkg]||'Package'}`, basePackagePrice); }
+  const layoutRecord = pricingData.bathroom.layouts[b.layout] || pricingData.bathroom.layouts.standard;
+  const layoutCost = getPricingCost(layoutRecord, {applyLocation:true});
+  if(layoutCost>0){ subtotal += layoutCost; addLine(`Layout · ${find(AppConfig.layoutsB, b.layout).name}`, layoutCost); }
+  const vanityRecord = pricingData.bathroom.vanities[b.vanity] || pricingData.bathroom.vanities.wall;
+  const allowVanityRecord = pricingData.bathroom.vanities[allow.vanity] || pricingData.bathroom.vanities.wall;
+  const vanityCost = Math.max(0, getPricingCost(vanityRecord, {applyLocation:true}) - getPricingCost(allowVanityRecord, {applyLocation:true}));
+  if(vanityCost>0){ subtotal += vanityCost; addLine(`Vanity · ${find(AppConfig.vanS, b.vanity).name}`, vanityCost); }
+  const basinRecord = pricingData.bathroom.basins[b.basin] || pricingData.bathroom.basins.integrated;
+  const allowBasinRecord = pricingData.bathroom.basins[allow.basin] || pricingData.bathroom.basins.integrated;
+  const basinCost = Math.max(0, getPricingCost(basinRecord, {applyLocation:true}) - getPricingCost(allowBasinRecord, {applyLocation:true}));
+  if(basinCost>0){ subtotal += basinCost; addLine(`Basin · ${find(AppConfig.basins, b.basin).name}`, basinCost); }
+  const cabinetRecord = pricingData.bathroom.cabinets[b.cabinet] || pricingData.bathroom.cabinets.none;
+  const allowCabinetRecord = pricingData.bathroom.cabinets[allow.cabinet] || pricingData.bathroom.cabinets.none;
+  const cabinetCost = Math.max(0, getPricingCost(cabinetRecord, {applyLocation:true}) - getPricingCost(allowCabinetRecord, {applyLocation:true}));
+  if(cabinetCost>0){ subtotal += cabinetCost; addLine(`Cabinet · ${find(AppConfig.cabinets, b.cabinet).name}`, cabinetCost); }
+  const mirrorRecord = pricingData.bathroom.mirrors[b.mirror] || pricingData.bathroom.mirrors.std;
+  const allowMirrorRecord = pricingData.bathroom.mirrors[allow.mirror] || pricingData.bathroom.mirrors.std;
+  const mirrorCost = Math.max(0, getPricingCost(mirrorRecord, {applyLocation:true}) - getPricingCost(allowMirrorRecord, {applyLocation:true}));
+  if(mirrorCost>0){ subtotal += mirrorCost; addLine(`Mirror · ${find(AppConfig.mirrors, b.mirror).name}`, mirrorCost); }
+  const tapRecord = pricingData.bathroom.tapware[b.tap] || pricingData.bathroom.tapware.caroma;
+  const allowTapRecord = pricingData.bathroom.tapware[allow.tap] || pricingData.bathroom.tapware.caroma;
+  const tapCost = Math.max(0, getPricingCost(tapRecord, {applyLocation:true}) - getPricingCost(allowTapRecord, {applyLocation:true}));
+  if(tapCost>0){ subtotal += tapCost; addLine(`Tapware · ${find(AppConfig.mixers, b.tap).name}`, tapCost); }
+  const showerRecord = pricingData.bathroom.showers[b.showerHead] || pricingData.bathroom.showers.basic;
+  const allowShowerRecord = pricingData.bathroom.showers[allow.showerHead] || pricingData.bathroom.showers.basic;
+  const showerCost = Math.max(0, getPricingCost(showerRecord, {applyLocation:true}) - getPricingCost(allowShowerRecord, {applyLocation:true}));
+  if(showerCost>0){ subtotal += showerCost; addLine(`Shower head · ${find(AppConfig.showerHeads, b.showerHead).name}`, showerCost); }
+  const screenRecord = pricingData.bathroom.showerScreens[b.screen] || pricingData.bathroom.showerScreens.semi;
+  const allowScreenRecord = pricingData.bathroom.showerScreens[allow.screen] || pricingData.bathroom.showerScreens.semi;
+  const screenCost = Math.max(0, getPricingCost(screenRecord, {applyLocation:true}) - getPricingCost(allowScreenRecord, {applyLocation:true}));
+  if(screenCost>0){ subtotal += screenCost; addLine(`Shower screen · ${find(AppConfig.screens, b.screen).name}`, screenCost); }
+  const storageRecord = pricingData.bathroom.accessories[b.storage] || pricingData.bathroom.accessories.none;
+  const allowStorageRecord = pricingData.bathroom.accessories[allow.storage] || pricingData.bathroom.accessories.none;
+  const storageCost = Math.max(0, getPricingCost(storageRecord, {applyLocation:true}) - getPricingCost(allowStorageRecord, {applyLocation:true}));
+  if(storageCost>0){ subtotal += storageCost; addLine(`Storage · ${find(AppConfig.storage, b.storage).name}`, storageCost); }
+  const bathRecord = pricingData.bathroom.baths[b.bath] || pricingData.bathroom.baths.none;
+  const allowBathRecord = pricingData.bathroom.baths[allow.bath] || pricingData.bathroom.baths.none;
+  const bathCost = Math.max(0, getPricingCost(bathRecord, {applyLocation:true}) - getPricingCost(allowBathRecord, {applyLocation:true}));
+  if(bathCost>0){ subtotal += bathCost; addLine(`Bath · ${find(AppConfig.baths, b.bath).name}`, bathCost); }
+  const wallArea = Math.max(0, (b.w || 0) * (b.d || 0) * 0.65);
+  const floorArea = Math.max(0, (b.w || 0) * (b.d || 0));
+  const wallTileRecord = pricingData.bathroom.wallTiles[b.wTile] || pricingData.bathroom.wallTiles.sub;
+  const floorTileRecord = pricingData.bathroom.floorTiles[b.fTile] || pricingData.bathroom.floorTiles.gry;
+  const wallTileCost = getPricingCost(wallTileRecord, {applyLocation:true, quantity:wallArea});
+  const floorTileCost = getPricingCost(floorTileRecord, {applyLocation:true, quantity:floorArea});
+  if(wallTileCost>0){ subtotal += wallTileCost; addLine(`Wall tiles · ${find(AppConfig.wTiles, b.wTile).name}`, wallTileCost); }
+  if(floorTileCost>0){ subtotal += floorTileCost; addLine(`Floor tiles · ${find(AppConfig.fTiles, b.fTile).name}`, floorTileCost); }
+  return {subtotal, breakdown};
 }
+function calculateSubtotalExGST(){
+  const selections = getCurrentActiveSelections();
+  const subtotal = app.mode === 'kitchen' ? calculateKitchenProducts().subtotal : calculateBathroomProducts().subtotal;
+  const locationMultiplier = calculateLocationAdjustment(selections);
+  const complexityMultiplier = calculateComplexityAdjustment(selections);
+  return subtotal * locationMultiplier * complexityMultiplier;
+}
+function calculateGST(subtotal){ return subtotal * pricingData.metadata.gstRate; }
+function calculateTotalIncGST(subtotal){ return subtotal + calculateGST(subtotal); }
+function calculateEstimateRange(total){ const minVariance = pricingData.estimateRange.minimumVariance; const maxVariance = pricingData.estimateRange.maximumVariance; return { minimum: total * (1 - minVariance), maximum: total * (1 + maxVariance) }; }
+function recalculatePricing(){ const selections = getCurrentActiveSelections(); const subtotal = calculateSubtotalExGST(); const gst = calculateGST(subtotal); const total = subtotal + gst; const estimateRange = calculateEstimateRange(total); pricingState.projectType = selections.mode; pricingState.selectedItems = selections; pricingState.subtotalExGST = subtotal; pricingState.gst = gst; pricingState.totalIncGST = total; pricingState.estimateMinimum = estimateRange.minimum; pricingState.estimateMaximum = estimateRange.maximum; pricingState.hasIncompleteSelections = false; return pricingState; }
+function updateExistingPriceDisplay(){ const range = recalculatePricing(); const priceEl = $('sumPrice'); if(priceEl){ priceEl.textContent = `${formatAUD(range.estimateMinimum)} – ${formatAUD(range.estimateMaximum)}`; } const subEl = document.querySelector('#sumCol .sub'); if(subEl){ subEl.textContent = 'Estimated project range · incl. GST'; } }
+function savePricingState(){ if(typeof window==='undefined' || !window.localStorage) return; try{ const payload = { mode: app.mode, kitchen: { ...kitchen }, bathroom: { ...bathroom }, pricingState: { ...pricingState, selectedItems: getCurrentActiveSelections() } }; window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload)); }catch(err){ console.warn('Unable to save planner pricing state', err); } }
+function restorePricingState(){ if(typeof window==='undefined' || !window.localStorage) return; try{ const raw = window.localStorage.getItem(STORAGE_KEY); if(!raw) return; const payload = JSON.parse(raw); if(payload.mode==='bathroom') app.mode = 'bathroom'; else app.mode = 'kitchen'; if(payload.kitchen){ Object.keys(payload.kitchen).forEach(function(key){ kitchen[key] = payload.kitchen[key]; }); } if(payload.bathroom){ Object.keys(payload.bathroom).forEach(function(key){ bathroom[key] = payload.bathroom[key]; }); } if(payload.pricingState && payload.pricingState.location){ pricingState.location = payload.pricingState.location; } }catch(err){ console.warn('Unable to restore planner pricing state', err); } }
+function calcKitchen(){ return recalculatePricing(); }
+function calcBathroom(){ return recalculatePricing(); }
 
 let scene, camera, renderer, controls, root, threeReady = false;
 let lastKitchenTargetKey = null, lastBathTargetKey = null;
@@ -1812,15 +1946,14 @@ function getBathroomServiceBreakdown(){
   return items;
 }
 function getLiveEstimateBreakdown(){
-  const base=[{label:'Base estimate',amount:3000}];
-  const items=app.mode==='kitchen'?getKitchenServiceBreakdown():getBathroomServiceBreakdown();
-  return base.concat(items);
+  const totals = app.mode==='kitchen' ? calculateKitchenProducts() : calculateBathroomProducts();
+  return (totals.breakdown || []).slice();
 }
 function renderSummary(){
   const data=getDesignSummaryData();
-  const estimate = app.mode==='kitchen' ? calcKitchen().total : calcBathroom().total;
   const breakdown=getLiveEstimateBreakdown();
-  $('sumPrice').textContent=money(estimate);
+  const range = app.mode==='kitchen' ? calcKitchen() : calcBathroom();
+  $('sumPrice').textContent=`${formatAUD(range.estimateMinimum)} – ${formatAUD(range.estimateMaximum)}`;
   $('sumBody').innerHTML=`<div class="quote-card">
     <div class="quote-chip">Indicative Sydney pricing</div>
     <h4>Design estimate ready</h4>
@@ -2048,9 +2181,13 @@ function quoteMsg(){
 }
 
 function init(){
+  restorePricingState();
   init3D();
   bind();
   app.ready=true;
+  recalculatePricing();
+  updateExistingPriceDisplay();
+  render();
 }
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
 else init();
