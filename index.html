@@ -251,6 +251,10 @@ body.planner-open .site-header{display:none!important}
 #planner-view .quote-card p{font-size:.74rem;line-height:1.5;color:rgba(255,255,255,.78)}
 #planner-view .quote-list{display:grid;gap:6px;margin:10px 0 0;padding-left:16px;font-size:.72rem;color:rgba(255,255,255,.84)}
 #planner-view .quote-list li::marker{color:var(--brass3)}
+#planner-view .quote-highlights{display:grid;gap:8px;margin-top:10px}
+#planner-view .quote-highlight{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)}
+#planner-view .quote-highlight__label{font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.62);font-family:var(--fl)}
+#planner-view .quote-highlight__value{font-size:.72rem;font-weight:600;color:#fff;text-align:right;line-height:1.35}
 #planner-view .quote-info{margin-top:10px;padding:8px 10px;border-radius:8px;background:rgba(111,179,104,.15);color:#eaf8ea;border:1px solid rgba(111,179,104,.24);font-size:.68rem;line-height:1.5}
 #planner-view .quick-summary{position:sticky;top:12px;z-index:2;background:#0F1110;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;color:#fff;box-shadow:0 12px 24px rgba(0,0,0,.16)}
 #planner-view .quick-summary__head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#dcd8cd;font-family:var(--fl)}
@@ -1651,12 +1655,22 @@ function getDesignSummaryData(){
     if(k.hood!=='none') selectedProducts.push(find(AppConfig.hoods,k.hood).name);
     if(k.mw!=='none') selectedProducts.push(find(AppConfig.mws,k.mw).name);
     const colourLabel=k.color==='custom'?`Custom ${k.customHex}`:find(AppConfig.colors,k.color).name;
+    const cabinetPieces=`${k.base} base · ${k.wall} wall · ${k.tall} tall · ${k.pantry} pantry · ${k.corner} corner`;
+    const doorCount=k.base+k.wall+k.tall+k.pantry+k.corner;
+    const drawerCount=k.drawerBanks*Math.max(k.drawersPer,1);
     return {
       packageLabel:PKG_LABEL[k.pkg]||'Essential',
       layoutLabel:find(AppConfig.layoutsK,k.layout).name,
       colourLabel,
       selectedProductsLabel:selectedProducts.length?selectedProducts.slice(0,3).join(' · '):'No upgrades selected',
       selectedProductsCount:selectedProducts.length,
+      pricingHighlights:[
+        {label:'Cabinet pieces', value:cabinetPieces},
+        {label:'Door count', value:`${doorCount} doors`},
+        {label:'Drawer count', value:`${drawerCount} drawer fronts`},
+        {label:'Benchtop sizing', value:`${k.benchLm.toFixed(1)} lm · ${k.waterfall?'waterfall':'plain edge'}`},
+        {label:'Selected finish', value:colourLabel}
+      ],
       quickSummary:[
         {label:'Base Cabinets', value:k.base},
         {label:'Wall Cabinets', value:k.wall},
@@ -1688,6 +1702,13 @@ function getDesignSummaryData(){
     colourLabel,
     selectedProductsLabel:selectedProducts.length?selectedProducts.slice(0,3).join(' · '):'No upgrades selected',
     selectedProductsCount:selectedProducts.length,
+    pricingHighlights:[
+      {label:'Vanity & basin', value:`${find(AppConfig.vanS,b.vanity).name} · ${find(AppConfig.basins,b.basin).name}`},
+      {label:'Cabinet & mirror', value:`${find(AppConfig.cabinets,b.cabinet).name} · ${find(AppConfig.mirrors,b.mirror).name}`},
+      {label:'Fixtures', value:`${find(AppConfig.mixers,b.tap).name} · ${find(AppConfig.showerHeads,b.showerHead).name}`},
+      {label:'Shower & storage', value:`${find(AppConfig.screens,b.screen).name} · ${find(AppConfig.storage,b.storage).name}`},
+      {label:'Tiles', value:`${find(AppConfig.wTiles,b.wTile).name}/${find(AppConfig.fTiles,b.fTile).name}`}
+    ],
     quickSummary:[
       {label:'Layout', value:find(AppConfig.layoutsB,b.layout).name},
       {label:'Vanity', value:find(AppConfig.vanS,b.vanity).name},
@@ -1807,6 +1828,9 @@ function renderSummary(){
     <ul class="quote-list">
       ${breakdown.map(item=>`<li style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span>${item.label}</span><strong>${money(item.amount)}</strong></li>`).join('')}
     </ul>
+    <div class="quote-highlights">
+      ${(data.pricingHighlights||[]).map(item=>`<div class="quote-highlight"><span class="quote-highlight__label">${item.label}</span><span class="quote-highlight__value">${item.value}</span></div>`).join('')}
+    </div>
     <div class="quote-info">Indicative pricing for Sydney supply and installation planning. Final pricing is confirmed after site review, measurements, product availability and trade scope.</div>
   </div>
   <div class="quick-summary">
