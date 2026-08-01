@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Kitchen &amp; Bathroom Renovations Sydney | MIC NSW Licensed Builders</title>
+    <meta name="description" content="MIC NSW delivers kitchen renovations Sydney, bathroom renovations Sydney, kitchen remodel Greater Sydney and bathroom renovation near me Sydney with licensed builders, custom joinery and clear renovation packages." />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#1C1F1A" />
+    <link rel="canonical" href="https://mic-nsw.com.au/" />
+    <link rel="icon" href="https://mic-nsw.com.au/front/images/logo2.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Kitchen &amp; Bathroom Renovations Sydney | MIC NSW" />
+    <meta property="og:description" content="Licensed Sydney kitchen and bathroom renovation specialists for Greater Sydney homes, custom joinery and transparent packages." />
+    <meta property="og:url" content="https://mic-nsw.com.au/" />
+    <meta property="og:image" content="https://mic-nsw.com.au/front/images/logo2.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kitchen &amp; Bathroom Renovations Sydney | MIC NSW" />
+    <meta name="twitter:description" content="Sydney homeowners trust MIC NSW for kitchen and bathroom renovations with licensed building guidance and tailored design." />
+    <meta name="twitter:image" content="https://mic-nsw.com.au/front/images/logo2.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ink: #1C1F1A;
+        --brass: #B4813F;
+        --stone: #F6F3EC;
+        --white: #FFFEFB;
+        --slate: #2E4247;
+        --line: rgba(28,31,26,0.14);
+        --text-muted: #4b514a;
+        --shadow: 0 16px 40px -22px rgba(28,31,26,0.36);
+        --font-head: "Fraunces", Georgia, serif;
+        --font-body: "Inter", Arial, sans-serif;
+        --font-label: "Space Mono", monospace;
+        --max: 1180px;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--font-body);
+        background: var(--white);
+        color: var(--ink);
+        line-height: 1.65;
+        overflow-x: hidden;
+      }
+      body.planner-open { overflow: hidden; }
+      img { display: block; max-width: 100%; }
+      a { color: inherit; text-decoration: none; }
+      button, input, select, textarea { font: inherit; }
+      ul { padding: 0; margin: 0; list-style: none; }
+      .container { width: min(var(--max), calc(100% - 2rem)); margin: 0 auto; }
+      .section { padding: 4.5rem 0; }
+      .section--dark { background: var(--slate); color: var(--white); }
+      .section--cream { background: var(--stone); }
+      .eyebrow {
+        margin: 0 0 0.7rem;
+        font-size: 0.75rem;
+        font-family: var(--font-label);
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--brass);
+      }
+      h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.12; margin: 0 0 1rem; }
+      h1 { font-size: clamp(2.3rem, 4.6vw, 3.7rem); max-width: 12ch; }
+      h2 { font-size: clamp(1.75rem, 3.25vw, 2.35rem); }
+      h3 { font-size: 1.25rem; }
+      p { margin: 0 0 1rem; color: var(--text-muted); }
+      .section--dark p, .section--dark li, .section--dark a { color: rgba(255,255,255,0.84); }
+      .section--dark .eyebrow { color: #f0d9b4; }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-height: 46px;
+        padding: 0.8rem 1.2rem;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      }
+      .btn:hover { transform: translateY(-1px); }
+      .btn--primary { background: var(--ink); color: var(--white); box-shadow: var(--shadow); }
+      .btn--brass { background: var(--brass); color: var(--white); box-shadow: var(--shadow); }
+      .btn--outline { background: transparent; border-color: var(--line); color: var(--ink); }
+      .btn--wa { background: #25D366; color: var(--white); }
+      .btn--light { background: var(--white); color: var(--ink); }
+      .btn-group { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+      .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(255,254,251,0.94);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
+      }
+      .site-header__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-height: 74px;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-width: 0;
+      }
+      .brand__mark {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 42px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: var(--white);
+      }
+      .brand__mark img { width: 100%; height: 100%; object-fit: contain; }
+      .brand__text { font-family: var(--font-head); font-size: 1.08rem; font-weight: 700; }
+      .brand__text small { display: block; font-family: var(--font-label); font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
+      .site-nav {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .site-nav__links { display: flex; gap: 1rem; flex-wrap: wrap; }
+      .site-nav__links a { font-size: 0.92rem; color: var(--text-muted); font-weight: 600; }
+      .site-nav__links a:hover, .site-nav__links a:focus-visible { color: var(--ink); }
+      .site-nav__actions { display: flex; gap: 0.7rem; align-items: center; }
+      .site-nav__toggle { display: none; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: var(--white); cursor: pointer; }
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 74px 1rem auto 1rem;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        box-shadow: var(--shadow);
+        padding: 1rem;
+        z-index: 90;
+      }
+      .mobile-menu.open { display: block; }
+      .mobile-menu a { display: block; padding: 0.8rem 0; border-bottom: 1px solid var(--line); font-weight: 600; }
+      .mobile-menu a:last-child { border-bottom: 0; }
+
+      .hero {
+        padding: 4.5rem 0 3.5rem;
+        background: linear-gradient(135deg, rgba(246,243,236,0.95), rgba(255,254,251,0.95));
+      }
+      .hero__grid {
+        display: grid;
+        gap: 2rem;
+        align-items: center;
+      }
+      .hero__copy p { font-size: 1.05rem; max-width: 62ch; }
+      .hero__highlights {
+        display: grid;
+        gap: 0.9rem;
+        margin-top: 1.5rem;
+      }
+      .hero__highlights li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 0.95rem;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 0.9rem;
+        box-shadow: var(--shadow);
+      }
+      .chip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.7rem; border-radius: 999px; font-size: 0.8rem; font-family: var(--font-label); font-weight: 700; background: rgba(180,129,63,0.16); color: var(--brass); }
+      .hero__media { position: relative; }
+      .hero__media img { width: 100%; height: 100%; min-height: 420px; object-fit: cover; border-radius: 1.6rem; box-shadow: var(--shadow); }
+      .hero__card {
+        position: absolute;
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        background: rgba(255,254,251,0.96);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        padding: 1rem 1.1rem;
+        box-shadow: var(--shadow);
+      }
+      .hero__card strong { display: block; font-size: 0.95rem; margin-bottom: 0.25rem; }
+      .hero__card span { font-size: 0.86rem; color: var(--text-muted); }
+
+      .feature-grid, .services-grid, .projects-grid, .packages-grid, .process-grid, .contact-grid {
+        display: grid;
+        gap: 1.2rem;
+      }
+      .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .feature-card, .service-card, .package-card, .process-card, .project-card, .faq-card, .contact-card {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 1.1rem;
+        padding: 1.25rem;
+        box-shadow: var(--shadow);
+      }
+      .feature-card h3, .service-card h3, .package-card h3, .process-card h3, .project-card h3, .faq-card h3, .contact-card h3 { margin-bottom: 0.65rem; }
+      .feature-card p, .service-card p, .package-card p, .process-card p, .project-card p, .faq-card p, .contact-card p { margin-bottom: 0; }
+      .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .service-card img, .project-card img { width: 100%; border-radius: 0.9rem; height: 220px; object-fit: cover; margin-bottom: 1rem; }
+      .project-card img { height: 240px; }
+      .package-card--featured { border-color: var(--brass); background: linear-gradient(180deg, rgba(255,254,251,1), rgba(246,243,236,1)); }
+      .package-card__price { display: block; margin-top: 0.8rem; font-size: 1.35rem; font-family: var(--font-head); color: var(--brass); }
+      .packages-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .process-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .process-card { background: var(--stone); }
+      .process-card strong { display: block; margin-bottom: 0.4rem; font-size: 0.9rem; color: var(--brass); font-family: var(--font-label); }
+      .projects-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .faq-list { display: grid; gap: 1rem; }
+      .faq-card details { cursor: pointer; }
+      .faq-card summary { font-weight: 700; display: flex; justify-content: space-between; gap: 1rem; list-style: none; }
+      .faq-card summary::-webkit-details-marker { display: none; }
+      .faq-card p { margin-top: 0.8rem; }
+      .contact-grid { grid-template-columns: 1.05fr 0.95fr; }
+      .contact-card form { display: grid; gap: 0.8rem; }
+      .contact-card label { font-size: 0.84rem; font-weight: 700; color: var(--ink); }
+      .contact-card input, .contact-card select, .contact-card textarea {
+        width: 100%;
+        min-height: 46px;
+        padding: 0.8rem 0.95rem;
+        border: 1px solid var(--line);
+        border-radius: 0.8rem;
+        background: var(--white);
+      }
+      .contact-card textarea { min-height: 120px; resize: vertical; }
+      .contact-card button { margin-top: 0.2rem; }
+      .contact-links { display: grid; gap: 0.7rem; margin-top: 1rem; }
+      .contact-links a { display: inline-flex; align-items: center; gap: 0.55rem; font-weight: 600; }
+      .contact-stack { display: grid; gap: 1rem; }
+
+      .cta-band { padding: 3rem 0; background: var(--ink); color: var(--white); }
+      .cta-band__wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+      .cta-band h2 { margin-bottom: 0.4rem; color: var(--white); }
+
+      .site-footer { background: var(--slate); color: rgba(255,255,255,0.9); padding: 3.2rem 0 1.3rem; }
+      .footer-grid { display: grid; gap: 1.1rem; grid-template-columns: 1.2fr 0.9fr 0.9fr 1fr; }
+      .site-footer h4 { font-family: var(--font-label); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: #f0d9b4; margin-bottom: 0.85rem; }
+      .footer-links { display: grid; gap: 0.55rem; }
+      .footer-links a { color: rgba(255,255,255,0.78); }
+      .footer-bottom { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.16); font-size: 0.82rem; color: rgba(255,255,255,0.66); }
+      .action-row { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1rem; }
+
+      #planner-view {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 110;
+        background: var(--stone);
+        color: var(--ink);
+      }
+      body.planner-open #planner-view { display: block; }
+      #planner-view .planner-shell { display: grid; grid-template-rows: auto 1fr auto; min-height: 100vh; }
+      #planner-view .planner-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem 1rem 0.8rem;
+        background: var(--ink);
+        color: var(--white);
+      }
+      #planner-view .planner-top .brand__text, #planner-view .planner-top .brand__text small { color: var(--white); }
+      #planner-view .planner-top .brand__text small { color: #f0d9b4; }
+      #planner-view .planner-top button { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; padding: 0.6rem 0.9rem; cursor: pointer; }
+      #planner-view .planner-content { display: grid; grid-template-columns: minmax(200px, 250px) minmax(0, 1fr) minmax(220px, 280px); min-height: 0; }
+      #planner-view .planner-section { padding: 1rem; border-right: 1px solid var(--line); overflow: auto; }
+      #planner-view .planner-section:last-child { border-right: 0; }
+      #planner-view .planner-steps { display: grid; gap: 0.6rem; }
+      #planner-view .planner-step {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        border: 1px solid var(--line);
+        border-radius: 0.8rem;
+        padding: 0.75rem 0.8rem;
+        background: var(--white);
+        cursor: pointer;
+        font-weight: 700;
+      }
+      #planner-view .planner-step.active { border-color: var(--brass); box-shadow: inset 0 0 0 1px rgba(180,129,63,0.2); }
+      #planner-view .planner-step__index { width: 28px; height: 28px; border-radius: 50%; background: var(--stone); display: inline-grid; place-items: center; font-size: 0.82rem; font-family: var(--font-label); }
+      #planner-view .planner-main { display: grid; grid-template-rows: auto 1fr; min-height: 0; }
+      #planner-view .planner-preview {
+        padding: 1rem 1rem 0;
+        display: grid;
+        gap: 0.8rem;
+      }
+      #planner-view .preview-card {
+        background: linear-gradient(160deg, rgba(255,254,251,0.98), rgba(246,243,236,0.96));
+        border: 1px solid var(--line);
+        border-radius: 1.2rem;
+        padding: 1rem;
+        box-shadow: var(--shadow);
+      }
+      #planner-view .preview-card__frame {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 0.75rem;
+        min-height: 220px;
+      }
+      #planner-view .preview-card__frame > div { border-radius: 1rem; border: 1px solid var(--line); background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(240,232,220,0.95)); }
+      #planner-view .preview-card__frame .preview-floor { background: linear-gradient(135deg, #fff, #eee3ce); min-height: 110px; }
+      #planner-view .preview-card__frame .preview-side { background: linear-gradient(135deg, #e9e0d0, #f7f0e5); min-height: 110px; }
+      #planner-view .preview-card__label { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.5rem; }
+      #planner-view .planner-options { padding: 1rem; overflow: auto; }
+      #planner-view .options-grid { display: grid; gap: 0.8rem; }
+      #planner-view .option-card {
+        border: 1px solid var(--line);
+        border-radius: 0.95rem;
+        padding: 0.9rem;
+        background: var(--white);
+        cursor: pointer;
+        transition: border-color 180ms ease, transform 180ms ease;
+      }
+      #planner-view .option-card:hover { border-color: var(--brass); transform: translateY(-1px); }
+      #planner-view .option-card.active { border-color: var(--brass); box-shadow: inset 0 0 0 1px rgba(180,129,63,0.15); }
+      #planner-view .option-card__title { font-weight: 700; margin-bottom: 0.2rem; }
+      #planner-view .option-card__desc { font-size: 0.88rem; color: var(--text-muted); }
+      #planner-view .planner-summary { padding: 1rem; background: rgba(255,255,255,0.86); overflow: auto; }
+      #planner-view .planner-summary__list { display: grid; gap: 0.7rem; margin-top: 0.7rem; }
+      #planner-view .planner-summary__item { border-bottom: 1px solid var(--line); padding-bottom: 0.6rem; }
+      #planner-view .planner-summary__item:last-child { border-bottom: 0; }
+      #planner-view .planner-nav {
+        position: sticky;
+        bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        gap: 0.8rem;
+        padding: 0.9rem 1rem calc(1rem + env(safe-area-inset-bottom));
+        border-top: 1px solid var(--line);
+        background: rgba(255,254,251,0.95);
+        backdrop-filter: blur(8px);
+      }
+      #planner-view .planner-nav button { min-width: 112px; }
+      #planner-view .planner-nav button[disabled] { opacity: 0.45; cursor: not-allowed; }
+
+      @media (max-width: 980px) {
+        .services-grid, .projects-grid, .packages-grid, .contact-grid, .footer-grid { grid-template-columns: 1fr 1fr; }
+        .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        #planner-view .planner-content { grid-template-columns: 1fr; }
+        #planner-view .planner-section { border-right: 0; border-bottom: 1px solid var(--line); }
+        #planner-view .planner-preview { padding-bottom: 0; }
+      }
+      @media (max-width: 760px) {
+        .site-nav__links { display: none; }
+        .site-nav__actions .btn--primary { display: none; }
+        .site-nav__toggle { display: inline-grid; place-items: center; }
+        .hero__grid, .feature-grid, .services-grid, .projects-grid, .packages-grid, .process-grid, .contact-grid, .footer-grid { grid-template-columns: 1fr; }
+        .hero { padding-top: 3rem; }
+        .hero__media img { min-height: 320px; }
+        .section { padding: 3.6rem 0; }
+        .cta-band__wrap { align-items: flex-start; }
+        #planner-view .planner-top { padding: 0.9rem 0.9rem 0.8rem; }
+        #planner-view .planner-preview { padding: 0.8rem 0.8rem 0; }
+        #planner-view .preview-card__frame { grid-template-columns: 1fr; min-height: auto; }
+        #planner-view .planner-summary { order: 3; }
+        #planner-view .planner-preview { max-height: 32vh; overflow: hidden; }
+      }
+      @media (max-width: 520px) {
+        .container { width: min(var(--max), calc(100% - 1.2rem)); }
+        .btn { min-height: 44px; }
+        #planner-view .planner-nav { flex-direction: column-reverse; }
+        #planner-view .planner-nav button { width: 100%; }
+      }
+    </style>
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": ["HomeAndConstructionBusiness", "LocalBusiness"],
+        "name": "MIC NSW",
+        "url": "https://mic-nsw.com.au/",
+        "telephone": "+61-470-640-083",
+        "email": "info@mic-nsw.com.au",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "NSW",
+          "addressCountry": "AU",
+          "addressLocality": "Greater Sydney"
+        },
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Sydney"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Greater Sydney"
+          }
+        ],
+        "priceRange": "$$$",
+        "description": "MIC NSW delivers kitchen renovations Sydney, bathroom renovations Sydney and custom joinery across Greater Sydney.",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Kitchen and bathroom renovation services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Kitchen renovations Sydney"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Bathroom renovations Sydney"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Custom joinery Sydney"
+              }
+            }
+          ]
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do you work with licensed builders in Sydney?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. MIC NSW provides renovation project delivery across Greater Sydney with a licensed building approach and clear communication from planning through completion."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does a kitchen or bathroom renovation usually take?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Timelines vary by scope, but many kitchen renovations Sydney and bathroom renovation projects take several weeks to a few months depending on design complexity and approvals."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What affects bathroom renovation cost Sydney?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Floorplan changes, waterproofing, plumbing, joinery, fixtures and finish level all influence bathroom renovation cost Sydney."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which Sydney suburbs do you service?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We service homes throughout Sydney, Greater Sydney and nearby areas including the Inner West, North Shore, Eastern Suburbs, Western Sydney, Hills District, Sutherland Shire and Northern Beaches."
+            }
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "MIC NSW",
+        "url": "https://mic-nsw.com.au/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://mic-nsw.com.au/#contact",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+</head>
+  <body>
+    <a class="visually-hidden" href="#content">Skip to content</a>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href="#home" aria-label="MIC NSW home">
+          <span class="brand__mark" aria-hidden="true"><img src="https://mic-nsw.com.au/front/images/logo2.png" alt="MIC NSW logo" /></span>
+          <span class="brand__text">MIC NSW<small>Licensed builders</small></span>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <div class="site-nav__links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#design-studio">Design Studio</a>
+            <a href="#packages">Packages</a>
+            <a href="#process">Process</a>
+            <a href="#projects">Projects</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
+          </div>
+          <div class="site-nav__actions">
+            <a class="btn btn--outline" href="https://wa.me/61470640083" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="btn btn--primary" href="#design-studio">Start Designing</a>
+            <button class="site-nav__toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-mobile-toggle>
+              ☰
+            </button>
+          </div>
+        </nav>
+      </div>
+      <div class="mobile-menu" data-mobile-menu>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#design-studio">Design Studio</a>
+        <a href="#packages">Packages</a>
+        <a href="#process">Process</a>
+        <a href="#projects">Projects</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </header>
+
+    <main id="content">
+      <section class="hero" id="home">
+        <div class="container hero__grid">
+          <div class="hero__copy">
+            <p class="eyebrow">Sydney kitchen &amp; bathroom renovations</p>
+            <h1>Kitchen &amp; bathroom renovations Sydney homeowners trust.</h1>
+            <p>MIC NSW helps families across Greater Sydney plan custom kitchen renovations, bathroom renovations and full home renovation upgrades with a licensed builder, clear packages and design-led support from concept to completion.</p>
+            <div class="btn-group">
+              <a class="btn btn--primary" href="#contact">Book a free consultation</a>
+              <a class="btn btn--outline" href="#design-studio">Open the planner</a>
+            </div>
+            <ul class="hero__highlights">
+              <li><span class="chip">Licensed builders</span> Home renovations NSW with expert project coordination</li>
+              <li><span class="chip">Custom joinery</span> Tailored storage, cabinetry and finishes for Sydney homes</li>
+              <li><span class="chip">Clear packages</span> Kitchen renovation packages Sydney and bathroom renovation cost guidance</li>
+            </ul>
+          </div>
+          <div class="hero__media">
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80" alt="Sydney kitchen renovation with stone benchtops and custom joinery" loading="eager" />
+            <div class="hero__card">
+              <strong>Serving Greater Sydney</strong>
+              <span>Inner West, North Shore, Eastern Suburbs, Western Sydney, Hills District, Sutherland Shire and Northern Beaches</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--cream" id="about">
+        <div class="container">
+          <p class="eyebrow">About MIC NSW</p>
+          <h2>Licensed kitchen and bathroom specialists for Greater Sydney homes</h2>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <h3>Built for local homes</h3>
+              <p>We manage kitchen renovations Sydney and bathroom renovations Sydney with practical planning, strong communication and a focus on lasting workmanship. Our team is experienced in delivering home renovations NSW for busy family households, apartments and period homes.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Design-led renovation support</h3>
+              <p>From initial concept through to construction, we help you compare layouts, materials and renovation packages so the result feels functional, calm and aligned with your lifestyle.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="services">
+        <div class="container">
+          <p class="eyebrow">Services</p>
+          <h2>Kitchen and bathroom renovations tailored to Sydney living</h2>
+          <div class="services-grid">
+            <article class="service-card">
+              <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80" alt="Sydney kitchen renovation with open-plan cabinetry and premium finishes" loading="lazy" />
+              <h3>Kitchen renovations Sydney</h3>
+              <p>We design and build kitchen renovations Sydney that balance storage, cooking flow and entertaining. Whether you want a compact refresh or a full kitchen remodel Greater Sydney, our team can guide layout, joinery and finishes.</p>
+            </article>
+            <article class="service-card">
+              <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80" alt="Bathroom renovation in Sydney with modern vanity and stone surfaces" loading="lazy" />
+              <h3>Bathroom renovations Sydney</h3>
+              <p>From bathroom renovation near me Sydney searches to full ensuite upgrades, we help clients choose waterproofing, tiling and fittings that suit both use and visual style. We also provide practical guidance on bathroom renovation cost Sydney.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--cream" id="design-studio">
+        <div class="container">
+          <p class="eyebrow">Design Studio</p>
+          <h2>Explore your renovation direction before you commit</h2>
+          <p>Use our planner to compare project styles, layouts and finishes. It is designed to help Sydney homeowners narrow down decisions for a kitchen renovation or bathroom update without losing momentum.</p>
+          <div class="btn-group" style="margin-top: 1.2rem;">
+            <button class="btn btn--primary" type="button" data-planner-open>Open the planner</button>
+            <a class="btn btn--outline" href="#packages">View renovation packages</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="packages">
+        <div class="container">
+          <p class="eyebrow">Packages</p>
+          <h2>Flexible packages for kitchen and bathroom upgrades</h2>
+          <div class="packages-grid">
+            <article class="package-card">
+              <h3>Refresh</h3>
+              <p>Ideal for cosmetic updates, cabinetry refresh and targeted improvements.</p>
+              <span class="package-card__price">From $18k*</span>
+            </article>
+            <article class="package-card package-card--featured">
+              <h3>Signature</h3>
+              <p>Balanced scope for custom joinery, premium surfaces and smart storage.</p>
+              <span class="package-card__price">From $35k*</span>
+            </article>
+            <article class="package-card">
+              <h3>Complete Renovation</h3>
+              <p>Full project management for kitchen remodel Greater Sydney or bathroom renovations with structural works.</p>
+              <span class="package-card__price">From $60k*</span>
+            </article>
+          </div>
+          <p class="chip" style="margin-top: 1rem;">*Indicative Sydney metro pricing only and subject to site conditions, materials and scope.</p>
+        </div>
+      </section>
+
+      <section class="section section--cream" id="process">
+        <div class="container">
+          <p class="eyebrow">Process</p>
+          <h2>A clear renovation journey for local clients</h2>
+          <div class="process-grid">
+            <article class="process-card">
+              <strong>01</strong>
+              <h3>Consultation</h3>
+              <p>We review your goals, budget and site for kitchen renovations Sydney or bathroom renovations Sydney.</p>
+            </article>
+            <article class="process-card">
+              <strong>02</strong>
+              <h3>Design</h3>
+              <p>We map layout, joinery and finishes so your renovation feels intentional from the start.</p>
+            </article>
+            <article class="process-card">
+              <strong>03</strong>
+              <h3>Build</h3>
+              <p>We coordinate trades and keep the build transparent, efficient and aligned with your timeline.</p>
+            </article>
+            <article class="process-card">
+              <strong>04</strong>
+              <h3>Deliver</h3>
+              <p>Your project is finalised with practical support, maintenance guidance and a polished finish.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="projects">
+        <div class="container">
+          <p class="eyebrow">Projects</p>
+          <h2>Recent renovation directions shaped for Sydney homes</h2>
+          <div class="projects-grid">
+            <article class="project-card">
+              <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80" alt="Inner West kitchen renovation with contemporary cabinetry and stone island" loading="lazy" />
+              <h3>Inner West kitchen refresh</h3>
+              <p>Clean cabinetry, smart storage and a warmer palette for an active family home.</p>
+            </article>
+            <article class="project-card">
+              <img src="https://images.unsplash.com/photo-1620625515032-6ed0c1790c75?auto=format&fit=crop&w=1200&q=80" alt="North Shore bathroom renovation with spa-inspired finishes" loading="lazy" />
+              <h3>North Shore bathroom retreat</h3>
+              <p>Layered textures, floating vanity and a soft-toned palette for a calm ensuite.</p>
+            </article>
+            <article class="project-card">
+              <img src="https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=1200&q=80" alt="Western Sydney custom joinery installation for a modern kitchen" loading="lazy" />
+              <h3>Western Sydney custom joinery</h3>
+              <p>Built-in storage, integrated appliances and durable finishes for everyday family use.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--cream" id="faq">
+        <div class="container">
+          <p class="eyebrow">FAQ</p>
+          <h2>Common questions about Sydney renovation projects</h2>
+          <div class="faq-list">
+            <article class="faq-card">
+              <details open>
+                <summary>Do you work with licensed builders in Sydney?<span>+</span></summary>
+                <p>Yes. MIC NSW provides renovation project delivery across Greater Sydney with a licensed building approach and clear communication from planning through completion.</p>
+              </details>
+            </article>
+            <article class="faq-card">
+              <details>
+                <summary>How long does a kitchen or bathroom renovation usually take?<span>+</span></summary>
+                <p>Timelines vary by scope, but many kitchen renovations Sydney and bathroom renovation projects take several weeks to a few months depending on design complexity and approvals.</p>
+              </details>
+            </article>
+            <article class="faq-card">
+              <details>
+                <summary>What affects bathroom renovation cost Sydney?<span>+</span></summary>
+                <p>Floorplan changes, waterproofing, plumbing, joinery, fixtures and finish level all influence bathroom renovation cost Sydney. We provide transparent guidance during the planning stage.</p>
+              </details>
+            </article>
+            <article class="faq-card">
+              <details>
+                <summary>Which Sydney suburbs do you service?<span>+</span></summary>
+                <p>We service homes throughout Sydney, Greater Sydney and nearby areas including the Inner West, North Shore, Eastern Suburbs, Western Sydney, Hills District, Sutherland Shire and Northern Beaches.</p>
+              </details>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="container contact-grid">
+          <article class="contact-card">
+            <p class="eyebrow">Contact</p>
+            <h2>Start your Sydney renovation enquiry</h2>
+            <p>Tell us about your kitchen or bathroom renovation goals and we will help you understand the right package, timeline and design direction for your home.</p>
+            <div class="contact-links">
+              <a href="tel:+61470640083">Phone: +61 470 640 083</a>
+              <a href="mailto:info@mic-nsw.com.au">Email: info@mic-nsw.com.au</a>
+              <a href="https://wa.me/61470640083" target="_blank" rel="noopener">WhatsApp MIC NSW</a>
+            </div>
+          </article>
+          <article class="contact-card">
+            <form action="https://formspree.io/f/your-form-id" method="POST">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" required />
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="name@email.com" required />
+              <label for="service">Service</label>
+              <select id="service" name="service">
+                <option>Kitchen renovation</option>
+                <option>Bathroom renovation</option>
+                <option>Custom joinery</option>
+                <option>Full home renovation</option>
+              </select>
+              <label for="message">Project details</label>
+              <textarea id="message" name="message" placeholder="Share your Sydney renovation goals, suburb and timeline"></textarea>
+              <button class="btn btn--primary" type="submit">Request a quote</button>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta-band">
+        <div class="container cta-band__wrap">
+          <div>
+            <p class="eyebrow">Free consultation</p>
+            <h2>Discuss your kitchen or bathroom renovation in Sydney today.</h2>
+          </div>
+          <div class="btn-group">
+            <a class="btn btn--light" href="mailto:info@mic-nsw.com.au">Email us</a>
+            <a class="btn btn--brass" href="https://wa.me/61470640083" target="_blank" rel="noopener">Book on WhatsApp</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <h4>MIC NSW</h4>
+          <p>Licensed builders for kitchen renovations Sydney, bathroom renovations Sydney and home renovations NSW with a design-led, transparent approach.</p>
+          <div class="action-row">
+            <a class="btn btn--light" href="mailto:info@mic-nsw.com.au">Email Us</a>
+            <a class="btn btn--wa" href="https://wa.me/61470640083" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <div class="footer-links">
+            <a href="tel:+61470640083">Phone +61 470 640 083</a>
+            <a href="mailto:info@mic-nsw.com.au">Email info@mic-nsw.com.au</a>
+            <a href="https://wa.me/61470640083" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+        <div>
+          <h4>Business details</h4>
+          <div class="footer-links">
+            <span>Licence 393630C</span>
+            <span>ABN 51 665 533 282</span>
+            <span>Greater Sydney, NSW, Australia</span>
+          </div>
+        </div>
+        <div>
+          <h4>Follow</h4>
+          <div class="footer-links">
+            <a href="https://www.facebook.com" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://www.instagram.com" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://wa.me/61470640083" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <p>© 2026 MIC NSW. Licensed builder services for Sydney kitchen renovations and bathroom renovations.</p>
+      </div>
+    </footer>
+
+    <div id="planner-view" aria-hidden="true">
+      <div class="planner-shell">
+        <div class="planner-top">
+          <a class="brand" href="#home" aria-label="MIC NSW home">
+            <span class="brand__mark" aria-hidden="true"><img src="https://mic-nsw.com.au/front/images/logo2.png" alt="MIC NSW logo" /></span>
+            <span class="brand__text">MIC NSW<small>Planner</small></span>
+          </a>
+          <button type="button" data-planner-close>Close</button>
+        </div>
+        <div class="planner-content">
+          <section class="planner-section" aria-label="Planner steps">
+            <h3>Plan your project</h3>
+            <div class="planner-steps" data-steps></div>
+          </section>
+          <section class="planner-section planner-main">
+            <div class="planner-preview" aria-live="polite">
+              <div class="preview-card">
+                <div class="preview-card__frame">
+                  <div class="preview-floor"></div>
+                  <div class="preview-side"></div>
+                </div>
+                <div class="preview-card__label">2D preview • 3D view is not required for the planning experience.</div>
+              </div>
+            </div>
+            <div class="planner-options" data-options></div>
+          </section>
+          <aside class="planner-section planner-summary" aria-label="Planner summary">
+            <h3>Summary</h3>
+            <div class="planner-summary__list" data-summary></div>
+          </aside>
+        </div>
+        <div class="planner-nav">
+          <button class="btn btn--outline" type="button" data-planner-back>Back</button>
+          <button class="btn btn--primary" type="button" data-planner-next>Next</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const plannerView = document.getElementById('planner-view');
+      const plannerSteps = document.querySelector('[data-steps]');
+      const plannerOptions = document.querySelector('[data-options]');
+      const plannerSummary = document.querySelector('[data-summary]');
+      const openPlannerButtons = document.querySelectorAll('[data-planner-open]');
+      const closePlannerButton = document.querySelector('[data-planner-close]');
+      const plannerBack = document.querySelector('[data-planner-back]');
+      const plannerNext = document.querySelector('[data-planner-next]');
+      const mobileToggle = document.querySelector('[data-mobile-toggle]');
+      const mobileMenu = document.querySelector('[data-mobile-menu]');
+
+      const plannerConfig = [
+        {
+          title: 'Project',
+          prompt: 'Choose the renovation focus',
+          options: [
+            { value: 'kitchen', title: 'Kitchen renovation', desc: 'Open plan, storage and premium finishes' },
+            { value: 'bathroom', title: 'Bathroom renovation', desc: 'Spa-like upgrades with practical layouts' },
+            { value: 'both', title: 'Kitchen + bathroom', desc: 'A whole-home refresh with coordinated finishes' }
+          ]
+        },
+        {
+          title: 'Style',
+          prompt: 'Choose the overall style',
+          options: [
+            { value: 'modern', title: 'Modern', desc: 'Clean lines and stone surfaces' },
+            { value: 'timeless', title: 'Timeless', desc: 'Warm textures and enduring materials' },
+            { value: 'minimal', title: 'Minimal', desc: 'Soft palette and streamlined storage' }
+          ]
+        },
+        {
+          title: 'Layout',
+          prompt: 'Select the feature layout',
+          options: [
+            { value: 'open', title: 'Open plan', desc: 'More flow and entertaining space' },
+            { value: 'family', title: 'Family-first', desc: 'Storage and durability are the priority' },
+            { value: 'compact', title: 'Compact and clever', desc: 'Efficient use of every square metre' }
+          ]
+        },
+        {
+          title: 'Finish',
+          prompt: 'Choose your preferred finish',
+          options: [
+            { value: 'stone', title: 'Stone', desc: 'Elegant benchtops and splashbacks' },
+            { value: 'timber', title: 'Timber', desc: 'Warm joinery and natural texture' },
+            { value: 'matte', title: 'Matte', desc: 'Soft-touch finishes and subtle detailing' }
+          ]
+        }
+      ];
+
+      const state = {
+        step: 0,
+        project: 'kitchen',
+        style: 'timeless',
+        layout: 'family',
+        finish: 'stone'
+      };
+
+      function render() {
+        const current = plannerConfig[state.step];
+        plannerSteps.innerHTML = '';
+        plannerConfig.forEach((step, index) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = `planner-step${state.step === index ? ' active' : ''}`;
+          button.innerHTML = `<span class="planner-step__index">${index + 1}</span><span>${step.title}</span>`;
+          button.addEventListener('click', () => {
+            state.step = index;
+            render();
+          });
+          plannerSteps.appendChild(button);
+        });
+
+        plannerOptions.innerHTML = '';
+        const optionsWrap = document.createElement('div');
+        optionsWrap.className = 'options-grid';
+        const fieldName = current.title.toLowerCase();
+        current.options.forEach(option => {
+          const card = document.createElement('button');
+          card.type = 'button';
+          card.className = `option-card${state[fieldName] === option.value ? ' active' : ''}`;
+          card.innerHTML = `<div class="option-card__title">${option.title}</div><div class="option-card__desc">${option.desc}</div>`;
+          card.addEventListener('click', () => {
+            state[fieldName] = option.value;
+            render();
+          });
+          optionsWrap.appendChild(card);
+        });
+        plannerOptions.appendChild(optionsWrap);
+
+        plannerSummary.innerHTML = '';
+        const summaryItems = [
+          { label: 'Project', value: plannerConfig[0].options.find(o => o.value === state.project).title },
+          { label: 'Style', value: plannerConfig[1].options.find(o => o.value === state.style).title },
+          { label: 'Layout', value: plannerConfig[2].options.find(o => o.value === state.layout).title },
+          { label: 'Finish', value: plannerConfig[3].options.find(o => o.value === state.finish).title }
+        ];
+        summaryItems.forEach(item => {
+          const row = document.createElement('div');
+          row.className = 'planner-summary__item';
+          row.innerHTML = `<strong>${item.label}</strong><div>${item.value}</div>`;
+          plannerSummary.appendChild(row);
+        });
+
+        plannerBack.disabled = state.step === 0;
+        plannerNext.textContent = state.step === plannerConfig.length - 1 ? 'Done' : 'Next';
+      }
+
+      function openPlanner() {
+        document.body.classList.add('planner-open');
+        plannerView.setAttribute('aria-hidden', 'false');
+        render();
+      }
+
+      function closePlanner() {
+        document.body.classList.remove('planner-open');
+        plannerView.setAttribute('aria-hidden', 'true');
+      }
+
+      openPlannerButtons.forEach(button => button.addEventListener('click', openPlanner));
+      closePlannerButton.addEventListener('click', closePlanner);
+      plannerBack.addEventListener('click', () => {
+        if (state.step > 0) {
+          state.step -= 1;
+          render();
+        }
+      });
+      plannerNext.addEventListener('click', () => {
+        if (state.step < plannerConfig.length - 1) {
+          state.step += 1;
+          render();
+        } else {
+          closePlanner();
+        }
+      });
+
+      mobileToggle.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('open');
+        mobileToggle.setAttribute('aria-expanded', String(open));
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!mobileMenu.contains(event.target) && !mobileToggle.contains(event.target)) {
+          mobileMenu.classList.remove('open');
+          mobileToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      render();
+    </script>
+  </body>
+</html>
