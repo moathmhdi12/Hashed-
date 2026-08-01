@@ -698,13 +698,9 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
       <div class="toolbar">
         <span class="badge-3d">3D PREVIEW</span>
         <div class="tools">
-          <button type="button" class="tool" id="camFront" title="Front view">↥</button>
-          <button type="button" class="tool" id="camSide" title="Side view">⇄</button>
-          <button type="button" class="tool" id="camTop" title="Top view">⌂</button>
-          <button type="button" class="tool" id="camCorner" title="Corner view">◫</button>
-          <button type="button" class="tool" id="toggleWalls" title="Hide walls">▣</button>
-          <button type="button" class="tool" id="toggleMeasurements" title="Show measurements">📏</button>
-          <button type="button" class="tool" id="fullscreen3d" title="Fullscreen">⛶</button>
+          <button type="button" class="tool interact-3d" id="interact3d" title="Enable touch interaction with the 3D preview" style="display:none">✋ Interact</button>
+          <button type="button" class="tool" id="zIn" title="Zoom in">+</button>
+          <button type="button" class="tool" id="zOut" title="Zoom out">−</button>
           <button type="button" class="tool" id="zReset" title="Reset view">↺</button>
           <button type="button" class="tool mob-sum" id="togSum" title="Summary" style="display:none">☰</button>
         </div>
@@ -758,35 +754,6 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
       <input id="qEmail" type="email" autocomplete="email" required>
       <label for="qPhone">Phone</label>
       <input id="qPhone" type="tel" autocomplete="tel" required>
-      <label for="qSuburb">Project Suburb</label>
-      <input id="qSuburb" type="text" autocomplete="address-level2">
-      <label for="qContactMethod">Preferred contact method</label>
-      <select id="qContactMethod">
-        <option value="Phone">Phone</option>
-        <option value="Email">Email</option>
-        <option value="WhatsApp">WhatsApp</option>
-      </select>
-      <label for="qConsultDate">Preferred consultation date</label>
-      <input id="qConsultDate" type="date">
-      <label for="qTimeframe">Project timeframe</label>
-      <select id="qTimeframe">
-        <option value="ASAP">ASAP</option>
-        <option value="1–2 months">1–2 months</option>
-        <option value="2–4 months">2–4 months</option>
-        <option value="Planning phase">Planning phase</option>
-      </select>
-      <label for="qBudget">Budget range</label>
-      <select id="qBudget">
-        <option value="Under $30k">Under $30k</option>
-        <option value="$30k–$60k">$30k–$60k</option>
-        <option value="$60k+">$60k+</option>
-      </select>
-      <label for="qNotes">Project notes</label>
-      <textarea id="qNotes" rows="3"></textarea>
-      <label style="display:flex;align-items:center;gap:8px;margin-top:8px">
-        <input id="qConsent" type="checkbox" required style="width:auto;min-height:auto">
-        <span>I consent to being contacted about this project.</span>
-      </label>
       <p class="status" id="qStatus" role="status"></p>
       <div class="modal-acts">
         <button type="button" class="btn" id="qCancel">Cancel</button>
@@ -806,1184 +773,1304 @@ section[id],#home,#about,#services,#design,#packages,#process,#projects,#faq,#qu
 </div>
 
 <script>
+const CONTACT_ENDPOINT = '';
+const QUOTE_ENDPOINT = '';
+const STORAGE_KEY = 'mic_nsw_planner_v1';
+
 (function(){
-  'use strict';
-  const CONTACT_ENDPOINT = '';
-  const QUOTE_ENDPOINT = '';
-  const STORAGE_KEY = 'mic_nsw_planner_v1';
-  const HOME_TITLE = 'Kitchen & Bathroom Renovations Sydney | MIC NSW';
-  const plannerView = document.getElementById('planner-view');
-  const websiteView = document.getElementById('website-view');
-  const siteHeader = document.getElementById('siteHeader');
-  const sideTitle = document.getElementById('sideTitle');
-  const progFill = document.getElementById('progFill');
-  const progLabel = document.getElementById('progLabel');
-  const stepList = document.getElementById('stepList');
-  const content = document.getElementById('content');
-  const stepTitle = document.getElementById('stepTitle');
-  const stepDesc = document.getElementById('stepDesc');
-  const doneTag = document.getElementById('doneTag');
-  const btnBack = document.getElementById('btnBack');
-  const btnNext = document.getElementById('btnNext');
-  const sumPrice = document.getElementById('sumPrice');
-  const sumBody = document.getElementById('sumBody');
-  const btnQuote = document.getElementById('btnQuote');
-  const stageNote = document.getElementById('stageNote');
-  const canvas = document.getElementById('c3d');
-  const stageWrap = document.getElementById('stageWrap');
-  const fallback3d = document.getElementById('fallback3d');
-  const zIn = document.getElementById('zIn');
-  const zOut = document.getElementById('zOut');
-  const zReset = document.getElementById('zReset');
-  const camFront = document.getElementById('camFront');
-  const camSide = document.getElementById('camSide');
-  const camTop = document.getElementById('camTop');
-  const camCorner = document.getElementById('camCorner');
-  const toggleWalls = document.getElementById('toggleWalls');
-  const toggleMeasurements = document.getElementById('toggleMeasurements');
-  const fullscreen3d = document.getElementById('fullscreen3d');
-  const interact3d = document.getElementById('interact3d');
-  const quoteModal = document.getElementById('quoteModal');
-  const qForm = document.getElementById('qForm');
-  const qStatus = document.getElementById('qStatus');
-  const qTitle = document.getElementById('qTitle');
-  const qClose = document.getElementById('qClose');
-  const qCancel = document.getElementById('qCancel');
-  const qEmailFallback = document.getElementById('qEmailFallback');
-  const qWaFallback = document.getElementById('qWaFallback');
-  const qCopyFallback = document.getElementById('qCopyFallback');
-  const toggSum = document.getElementById('togSum');
-  let scene;
-  let camera;
-  let renderer;
-  let controls;
-  let roomGroup;
-  let wallsGroup;
-  let measurementGroup;
-  let selectedMesh;
-  let selectedObjectName = '';
-  let currentPackagePreset = '';
-  let is3DSupported = true;
-  let savedScroll = 0;
-  let opening = false;
-  let pendingPackage = '';
-  let hasRendered3D = false;
-  let renderTimer = null;
+var HOME_TITLE='Kitchen & Bathroom Renovations Sydney | MIC NSW';
+var savedScroll=0;
+var websiteView=document.getElementById('website-view');
+var plannerView=document.getElementById('planner-view');
+var siteHeader=document.getElementById('siteHeader');
+var opening=false;
 
-  const planningSteps = {
-    kitchen: ['Project location','Room measurements','Layout','Cabinetry','Finishes & surfaces','Appliances & fixtures','Services & review'],
-    bathroom: ['Project location','Room measurements','Layout','Vanity & storage','Finishes','Bathroom products','Services & review']
-  };
-
-  const pricingData = {
-    metadata: {currency:'AUD', region:'Greater Sydney', gstRate:0.10, lastUpdated:'2026-08-01'},
-    locationZones: {
-      default:{name:'Western Sydney', multiplier:1.00},
-      'Parramatta':{name:'Parramatta and Inner West', multiplier:1.03},
-      'Inner West':{name:'Parramatta and Inner West', multiplier:1.03},
-      'Sydney CBD':{name:'Sydney CBD', multiplier:1.08},
-      'Eastern Suburbs':{name:'Eastern Suburbs', multiplier:1.10},
-      'Northern Beaches':{name:'Northern Beaches', multiplier:1.10},
-      'North Shore':{name:'North Shore', multiplier:1.08},
-      'Hills District':{name:'Hills District', multiplier:1.04},
-      'Outer Sydney':{name:'Outer Sydney', multiplier:1.08}
-    },
-    cabinetry: {
-      melamine:{brand:'Laminex', range:'Melamine', colour:'Stone', finish:'Matt', unitPrice:1800, waste:0.08, status:'Available'},
-      laminate:{brand:'Wilsonart', range:'Laminate', colour:'Oak', finish:'Matt', unitPrice:2200, waste:0.08, status:'Available'},
-      polyurethane:{brand:'Polytec', range:'Polyurethane', colour:'Snow', finish:'Satin', unitPrice:2600, waste:0.10, status:'Available'},
-      shaker:{brand:'Nikpol', range:'Shaker', colour:'Walnut', finish:'Satin', unitPrice:3200, waste:0.10, status:'Available'},
-      timber:{brand:'Polytec', range:'Timber Veneer', colour:'Natural', finish:'Low sheen', unitPrice:4200, waste:0.12, status:'Available'}
-    },
-    hardware: {
-      standard:{name:'Standard hinges', price:220},
-      soft:{name:'Soft-close hinges', price:480},
-      push:{name:'Push-to-open', price:560},
-      drawers:{name:'Soft-close drawers', price:690},
-      premium:{name:'Premium runners', price:930},
-      lift:{name:'Lift-up mechanism', price:1290},
-      corner:{name:'Corner storage system', price:890},
-      pantry:{name:'Pull-out pantry', price:980},
-      bins:{name:'Integrated bins', price:660}
-    },
-    benchtops: {
-      laminate:{name:'Laminate', price:560, install:380},
-      mineral:{name:'Mineral / engineered', price:880, install:490},
-      porcelain:{name:'Porcelain', price:1100, install:620},
-      stone:{name:'Sintered stone', price:1400, install:760},
-      natural:{name:'Natural stone', price:1650, install:840},
-      timber:{name:'Timber', price:980, install:510}
-    },
-    splashbacks: {
-      subway:{name:'Subway tile', price:175},
-      porcelain:{name:'Large format porcelain', price:260},
-      kitkat:{name:'KitKat tile', price:210},
-      mosaic:{name:'Mosaic', price:290},
-      glass:{name:'Glass splashback', price:330},
-      stone:{name:'Stone splashback', price:420},
-      fullheight:{name:'Full-height matching surface', price:510}
-    },
-    appliances: {
-      oven:{name:'Built-in oven', price:1800, install:450},
-      cooktop:{name:'Cooktop', price:1400, install:380},
-      rangehood:{name:'Rangehood', price:950, install:220},
-      dishwasher:{name:'Dishwasher', price:1100, install:260},
-      refrigerator:{name:'Refrigerator', price:2200, install:280},
-      microwave:{name:'Microwave', price:760, install:120},
-      coffee:{name:'Coffee machine', price:880, install:120},
-      steam:{name:'Steam oven', price:2400, install:480},
-      warming:{name:'Warming drawer', price:950, install:160}
-    },
-    plumbing: {
-      keep:{name:'Keep existing plumbing', price:0, complexity:0},
-      sink:{name:'Move sink', price:760, complexity:0.12},
-      toilet:{name:'Move toilet', price:920, complexity:0.14},
-      shower:{name:'Move shower', price:1180, complexity:0.16},
-      bath:{name:'Move bath', price:1340, complexity:0.16},
-      fridge:{name:'Add fridge water point', price:340, complexity:0.04},
-      dishwasher:{name:'Add dishwasher connection', price:420, complexity:0.05},
-      filtered:{name:'Add filtered-water tap', price:290, complexity:0.04},
-      gas:{name:'Add gas connection', price:740, complexity:0.09},
-      waste:{name:'Replace waste pipe', price:760, complexity:0.08},
-      water:{name:'Replace water lines', price:640, complexity:0.07}
-    },
-    electrical: {
-      power:{name:'Standard power point', price:140, labour:110},
-      double:{name:'Double power point', price:220, labour:120},
-      usb:{name:'USB power point', price:240, labour:130},
-      appliance:{name:'Appliance circuit', price:520, labour:420},
-      cooktop:{name:'Cooktop circuit', price:620, labour:460},
-      oven:{name:'Oven circuit', price:620, labour:460},
-      hood:{name:'Rangehood connection', price:260, labour:180},
-      dishwasher:{name:'Dishwasher connection', price:220, labour:180},
-      pendant:{name:'Pendant light', price:260, labour:180},
-      downlight:{name:'Downlight', price:120, labour:90},
-      strip:{name:'LED strip lighting', price:180, labour:140},
-      fan:{name:'Exhaust fan', price:320, labour:180},
-      rail:{name:'Heated towel rail', price:420, labour:180},
-      relocate:{name:'Switch relocation', price:260, labour:220}
-    },
-    labour: {
-      demolition:{name:'Demolition', price:900},
-      waste:{name:'Waste removal', price:360},
-      cabinetry:{name:'Cabinet installation', price:1200},
-      benchtop:{name:'Benchtop installation', price:640},
-      tiling:{name:'Tiling', price:950},
-      waterproofing:{name:'Waterproofing', price:820},
-      plumbing:{name:'Plumbing', price:720},
-      electrical:{name:'Electrical', price:760},
-      carpentry:{name:'Carpentry', price:640},
-      plastering:{name:'Plastering', price:540},
-      painting:{name:'Painting', price:420},
-      flooring:{name:'Flooring', price:780},
-      cleaning:{name:'Cleaning', price:310},
-      management:{name:'Project management', price:760},
-      protection:{name:'Site protection', price:240}
-    },
-    complexity: {
-      standard:{label:'Standard', multiplier:0.04, note:'Standard room and familiar layout.'},
-      moderate:{label:'Moderate', multiplier:0.08, note:'Additional joins, services, or access constraints.'},
-      complex:{label:'Complex', multiplier:0.12, note:'Multiple service moves and restricted access.'},
-      custom:{label:'Highly customised', multiplier:0.16, note:'Premium materials and custom joinery increase scope.'}
-    }
-  };
-
-  const modeConfig = {
-    kitchen: {
-      title:'Kitchen Project',
-      layoutOptions:[
-        {id:'straight', name:'Straight kitchen', desc:'Efficient single-wall layout', icon:'▭'},
-        {id:'l', name:'L-shaped kitchen', desc:'Two-wall layout with corner focus', icon:'└'},
-        {id:'u', name:'U-shaped kitchen', desc:'Three-wall work zone', icon:'▣'},
-        {id:'galley', name:'Galley kitchen', desc:'Compact parallel run', icon:'═'},
-        {id:'island', name:'Kitchen with island', desc:'Central island and open plan', icon:'◫'},
-        {id:'peninsula', name:'Peninsula kitchen', desc:'Island-like extension', icon:'⟡'},
-        {id:'custom', name:'Custom arrangement', desc:'Tailored to your room', icon:'✦'}
-      ],
-      cabinetMaterialOptions:[{id:'melamine', name:'Melamine'}, {id:'laminate', name:'Laminate'}, {id:'polyurethane', name:'Polyurethane'}, {id:'shaker', name:'Shaker'}, {id:'timber', name:'Timber veneer'}],
-      finishOptions:[{id:'matte', name:'Matte'}, {id:'satin', name:'Satin'}, {id:'high-gloss', name:'High-gloss'}],
-      hardwareOptions:[{id:'standard', name:'Standard'}, {id:'soft', name:'Soft-close'}, {id:'push', name:'Push-to-open'}, {id:'premium', name:'Premium runners'}],
-      benchtopOptions:[{id:'laminate', name:'Laminate'}, {id:'mineral', name:'Mineral'}, {id:'porcelain', name:'Porcelain'}, {id:'stone', name:'Sintered stone'}],
-      splashOptions:[{id:'subway', name:'Subway tile'}, {id:'porcelain', name:'Porcelain'}, {id:'mosaic', name:'Mosaic'}, {id:'glass', name:'Glass'}],
-      applianceOptions:['oven','cooktop','rangehood','dishwasher','refrigerator','microwave'],
-      plumbingOptions:['keep','sink','toilet','shower','bath','fridge','dishwasher','filtered','gas','water']
-    },
-    bathroom: {
-      title:'Bathroom Project',
-      layoutOptions:[
-        {id:'standard', name:'Standard bathroom', desc:'Efficient functional layout', icon:'▭'},
-        {id:'ensuite', name:'Ensuite', desc:'Compact private bathroom', icon:'▣'},
-        {id:'family', name:'Family bathroom', desc:'Shared family bathroom', icon:'◫'},
-        {id:'spa', name:'Spa-style', desc:'A more indulgent layout', icon:'✦'}
-      ],
-      cabinetMaterialOptions:[{id:'melamine', name:'Melamine'}, {id:'laminate', name:'Laminate'}, {id:'polyurethane', name:'Polyurethane'}],
-      finishOptions:[{id:'matte', name:'Matte'}, {id:'satin', name:'Satin'}, {id:'textured', name:'Textured'}],
-      hardwareOptions:[{id:'standard', name:'Standard'}, {id:'soft', name:'Soft-close'}, {id:'premium', name:'Premium'}],
-      benchtopOptions:[{id:'laminate', name:'Laminate'}, {id:'mineral', name:'Mineral'}, {id:'stone', name:'Stone'}],
-      splashOptions:[{id:'subway', name:'Subway tile'}, {id:'porcelain', name:'Porcelain'}, {id:'mosaic', name:'Mosaic'}],
-      applianceOptions:['vanity','basin','toilet','shower','bath','mirror','lighting','fan','rail'],
-      plumbingOptions:['keep','sink','toilet','shower','bath','water']
-    }
-  };
-
-  function createDefaultState(mode){
-    return {
-      mode,
-      packageId:'',
-      step:0,
-      selectedObject:'',
-      location:{suburb:'Sydney', postcode:'2000', propertyType:'House', floorLevel:'Ground', liftAccess:'No', parkingAccess:'Yes', loadingAccess:'Yes', siteAccess:'Easy'},
-      measurements: mode==='kitchen' ? {length:5.6, width:3.8, ceilingHeight:2.7, wallLengths:'5.6 / 3.8', doorLocations:'North', windowLocations:'West', plumbing:'Near sink', electrical:'2 outlets', islandLength:1.8}
-        : {length:3.1, width:2.3, ceilingHeight:2.4, doorPosition:'North', windowPosition:'East', showerArea:'2.0m²', vanityWall:'West', toiletPosition:'South', bathPosition:'None', plumbing:'Existing'},
-      layout: mode==='kitchen' ? 'straight' : 'standard',
-      cabinetry:{
-        base:3,
-        wall:2,
-        tall:1,
-        pantry:0,
-        corner:0,
-        island: mode==='kitchen' ? 1 : 0,
-        material:'melamine',
-        finish:'matte',
-        hardware:'soft',
-        door:'shaker',
-        colour:'#9A6B3C'
-      },
-      surfaces:{
-        benchtop: mode==='kitchen' ? 'laminate' : 'mineral',
-        splashback: 'subway',
-        wallTile: 'porcelain',
-        floorTile: 'porcelain',
-        sink: mode==='kitchen' ? 'single' : 'vanity',
-        tap: 'caroma'
-      },
-      appliances: mode==='kitchen' ? {oven:true, cooktop:true, rangehood:true, dishwasher:true, refrigerator:false, microwave:false, coffee:false, steam:false, warming:false}
-        : {vanity:true, basin:true, toilet:true, shower:true, bath:false, mirror:true, lighting:true, fan:true, rail:false},
-      plumbing:{
-        current:'keep',
-        additions:[]
-      },
-      electrical:{
-        power:2,
-        usb:1,
-        applianceCircuit:false,
-        cooktop:false,
-        oven:false,
-        hood:true,
-        dishwasher:true,
-        pendant:2,
-        downlights:4,
-        strip:false,
-        fan:true,
-        rail:false,
-        relocate:false
-      },
-      labour:{
-        demolition:true,
-        waste:true,
-        cabinetry:true,
-        benchtop:true,
-        tiling:true,
-        waterproofing:mode==='bathroom',
-        plumbing:true,
-        electrical:true,
-        carpentry:false,
-        plastering:true,
-        painting:true,
-        flooring:true,
-        cleaning:true,
-        management:true,
-        protection:true
-      },
-      complexity:'standard',
-      notes:'',
-      wallsVisible:true,
-      measurementsVisible:true,
-      cameraPreset:'corner'
-    };
+function openPlanner(mode, pkg){
+  window.__pendingPackage = pkg || '';
+  if(!plannerView||!websiteView){console.warn('Planner views missing');return;}
+  if(opening) return;
+  opening=true;
+  mode = (mode==='bathroom') ? 'bathroom' : 'kitchen';
+  savedScroll=window.scrollY||0;
+  websiteView.classList.add('is-hidden');
+  websiteView.setAttribute('aria-hidden','true');
+  plannerView.classList.add('is-active');
+  plannerView.setAttribute('aria-hidden','false');
+  document.body.classList.add('planner-open');
+  if(siteHeader) siteHeader.style.display='none';
+  if(window.MICPlanner && window.MICPlanner.resumeRender) window.MICPlanner.resumeRender();
+  try{ window.scrollTo(0,0);}catch(e){}
+  var wantHash='#planner/'+mode;
+  if(location.hash!==wantHash){
+    try{ history.replaceState(null,'',wantHash); }catch(e){ location.hash=wantHash; }
   }
-
-  const state = createDefaultState('kitchen');
-  let plannerData = null;
-
-  function cloneState(){ return JSON.parse(JSON.stringify(state)); }
-
-  function safeNumber(value, fallback){ const n = parseFloat(value); return Number.isFinite(n) ? n : fallback; }
-  function formatCurrency(value){ return new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD',maximumFractionDigits:0}).format(value); }
-  function findZone(suburb){ const key = String(suburb || '').trim(); if(!key) return pricingData.locationZones.default; return pricingData.locationZones[key] || pricingData.locationZones.default; }
-
-  function getRoomArea(){ return safeNumber(state.measurements.length, 5) * safeNumber(state.measurements.width, 3.5); }
-  function getCabinetryCost(){
-    const baseCab = safeNumber(state.cabinetry.base, 0);
-    const wallCab = safeNumber(state.cabinetry.wall, 0);
-    const tallCab = safeNumber(state.cabinetry.tall, 0);
-    const pantry = safeNumber(state.cabinetry.pantry, 0);
-    const corner = safeNumber(state.cabinetry.corner, 0);
-    const island = safeNumber(state.cabinetry.island, 0);
-    const material = pricingData.cabinetry[state.cabinetry.material] || pricingData.cabinetry.melamine;
-    const baseRate = 1800 + material.unitPrice * 0.70;
-    const sizeMultiplier = 1 + ((getRoomArea() / 20) * 0.08);
-    const cabinetCount = baseCab + wallCab + tallCab + pantry + corner + island;
-    const cabinetCost = cabinetCount * (baseRate * sizeMultiplier);
-    const finishCost = cabinetCount * (state.cabinetry.material === 'timber' ? 650 : 280);
-    const hardwareCost = (state.cabinetry.hardware === 'soft' ? 180 : state.cabinetry.hardware === 'premium' ? 420 : state.cabinetry.hardware === 'push' ? 240 : 60) * cabinetCount;
-    const installation = 900 + cabinetCount * 260;
-    return Math.round(cabinetCost + finishCost + hardwareCost + installation);
-  }
-
-  function getSurfaceCost(){
-    const benchtop = pricingData.benchtops[state.surfaces.benchtop] || pricingData.benchtops.laminate;
-    const splash = pricingData.splashbacks[state.surfaces.splashback] || pricingData.splashbacks.subway;
-    const roomArea = getRoomArea();
-    const benchtopCost = benchtop.price * Math.max(1, roomArea * 0.6) + benchtop.install * 0.8;
-    const splashCost = splash.price * (roomArea > 12 ? 2.8 : 1.8) + 140;
-    const tileArea = Math.max(1, roomArea * 0.55);
-    const tileCost = tileArea * 75 + 160;
-    return Math.round(benchtopCost + splashCost + tileCost);
-  }
-
-  function getApplianceCost(){
-    let total = 0;
-    const items = state.mode === 'kitchen' ? [
-      ['oven', state.appliances.oven],
-      ['cooktop', state.appliances.cooktop],
-      ['rangehood', state.appliances.rangehood],
-      ['dishwasher', state.appliances.dishwasher],
-      ['refrigerator', state.appliances.refrigerator],
-      ['microwave', state.appliances.microwave],
-      ['coffee', state.appliances.coffee],
-      ['steam', state.appliances.steam],
-      ['warming', state.appliances.warming]
-    ] : [
-      ['vanity', state.appliances.vanity],
-      ['basin', state.appliances.basin],
-      ['toilet', state.appliances.toilet],
-      ['shower', state.appliances.shower],
-      ['bath', state.appliances.bath],
-      ['mirror', state.appliances.mirror],
-      ['lighting', state.appliances.lighting],
-      ['fan', state.appliances.fan],
-      ['rail', state.appliances.rail]
-    ];
-    items.forEach(([key, active]) => { if(active){ const entry = pricingData.appliances[key] || pricingData.appliances.oven; total += entry.price + (entry.install || 0); }});
-    return total;
-  }
-
-  function getPlumbingCost(){
-    const base = pricingData.plumbing[state.plumbing.current] || pricingData.plumbing.keep;
-    let total = base.price;
-    state.plumbing.additions.forEach((item) => { const entry = pricingData.plumbing[item]; if(entry){ total += entry.price; }});
-    return total + (state.mode === 'bathroom' ? 720 : 520);
-  }
-
-  function getElectricalCost(){
-    let total = 0;
-    const points = Math.max(0, safeNumber(state.electrical.power, 0));
-    const usb = Math.max(0, safeNumber(state.electrical.usb, 0));
-    const pendants = Math.max(0, safeNumber(state.electrical.pendant, 0));
-    const downlights = Math.max(0, safeNumber(state.electrical.downlights, 0));
-    total += points * pricingData.electrical.power.price + usb * pricingData.electrical.usb.price + pendants * pricingData.electrical.pendant.price + downlights * pricingData.electrical.downlight.price;
-    if(state.electrical.applianceCircuit) total += pricingData.electrical.appliance.price;
-    if(state.electrical.cooktop) total += pricingData.electrical.cooktop.price;
-    if(state.electrical.oven) total += pricingData.electrical.oven.price;
-    if(state.electrical.hood) total += pricingData.electrical.hood.price;
-    if(state.electrical.dishwasher) total += pricingData.electrical.dishwasher.price;
-    if(state.electrical.strip) total += pricingData.electrical.strip.price;
-    if(state.electrical.fan) total += pricingData.electrical.fan.price;
-    if(state.electrical.rail) total += pricingData.electrical.rail.price;
-    if(state.electrical.relocate) total += pricingData.electrical.relocate.price;
-    return total;
-  }
-
-  function getLabourCost(){
-    let total = 0;
-    if(state.labour.demolition) total += pricingData.labour.demolition.price;
-    if(state.labour.waste) total += pricingData.labour.waste.price;
-    if(state.labour.cabinetry) total += pricingData.labour.cabinetry.price;
-    if(state.labour.benchtop) total += pricingData.labour.benchtop.price;
-    if(state.labour.tiling) total += pricingData.labour.tiling.price;
-    if(state.labour.waterproofing) total += pricingData.labour.waterproofing.price;
-    if(state.labour.plumbing) total += pricingData.labour.plumbing.price;
-    if(state.labour.electrical) total += pricingData.labour.electrical.price;
-    if(state.labour.carpentry) total += pricingData.labour.carpentry.price;
-    if(state.labour.plastering) total += pricingData.labour.plastering.price;
-    if(state.labour.painting) total += pricingData.labour.painting.price;
-    if(state.labour.flooring) total += pricingData.labour.flooring.price;
-    if(state.labour.cleaning) total += pricingData.labour.cleaning.price;
-    if(state.labour.management) total += pricingData.labour.management.price;
-    if(state.labour.protection) total += pricingData.labour.protection.price;
-    return total;
-  }
-
-  function getLocationMultiplier(){
-    const zone = findZone(state.location.suburb);
-    let multiplier = zone.multiplier || 1;
-    if(state.location.siteAccess === 'Difficult') multiplier += 0.03;
-    if(state.location.floorLevel === 'Level 2+' || state.location.floorLevel === 'Level 3+') multiplier += 0.01;
-    if(state.location.liftAccess === 'No') multiplier += 0.01;
-    if(state.location.parkingAccess === 'Limited') multiplier += 0.005;
-    if(state.location.loadingAccess === 'Difficult') multiplier += 0.005;
-    return multiplier;
-  }
-
-  function getComplexityMultiplier(){
-    const base = pricingData.complexity[state.complexity] || pricingData.complexity.standard;
-    let multiplier = base.multiplier || 0.04;
-    if(state.layout === 'custom' || state.layout === 'spa' || state.layout === 'family') multiplier += 0.02;
-    if(safeNumber(state.measurements.length, 0) * safeNumber(state.measurements.width, 0) > 18) multiplier += 0.02;
-    if(state.plumbing.additions.length >= 2) multiplier += 0.02;
-    if(state.electrical.relocate) multiplier += 0.01;
-    if(state.labour.demolition) multiplier += 0.01;
-    return Math.min(multiplier, 0.22);
-  }
-
-  function calculateEstimate(){
-    const baseProject = 8200 + getRoomArea() * 1000;
-    const materials = getCabinetryCost() + getSurfaceCost() + getApplianceCost();
-    const tradeServices = getPlumbingCost() + getElectricalCost();
-    const labour = getLabourCost();
-    const subtotal = baseProject + materials + tradeServices + labour;
-    const locationAdjustment = subtotal * (getLocationMultiplier() - 1);
-    const complexityAdjustment = subtotal * getComplexityMultiplier();
-    const subtotalWithAdjustments = subtotal + locationAdjustment + complexityAdjustment;
-    const gst = subtotalWithAdjustments * pricingData.metadata.gstRate;
-    const low = subtotalWithAdjustments * 0.92;
-    const high = subtotalWithAdjustments * 1.16;
-    return {baseProject, materials, tradeServices, labour, locationAdjustment, complexityAdjustment, subtotal:subtotalWithAdjustments, gst, low, high};
-  }
-
-  function getConfidence(){
-    let score = 0;
-    if(state.location.suburb) score += 1;
-    if(state.measurements.length && state.measurements.width) score += 1;
-    if(state.cabinetry.base || state.cabinetry.wall || state.cabinetry.tall) score += 1;
-    if(state.cabinetry.material) score += 1;
-    if(state.surfaces.benchtop) score += 1;
-    if(state.plumbing.current) score += 1;
-    if(state.electrical.power) score += 1;
-    if(state.mode === 'kitchen' ? state.appliances.oven || state.appliances.cooktop : state.appliances.bath || state.appliances.vanity) score += 1;
-    if(score >= 7) return {label:'Detailed estimate', level:'High', text:'Room measurements entered · cabinet quantities confirmed · materials selected · appliances selected · services entered'};
-    if(score >= 4) return {label:'Developing estimate', level:'Medium', text:'Several selections are confirmed and pricing is being refined.'};
-    return {label:'Early estimate', level:'Low', text:'We are building the first estimate from your early selections.'};
-  }
-
-  function getWarnings(){
-    const warnings = [];
-    const area = getRoomArea();
-    if(area < 10) warnings.push('Room size is compact; appliance clearance and circulation should be confirmed.');
-    if(state.cabinetry.base + state.cabinetry.wall + state.cabinetry.tall > 8) warnings.push('Large cabinet counts may require additional joinery or installation time.');
-    if(state.plumbing.additions.includes('shower') || state.plumbing.additions.includes('bath')) warnings.push('Wet-area moves may require waterproofing and a site inspection.');
-    if(state.electrical.relocate) warnings.push('Electrical relocation should be reviewed by a licensed electrician.');
-    if(state.location.siteAccess === 'Difficult' || state.location.loadingAccess === 'Difficult') warnings.push('Restricted access may increase delivery and trade complexity.');
-    return warnings;
-  }
-
-  function setMode(mode){
-    state.mode = mode;
-    state.step = 0;
-    if(!state.packageId && currentPackagePreset) currentPackagePreset='';
-    if(!plannerData || plannerData.mode !== mode){ plannerData = createDefaultState(mode); Object.assign(state, plannerData); }
-    if(!state.packageId && currentPackagePreset){ state.packageId = currentPackagePreset; }
-    render();
-    update3DScene();
-    saveProgress();
-  }
-
-  function loadProgress(){
-    try{ const raw = localStorage.getItem(STORAGE_KEY); if(raw){ const parsed = JSON.parse(raw); if(parsed && parsed.mode){ Object.assign(state, parsed); state.mode = parsed.mode || 'kitchen'; } }}catch(err){}
-  }
-
-  function saveProgress(){
-    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify({...state, lastSaved: new Date().toISOString()})); }catch(err){}
-  }
-
-  function openPlanner(mode, pkg){
-    pendingPackage = pkg || '';
-    state.mode = mode === 'bathroom' ? 'bathroom' : 'kitchen';
-    state.step = 0;
-    if(pendingPackage){ state.packageId = pendingPackage; currentPackagePreset = pendingPackage; }
-    loadProgress();
-    if(pendingPackage){
-      if(state.mode === 'kitchen'){ state.layout = 'straight'; state.cabinetry.base = 4; state.cabinetry.wall = 2; state.cabinetry.tall = 1; state.cabinetry.material = 'laminate'; state.surfaces.benchtop = 'mineral'; }
-      else { state.layout = 'standard'; state.cabinetry.base = 2; state.cabinetry.wall = 1; state.surfaces.benchtop = 'mineral'; }
-      state.packageId = pendingPackage;
-      currentPackagePreset = pendingPackage;
-    }
-    pendingPackage = '';
-    websiteView.classList.add('is-hidden');
-    websiteView.setAttribute('aria-hidden','true');
-    plannerView.classList.add('is-active');
-    plannerView.setAttribute('aria-hidden','false');
-    document.body.classList.add('planner-open');
-    if(siteHeader) siteHeader.style.display='none';
-    document.title = state.mode === 'bathroom' ? 'Bathroom Design Planner | MIC NSW' : 'Kitchen Design Planner | MIC NSW';
-    if(!hasRendered3D){ init3D(); }
-    render();
-    update3DScene();
-    saveProgress();
-  }
-
-  function closePlanner(hash){
-    plannerView.classList.remove('is-active');
-    plannerView.setAttribute('aria-hidden','true');
-    websiteView.classList.remove('is-hidden');
-    websiteView.setAttribute('aria-hidden','false');
-    document.body.classList.remove('planner-open');
-    if(siteHeader) siteHeader.style.display='';
-    document.title = HOME_TITLE;
-    const target = hash || '#design';
-    try{ history.replaceState(null,'',target); }catch(err){ location.hash = target; }
-  }
-
-  function renderSteps(){
-    const steps = planningSteps[state.mode];
-    stepList.innerHTML = steps.map((label, index) => `
-      <button type="button" class="step ${index === state.step ? 'on' : ''} ${index < state.step ? 'done' : ''}" data-step="${index}" role="listitem">
-        <span class="num">${index + 1}</span>
-        <span>${label}</span>
-      </button>
-    `).join('');
-    stepList.querySelectorAll('.step').forEach((btn) => btn.addEventListener('click', () => { state.step = Number(btn.getAttribute('data-step')); render(); }));
-  }
-
-  function renderProgress(){
-    sideTitle.textContent = state.mode === 'kitchen' ? 'Kitchen Project' : 'Bathroom Project';
-    const steps = planningSteps[state.mode].length;
-    progFill.style.width = `${((state.step + 1) / steps) * 100}%`;
-    progLabel.textContent = `Step ${state.step + 1} of ${steps}`;
-  }
-
-  function renderStepTitle(){
-    const steps = planningSteps[state.mode];
-    stepTitle.textContent = `Step ${state.step + 1}: ${steps[state.step]}`;
-    stepDesc.textContent = state.mode === 'kitchen' ? 'Refine the room, product choices and live estimate.' : 'Shape the bathroom layout and live estimate.';
-    btnBack.disabled = state.step === 0;
-    btnNext.textContent = state.step === steps.length - 1 ? 'Review quote' : 'Next →';
-    doneTag.style.display = state.step > 0 ? 'inline-flex' : 'none';
-  }
-
-  function createOptionCards(options, currentValue, mapping){
-    return options.map((option) => {
-      const isSelected = currentValue === option.id;
-      const label = option.name || option;
-      const desc = option.desc || '';
-      const meta = option.meta || '';
-      return `<button type="button" class="card ${isSelected ? 'sel' : ''}" data-set="${mapping}" data-value="${option.id}">
-        <span class="card-check"></span>
-        <div class="card-content">
-          <h4>${label}</h4>
-          ${desc ? `<div class="meta">${desc}</div>` : ''}
-          ${meta ? `<div class="price">${meta}</div>` : ''}
-        </div>
-      </button>`;
-    }).join('');
-  }
-
-  function renderLocationStep(){
-    return `
-      <div class="dims">
-        <div class="dim"><label>Suburb</label><input data-bind="location.suburb" value="${state.location.suburb || ''}" /></div>
-        <div class="dim"><label>Postcode</label><input data-bind="location.postcode" value="${state.location.postcode || ''}" /></div>
-        <div class="dim"><label>Property type</label><select data-bind="location.propertyType"><option ${state.location.propertyType === 'House' ? 'selected' : ''}>House</option><option ${state.location.propertyType === 'Apartment' ? 'selected' : ''}>Apartment</option><option ${state.location.propertyType === 'Townhouse' ? 'selected' : ''}>Townhouse</option><option ${state.location.propertyType === 'Commercial' ? 'selected' : ''}>Commercial</option></select></div>
-        <div class="dim"><label>Floor level</label><select data-bind="location.floorLevel"><option ${state.location.floorLevel === 'Ground' ? 'selected' : ''}>Ground</option><option ${state.location.floorLevel === 'Level 1' ? 'selected' : ''}>Level 1</option><option ${state.location.floorLevel === 'Level 2+' ? 'selected' : ''}>Level 2+</option><option ${state.location.floorLevel === 'Level 3+' ? 'selected' : ''}>Level 3+</option></select></div>
-        <div class="dim"><label>Lift access</label><select data-bind="location.liftAccess"><option ${state.location.liftAccess === 'Yes' ? 'selected' : ''}>Yes</option><option ${state.location.liftAccess === 'No' ? 'selected' : ''}>No</option></select></div>
-        <div class="dim"><label>Parking access</label><select data-bind="location.parkingAccess"><option ${state.location.parkingAccess === 'Yes' ? 'selected' : ''}>Yes</option><option ${state.location.parkingAccess === 'Limited' ? 'selected' : ''}>Limited</option><option ${state.location.parkingAccess === 'Difficult' ? 'selected' : ''}>Difficult</option></select></div>
-        <div class="dim"><label>Loading access</label><select data-bind="location.loadingAccess"><option ${state.location.loadingAccess === 'Yes' ? 'selected' : ''}>Yes</option><option ${state.location.loadingAccess === 'Limited' ? 'selected' : ''}>Limited</option><option ${state.location.loadingAccess === 'Difficult' ? 'selected' : ''}>Difficult</option></select></div>
-        <div class="dim"><label>Site access</label><select data-bind="location.siteAccess"><option ${state.location.siteAccess === 'Easy' ? 'selected' : ''}>Easy</option><option ${state.location.siteAccess === 'Moderate' ? 'selected' : ''}>Moderate</option><option ${state.location.siteAccess === 'Difficult' ? 'selected' : ''}>Difficult</option></select></div>
-      </div>
-      <div class="tip"><strong>Location zoning:</strong> Sydney pricing zones are applied dynamically to your suburb and site access.</div>
-      ${state.packageId ? `<div class="tip"><strong>Package selected:</strong> ${state.packageId}. Use the Apply preset option below to transfer it into the custom planner if you want a package-led starting point.</div>` : ''}
-      ${state.packageId ? `<div class="nav"><button type="button" class="btn pri" data-action="apply-package">Apply package preset</button></div>` : ''}
-    `;
-  }
-
-  function renderMeasurementsStep(){
-    if(state.mode === 'kitchen') {
-      return `
-        <div class="dims">
-          <div class="dim"><label>Room length (m)</label><input type="number" step="0.1" data-bind="measurements.length" value="${state.measurements.length || ''}"></div>
-          <div class="dim"><label>Room width (m)</label><input type="number" step="0.1" data-bind="measurements.width" value="${state.measurements.width || ''}"></div>
-          <div class="dim"><label>Ceiling height (m)</label><input type="number" step="0.1" data-bind="measurements.ceilingHeight" value="${state.measurements.ceilingHeight || ''}"></div>
-          <div class="dim"><label>Wall lengths</label><input data-bind="measurements.wallLengths" value="${state.measurements.wallLengths || ''}"></div>
-          <div class="dim"><label>Door locations</label><input data-bind="measurements.doorLocations" value="${state.measurements.doorLocations || ''}"></div>
-          <div class="dim"><label>Window locations</label><input data-bind="measurements.windowLocations" value="${state.measurements.windowLocations || ''}"></div>
-          <div class="dim"><label>Existing plumbing</label><input data-bind="measurements.plumbing" value="${state.measurements.plumbing || ''}"></div>
-          <div class="dim"><label>Existing electrical</label><input data-bind="measurements.electrical" value="${state.measurements.electrical || ''}"></div>
-          <div class="dim"><label>Island length (m)</label><input type="number" step="0.1" data-bind="measurements.islandLength" value="${state.measurements.islandLength || ''}"></div>
-        </div>
-        <div class="tip"><strong>Dimension check:</strong> negative or zero values are rejected and the room model will scale to your measurements.</div>
-      `;
-    }
-    return `
-      <div class="dims">
-        <div class="dim"><label>Room length (m)</label><input type="number" step="0.1" data-bind="measurements.length" value="${state.measurements.length || ''}"></div>
-        <div class="dim"><label>Room width (m)</label><input type="number" step="0.1" data-bind="measurements.width" value="${state.measurements.width || ''}"></div>
-        <div class="dim"><label>Ceiling height (m)</label><input type="number" step="0.1" data-bind="measurements.ceilingHeight" value="${state.measurements.ceilingHeight || ''}"></div>
-        <div class="dim"><label>Door position</label><input data-bind="measurements.doorPosition" value="${state.measurements.doorPosition || ''}"></div>
-        <div class="dim"><label>Window position</label><input data-bind="measurements.windowPosition" value="${state.measurements.windowPosition || ''}"></div>
-        <div class="dim"><label>Shower area</label><input data-bind="measurements.showerArea" value="${state.measurements.showerArea || ''}"></div>
-        <div class="dim"><label>Vanity wall</label><input data-bind="measurements.vanityWall" value="${state.measurements.vanityWall || ''}"></div>
-        <div class="dim"><label>Toilet position</label><input data-bind="measurements.toiletPosition" value="${state.measurements.toiletPosition || ''}"></div>
-        <div class="dim"><label>Bath position</label><input data-bind="measurements.bathPosition" value="${state.measurements.bathPosition || ''}"></div>
-      </div>
-      <div class="tip"><strong>Dimension check:</strong> invalid sizes are corrected to safe defaults and a warning will appear if the room becomes too tight.</div>
-    `;
-  }
-
-  function renderLayoutStep(){
-    const cards = createOptionCards(modeConfig[state.mode].layoutOptions, state.layout, 'layout');
-    return `<div class="grid wide">${cards}</div><div class="tip"><strong>Layout update:</strong> the 3D room adjusts immediately while keeping compatible selections intact.</div>`;
-  }
-
-  function renderCabinetryStep(){
-    const materialCards = createOptionCards(modeConfig[state.mode].cabinetMaterialOptions, state.cabinetry.material, 'cabinetry.material');
-    const finishCards = createOptionCards(modeConfig[state.mode].finishOptions, state.cabinetry.finish, 'cabinetry.finish');
-    const hardwareCards = createOptionCards(modeConfig[state.mode].hardwareOptions, state.cabinetry.hardware, 'cabinetry.hardware');
-    return `
-      <div class="dims">
-        <div class="dim"><label>Base cabinets</label><input type="number" min="0" step="1" data-bind="cabinetry.base" value="${state.cabinetry.base}"></div>
-        <div class="dim"><label>Wall cabinets</label><input type="number" min="0" step="1" data-bind="cabinetry.wall" value="${state.cabinetry.wall}"></div>
-        <div class="dim"><label>Tall cabinets</label><input type="number" min="0" step="1" data-bind="cabinetry.tall" value="${state.cabinetry.tall}"></div>
-        <div class="dim"><label>Pantry</label><input type="number" min="0" step="1" data-bind="cabinetry.pantry" value="${state.cabinetry.pantry}"></div>
-        <div class="dim"><label>Corner units</label><input type="number" min="0" step="1" data-bind="cabinetry.corner" value="${state.cabinetry.corner}"></div>
-        <div class="dim"><label>Island cabinets</label><input type="number" min="0" step="1" data-bind="cabinetry.island" value="${state.cabinetry.island}"></div>
-      </div>
-      <h5 style="margin:12px 0 8px">Material</h5>
-      <div class="grid wide">${materialCards}</div>
-      <h5 style="margin:12px 0 8px">Finish</h5>
-      <div class="grid wide">${finishCards}</div>
-      <h5 style="margin:12px 0 8px">Hardware</h5>
-      <div class="grid wide">${hardwareCards}</div>
-      <div class="dim" style="margin-top:10px"><label>Colour / finish tone</label><input type="color" value="${state.cabinetry.colour}" data-bind="cabinetry.colour" style="width:100%;height:44px;padding:4px"></div>
-    `;
-  }
-
-  function renderFinishesStep(){
-    const benchtopCards = createOptionCards(modeConfig[state.mode].benchtopOptions, state.surfaces.benchtop, 'surfaces.benchtop');
-    const splashCards = createOptionCards(modeConfig[state.mode].splashOptions, state.surfaces.splashback, 'surfaces.splashback');
-    return `
-      <h5 style="margin-bottom:8px">Benchtops</h5>
-      <div class="grid wide">${benchtopCards}</div>
-      <h5 style="margin:12px 0 8px">Splashbacks</h5>
-      <div class="grid wide">${splashCards}</div>
-      <div class="dims" style="margin-top:10px">
-        <div class="dim"><label>Wall tile</label><input data-bind="surfaces.wallTile" value="${state.surfaces.wallTile || ''}"></div>
-        <div class="dim"><label>Floor tile</label><input data-bind="surfaces.floorTile" value="${state.surfaces.floorTile || ''}"></div>
-        <div class="dim"><label>Sink selection</label><input data-bind="surfaces.sink" value="${state.surfaces.sink || ''}"></div>
-        <div class="dim"><label>Tapware</label><input data-bind="surfaces.tap" value="${state.surfaces.tap || ''}"></div>
-      </div>
-    `;
-  }
-
-  function renderAppliancesStep(){
-    if(state.mode === 'kitchen') {
-      const items = [
-        ['oven', 'Built-in oven'],
-        ['cooktop', 'Cooktop'],
-        ['rangehood', 'Rangehood'],
-        ['dishwasher', 'Dishwasher'],
-        ['refrigerator', 'Refrigerator'],
-        ['microwave', 'Microwave'],
-        ['coffee', 'Coffee machine'],
-        ['steam', 'Steam oven'],
-        ['warming', 'Warming drawer']
-      ];
-      const cards = items.map(([key, label]) => `<button type="button" class="card ${state.appliances[key] ? 'sel' : ''}" data-set="appliances.${key}" data-value="${state.appliances[key] ? 'toggle' : 'true'}"><span class="card-check"></span><div class="card-content"><h4>${label}</h4><div class="meta">${state.appliances[key] ? 'Selected' : 'Optional'}</div></div></button>`).join('');
-      return `<div class="grid wide">${cards}</div><div class="tip"><strong>Appliance placement:</strong> object overlap is checked in the 3D room and highlighted for review.</div>`;
-    }
-    const items = [
-      ['vanity', 'Vanity'], ['basin', 'Basin'], ['toilet', 'Toilet'], ['shower', 'Shower'], ['bath', 'Bath'], ['mirror', 'Mirror'], ['lighting', 'Lighting'], ['fan', 'Exhaust fan'], ['rail', 'Heated towel rail']
-    ];
-    const cards = items.map(([key, label]) => `<button type="button" class="card ${state.appliances[key] ? 'sel' : ''}" data-set="appliances.${key}" data-value="${state.appliances[key] ? 'toggle' : 'true'}"><span class="card-check"></span><div class="card-content"><h4>${label}</h4><div class="meta">${state.appliances[key] ? 'Selected' : 'Optional'}</div></div></button>`).join('');
-    return `<div class="grid wide">${cards}</div>`;
-  }
-
-  function renderServicesStep(){
-    return `
-      <div class="dims">
-        <div class="dim"><label>Plumbing direction</label><select data-bind="plumbing.current">${['keep','sink','toilet','shower','bath','fridge','dishwasher','filtered','gas','water'].map((id) => `<option value="${id}" ${state.plumbing.current === id ? 'selected' : ''}>${pricingData.plumbing[id].name}</option>`).join('')}</select></div>
-        <div class="dim"><label>Service additions</label><input data-bind="plumbing.additions" value="${state.plumbing.additions.join(', ')}"></div>
-        <div class="dim"><label>Power points</label><input type="number" min="0" step="1" data-bind="electrical.power" value="${state.electrical.power}"></div>
-        <div class="dim"><label>USB points</label><input type="number" min="0" step="1" data-bind="electrical.usb" value="${state.electrical.usb}"></div>
-        <div class="dim"><label>Downlights</label><input type="number" min="0" step="1" data-bind="electrical.downlights" value="${state.electrical.downlights}"></div>
-        <div class="dim"><label>Switch relocation</label><select data-bind="electrical.relocate"><option value="false" ${!state.electrical.relocate ? 'selected' : ''}>No</option><option value="true" ${state.electrical.relocate ? 'selected' : ''}>Yes</option></select></div>
-      </div>
-      <div class="tip"><strong>Labour:</strong> demolition, waterproofing, plumbing, electrical and project management are itemised separately.</div>
-    `;
-  }
-
-  function renderReviewStep(){
-    const estimate = calculateEstimate();
-    const confidence = getConfidence();
-    const warnings = getWarnings();
-    return `
-      <div class="quote-card">
-        <span class="quote-chip">${state.mode === 'kitchen' ? 'Kitchen' : 'Bathroom'} review</span>
-        <h4>${state.location.suburb || 'Sydney'} · ${state.mode === 'kitchen' ? 'Kitchen' : 'Bathroom'} design</h4>
-        <p>This review captures the current design approach and estimate range. Final pricing remains subject to site inspection and written quotation.</p>
-        <div class="quote-highlights">
-          <div class="quote-highlight"><span class="quote-highlight__label">Estimate range</span><span class="quote-highlight__value">${formatCurrency(estimate.low)} – ${formatCurrency(estimate.high)}</span></div>
-          <div class="quote-highlight"><span class="quote-highlight__label">Confidence</span><span class="quote-highlight__value">${confidence.label}</span></div>
-          <div class="quote-highlight"><span class="quote-highlight__label">Complexity</span><span class="quote-highlight__value">${pricingData.complexity[state.complexity].label}</span></div>
-        </div>
-      </div>
-      <div class="sec" style="margin-top:12px">
-        <h5>Included selections</h5>
-        <div class="prods">${getSelectedSummary()}</div>
-      </div>
-      <div class="sec">
-        <h5>Warnings</h5>
-        <div class="prods">${warnings.length ? warnings.map((item) => `<div>• ${item}</div>`).join('') : '<div>• No immediate concerns detected.</div>'}</div>
-      </div>
-      <div class="nav"><button type="button" class="btn pri" id="reviewQuoteBtn">Submit quote request</button></div>
-    `;
-  }
-
-  function getSelectedSummary(){
-    const parts = [];
-    parts.push(`Layout: ${state.layout}`);
-    parts.push(`Cabinets: ${state.cabinetry.base} base / ${state.cabinetry.wall} wall / ${state.cabinetry.tall} tall`);
-    parts.push(`Materials: ${state.cabinetry.material} · ${state.cabinetry.finish}`);
-    parts.push(`Benchtop: ${state.surfaces.benchtop}`);
-    parts.push(`Splashback: ${state.surfaces.splashback}`);
-    parts.push(`Plumbing: ${state.plumbing.current}`);
-    return parts.join('<br>');
-  }
-
-  function render(){
-    renderSteps();
-    renderProgress();
-    renderStepTitle();
-    const stepViews = [renderLocationStep, renderMeasurementsStep, renderLayoutStep, renderCabinetryStep, renderFinishesStep, renderAppliancesStep, renderServicesStep, renderReviewStep];
-    content.innerHTML = stepViews[state.step] ? stepViews[state.step]() : '';
-    content.querySelectorAll('[data-bind]').forEach((el) => {
-      el.addEventListener('input', (event) => handleFieldInput(event.target));
-      el.addEventListener('change', (event) => handleFieldInput(event.target));
-    });
-    content.querySelectorAll('[data-set]').forEach((el) => {
-      el.addEventListener('click', () => handleCardSet(el));
-    });
-    content.querySelectorAll('[data-action="apply-package"]').forEach((btn) => btn.addEventListener('click', () => applyPackagePreset()));
-    const reviewBtn = document.getElementById('reviewQuoteBtn');
-    if(reviewBtn) reviewBtn.addEventListener('click', () => openQuoteModal());
-    updateSummary();
-    update3DScene();
-    saveProgress();
-  }
-
-  function handleFieldInput(el){
-    const path = el.getAttribute('data-bind');
-    if(!path) return;
-    const parts = path.split('.');
-    let target = state;
-    for(let i=0;i<parts.length-1;i++) target = target[parts[i]];
-    const key = parts[parts.length - 1];
-    if(el.type === 'number') target[key] = safeNumber(el.value, 0);
-    else if(el.type === 'checkbox') target[key] = el.checked;
-    else if(el.type === 'color') target[key] = el.value;
-    else if(path === 'plumbing.additions') target[key] = el.value.split(',').map((item) => item.trim()).filter(Boolean);
-    else if(path === 'electrical.relocate') target[key] = el.value === 'true';
-    else target[key] = el.value;
-    if(path === 'measurements.length' || path === 'measurements.width' || path === 'measurements.ceilingHeight') {
-      const len = safeNumber(state.measurements.length, 5);
-      const width = safeNumber(state.measurements.width, 3.5);
-      const height = safeNumber(state.measurements.ceilingHeight, 2.7);
-      if(len <= 0 || width <= 0 || height <= 0){ state.measurements.length = Math.max(len, 0.5); state.measurements.width = Math.max(width, 0.5); state.measurements.ceilingHeight = Math.max(height, 0.5); }
-    }
-    render();
-  }
-
-  function handleCardSet(el){
-    const path = el.getAttribute('data-set');
-    const value = el.getAttribute('data-value');
-    if(!path) return;
-    const parts = path.split('.');
-    let target = state;
-    for(let i=0;i<parts.length-1;i++) target = target[parts[i]];
-    const key = parts[parts.length - 1];
-    if(value === 'toggle'){
-      target[key] = !target[key];
-    } else {
-      target[key] = value;
-    }
-    render();
-  }
-
-  function applyPackagePreset(){
-    if(!state.packageId) return;
-    if(state.mode === 'kitchen'){ state.layout='straight'; state.cabinetry.base=4; state.cabinetry.wall=2; state.cabinetry.tall=1; state.cabinetry.material='laminate'; state.surfaces.benchtop='mineral'; state.surfaces.splashback='subway'; state.appliances.oven=true; state.appliances.cooktop=true; state.appliances.rangehood=true; }
-    else { state.layout='standard'; state.cabinetry.base=2; state.cabinetry.wall=1; state.cabinetry.material='melamine'; state.surfaces.benchtop='mineral'; state.appliances.vanity=true; state.appliances.basin=true; state.appliances.toilet=true; }
-    state.notes = `Package preset applied from ${state.packageId}.`;
-    render();
-  }
-
-  function updateSummary(){
-    const estimate = calculateEstimate();
-    const confidence = getConfidence();
-    const warnings = getWarnings();
-    sumPrice.textContent = `${formatCurrency(estimate.low)} – ${formatCurrency(estimate.high)}`;
-    sumBody.innerHTML = `
-      <div class="sec">
-        <h5>Current selection</h5>
-        <div class="line"><span>Project</span><span>${state.mode === 'kitchen' ? 'Kitchen' : 'Bathroom'} renovation</span></div>
-        <div class="line"><span>Layout</span><span>${state.layout}</span></div>
-        <div class="line"><span>Materials</span><span>${state.cabinetry.material} · ${state.cabinetry.finish}</span></div>
-        <div class="line"><span>Location</span><span>${state.location.suburb || 'Sydney'}</span></div>
-      </div>
-      <div class="sec">
-        <h5>Estimate components</h5>
-        <div class="line"><span>Base project</span><span>${formatCurrency(estimate.baseProject)}</span></div>
-        <div class="line"><span>Materials</span><span>${formatCurrency(estimate.materials)}</span></div>
-        <div class="line"><span>Trade services</span><span>${formatCurrency(estimate.tradeServices)}</span></div>
-        <div class="line"><span>Labour</span><span>${formatCurrency(estimate.labour)}</span></div>
-        <div class="line"><span>Location adj.</span><span>${formatCurrency(estimate.locationAdjustment)}</span></div>
-        <div class="line"><span>Complexity adj.</span><span>${formatCurrency(estimate.complexityAdjustment)}</span></div>
-        <div class="line tot"><span>GST</span><span>${formatCurrency(estimate.gst)}</span></div>
-      </div>
-      <div class="sec">
-        <h5>Estimate confidence</h5>
-        <div class="line"><span>${confidence.label}</span><span>${confidence.level}</span></div>
-        <div class="prods">${confidence.text}</div>
-      </div>
-      <div class="sec">
-        <h5>Items requiring inspection</h5>
-        <div class="prods">${warnings.length ? warnings.map((entry) => `<div>• ${entry}</div>`).join('') : '<div>• No immediate issues.</div>'}</div>
-      </div>
-    `;
-  }
-
-  function buildRoomDimensions(){
-    const length = Math.max(safeNumber(state.measurements.length, 5.6), 0.5);
-    const width = Math.max(safeNumber(state.measurements.width, 3.8), 0.5);
-    const height = Math.max(safeNumber(state.measurements.ceilingHeight, 2.7), 1.8);
-    return {length, width, height};
-  }
-
-  function update3DScene(){
-    if(!canvas) return;
-    if(!scene){ init3D(); }
-    if(!scene) return;
-    if(roomGroup){ roomGroup.clear(); }
-    if(wallsGroup){ wallsGroup.clear(); }
-    if(measurementGroup){ measurementGroup.clear(); }
-    const {length, width, height} = buildRoomDimensions();
-    const roomWidth = width;
-    const roomDepth = length;
-    const floorColor = 0xF2ECDD;
-    const wallColor = 0xE4DCC7;
-    roomGroup = new THREE.Group();
-    wallsGroup = new THREE.Group();
-    measurementGroup = new THREE.Group();
-    scene.add(roomGroup);
-    scene.add(wallsGroup);
-    scene.add(measurementGroup);
-
-    const floor = new THREE.Mesh(new THREE.BoxGeometry(roomWidth + 0.6, 0.06, roomDepth + 0.6), new THREE.MeshStandardMaterial({color: floorColor, roughness:0.95}));
-    floor.position.y = 0;
-    roomGroup.add(floor);
-
-    const wallMaterial = new THREE.MeshStandardMaterial({color: wallColor, roughness:0.95, metalness:0.05});
-    const backWall = new THREE.Mesh(new THREE.BoxGeometry(roomWidth, height, 0.08), wallMaterial);
-    backWall.position.set(0, height / 2, -roomDepth / 2);
-    wallsGroup.add(backWall);
-    const frontWall = new THREE.Mesh(new THREE.BoxGeometry(roomWidth, height, 0.08), wallMaterial);
-    frontWall.position.set(0, height / 2, roomDepth / 2);
-    wallsGroup.add(frontWall);
-    const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.08, height, roomDepth), wallMaterial);
-    leftWall.position.set(-roomWidth / 2, height / 2, 0);
-    wallsGroup.add(leftWall);
-    const rightWall = new THREE.Mesh(new THREE.BoxGeometry(0.08, height, roomDepth), wallMaterial);
-    rightWall.position.set(roomWidth / 2, height / 2, 0);
-    wallsGroup.add(rightWall);
-
-    if(!state.wallsVisible) wallsGroup.visible = false;
-    const measurementsVisible = state.measurementsVisible !== false;
-    measurementGroup.visible = measurementsVisible;
-    const edgeMaterial = new THREE.LineDashedMaterial({color:0x8D7A55, dashSize:0.08, gapSize:0.06});
-    const edgePoints = [
-      [-roomWidth / 2, 0.02, -roomDepth / 2],
-      [roomWidth / 2, 0.02, -roomDepth / 2],
-      [roomWidth / 2, 0.02, roomDepth / 2],
-      [-roomWidth / 2, 0.02, roomDepth / 2],
-      [-roomWidth / 2, 0.02, -roomDepth / 2]
-    ];
-    const geometry = new THREE.BufferGeometry().setFromPoints(edgePoints.map(([x,y,z]) => new THREE.Vector3(x,y,z)));
-    const line = new THREE.Line(geometry, edgeMaterial);
-    line.computeLineDistances();
-    measurementGroup.add(line);
-
-    const cabinetColor = new THREE.Color(state.cabinetry.colour || '#9A6B3C');
-
-    if(state.mode === 'kitchen') {
-      const baseCount = Math.max(0, safeNumber(state.cabinetry.base, 0));
-      const wallCount = Math.max(0, safeNumber(state.cabinetry.wall, 0));
-      const tallCount = Math.max(0, safeNumber(state.cabinetry.tall, 0));
-      const pantryCount = Math.max(0, safeNumber(state.cabinetry.pantry, 0));
-      const cornerCount = Math.max(0, safeNumber(state.cabinetry.corner, 0));
-      const islandCount = Math.max(0, safeNumber(state.cabinetry.island, 0));
-      const cabinetWidth = 0.75;
-      const cabinetDepth = 0.6;
-      const cabinetHeight = 0.84;
-      const startX = -roomWidth / 2 + 0.8;
-      const z = -roomDepth / 2 + 0.8;
-      for(let i=0;i<baseCount;i++) addCabinet({x:startX + i * 0.9,y:0.42,z, width:cabinetWidth, depth:cabinetDepth, height:cabinetHeight, color:cabinetColor, label:'Base cabinet'});
-      for(let i=0;i<wallCount;i++) addCabinet({x:startX + i * 0.9,y:height - 0.42,z:roomDepth / 2 - 0.2, width:cabinetWidth, depth:cabinetDepth, height:cabinetHeight, color:cabinetColor, label:'Wall cabinet'});
-      for(let i=0;i<tallCount;i++) addCabinet({x:startX + 1.4 + i * 0.9,y:height / 2,z:roomDepth / 2 - 0.2, width:cabinetWidth, depth:cabinetDepth, height:1.8, color:cabinetColor, label:'Tall cabinet'});
-      for(let i=0;i<pantryCount;i++) addCabinet({x:startX + 1.4 + i * 0.9,y:0.42,z:-roomDepth / 2 + 1.2, width:0.8, depth:cabinetDepth, height:cabinetHeight, color:cabinetColor, label:'Pantry'});
-      for(let i=0;i<cornerCount;i++) addCabinet({x:roomWidth / 2 - 1.0 - i * 0.9,y:0.42,z:-roomDepth / 2 + 1.2, width:cabinetWidth, depth:cabinetDepth, height:cabinetHeight, color:cabinetColor, label:'Corner cabinet'});
-      if(islandCount > 0) addCabinet({x:0,y:0.42,z:0, width:1.8, depth:0.9, height:0.9, color:cabinetColor, label:'Island'});
-      if(state.appliances.oven) addAppliance({x:-roomWidth / 2 + 1.4, y:0.86, z:-roomDepth / 2 + 1.8, width:0.7, depth:0.6, height:0.6, color:0xC9C6C0, label:'Oven'});
-      if(state.appliances.cooktop) addAppliance({x:0, y:0.86, z:-roomDepth / 2 + 0.3, width:0.9, depth:0.6, height:0.16, color:0x606060, label:'Cooktop'});
-      if(state.appliances.rangehood) addAppliance({x:0, y:height - 0.2, z:roomDepth / 2 - 0.2, width:0.8, depth:0.4, height:0.16, color:0x8D6A2A, label:'Rangehood'});
-      if(state.appliances.dishwasher) addAppliance({x:startX + 2.2, y:0.42, z:-roomDepth / 2 + 0.25, width:0.6, depth:0.6, height:0.84, color:0x7A7A7A, label:'Dishwasher'});
-      if(state.appliances.refrigerator) addAppliance({x:roomWidth / 2 - 1.2, y:1.0, z:-roomDepth / 2 + 0.4, width:0.7, depth:0.7, height:1.8, color:0xC4CED4, label:'Fridge'});
-      const bench = new THREE.Mesh(new THREE.BoxGeometry(roomWidth * 0.7, 0.12, 0.6), new THREE.MeshStandardMaterial({color:0xE7E0D2, roughness:0.8})); bench.position.set(0, 0.84, -roomDepth / 2 + 1.0); roomGroup.add(bench); bench.userData.label='Benchtop'; bench.userData.group='surface';
-      const sink = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.1, 0.6), new THREE.MeshStandardMaterial({color:0xD1D8DA})); sink.position.set(-0.4, 0.86, -roomDepth / 2 + 1.0); roomGroup.add(sink); sink.userData.label='Sink'; sink.userData.group='service';
-    } else {
-      const vanityWidth = 1.2; const vanityDepth = 0.6; const vanityHeight = 0.8;
-      addCabinet({x:-0.2,y:0.4,z:-roomDepth / 2 + 0.8, width:vanityWidth, depth:vanityDepth, height:vanityHeight, color:cabinetColor, label:'Vanity'});
-      addCabinet({x:1.1,y:0.4,z:-roomDepth / 2 + 0.8, width:0.55, depth:0.55, height:0.8, color:0xD9C9AA, label:'Mirror cabinet'});
-      const bath = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.5, 2.0), new THREE.MeshStandardMaterial({color:0xF3F6FB})); bath.position.set(0.4, 0.25, 0.2); roomGroup.add(bath); bath.userData.label='Bath'; bath.userData.group='fixture';
-      if(state.appliances.shower) { const shower = new THREE.Mesh(new THREE.BoxGeometry(1.3, 1.6, 1.0), new THREE.MeshStandardMaterial({color:0xDDECF6, transparent:true, opacity:0.65})); shower.position.set(-1.0, 0.8, 0.6); roomGroup.add(shower); shower.userData.label='Shower'; shower.userData.group='fixture'; }
-      if(state.appliances.toilet) { const toilet = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.75, 0.7), new THREE.MeshStandardMaterial({color:0xFFFFFF})); toilet.position.set(1.2, 0.38, 0.6); roomGroup.add(toilet); toilet.userData.label='Toilet'; toilet.userData.group='fixture'; }
-    }
-
-    const light = new THREE.PointLight(0xffffff, 1.2, 18); light.position.set(0, 5, 0); scene.add(light);
-    const fill = new THREE.HemisphereLight(0xfff0d0, 0x3c4d57, 0.8); scene.add(fill);
-    const target = new THREE.Vector3(0, height / 2, 0);
-    controls.target.copy(target);
-    setCameraPreset(state.cameraPreset || 'corner');
-    if(!hasRendered3D){ hasRendered3D = true; }
-  }
-
-  function addCabinet({x,y,z,width,depth,height,color,label}){
-    const material = new THREE.MeshStandardMaterial({color, roughness:0.8, emissive:0x000000, emissiveIntensity:0});
-    const mesh = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
-    mesh.position.set(x, y + height / 2, z);
-    mesh.userData.label = label;
-    mesh.userData.group = 'cabinet';
-    roomGroup.add(mesh);
-    return mesh;
-  }
-
-  function addAppliance({x,y,z,width,depth,height,color,label}){
-    const material = new THREE.MeshStandardMaterial({color, roughness:0.7, emissive:0x000000, emissiveIntensity:0});
-    const mesh = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
-    mesh.position.set(x, y + height / 2, z);
-    mesh.userData.label = label;
-    mesh.userData.group = 'appliance';
-    roomGroup.add(mesh);
-    return mesh;
-  }
-
-  function setCameraPreset(preset){
-    const {length, width, height} = buildRoomDimensions();
-    const roomWidth = width; const roomDepth = length;
-    const target = new THREE.Vector3(0, height / 2, 0);
-    controls.target.copy(target);
-    if(preset === 'front'){ camera.position.set(0, height / 2 + 0.8, roomDepth + 2.4); }
-    else if(preset === 'side'){ camera.position.set(roomWidth + 2.6, height / 2 + 0.8, 0); }
-    else if(preset === 'top'){ camera.position.set(0, roomDepth + 3.0, 0); }
-    else { camera.position.set(roomWidth + 2.4, height / 2 + 1.8, roomDepth + 2.0); }
-    camera.lookAt(target);
-    controls.update();
-  }
-
-  function init3D(){
-    if(!canvas) return;
+  setTimeout(function(){
     try{
-      scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(35, canvas.clientWidth / Math.max(canvas.clientHeight, 1), 0.1, 100);
-      renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.setSize(canvas.clientWidth || 900, canvas.clientHeight || 600, false);
-      controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.enableDamping = true;
-      controls.enablePan = true;
-      controls.minDistance = 2.4;
-      controls.maxDistance = 18;
-      controls.target.set(0, 1.2, 0);
-      scene.background = new THREE.Color(0xF4EFD9);
-      stageNote.textContent = 'Drag to rotate · Scroll to zoom · Pan with orbit controls';
-      fallback3d.classList.remove('show');
-      updateWindowSize();
-      window.addEventListener('resize', updateWindowSize);
-      renderer.domElement.addEventListener('pointerdown', () => { stageWrap.classList.add('interacting'); });
-      renderer.domElement.addEventListener('pointerup', () => { stageWrap.classList.remove('interacting'); });
-      renderer.domElement.addEventListener('click', handleSceneClick);
-      zIn.addEventListener('click', () => { camera.position.z -= 0.4; controls.update(); });
-      zOut.addEventListener('click', () => { camera.position.z += 0.4; controls.update(); });
-      zReset.addEventListener('click', () => setCameraPreset(state.cameraPreset || 'corner'));
-      camFront.addEventListener('click', () => { state.cameraPreset='front'; setCameraPreset('front'); });
-      camSide.addEventListener('click', () => { state.cameraPreset='side'; setCameraPreset('side'); });
-      camTop.addEventListener('click', () => { state.cameraPreset='top'; setCameraPreset('top'); });
-      camCorner.addEventListener('click', () => { state.cameraPreset='corner'; setCameraPreset('corner'); });
-      toggleWalls.addEventListener('click', () => { state.wallsVisible = !state.wallsVisible; if(wallsGroup) wallsGroup.visible = state.wallsVisible; toggleWalls.classList.toggle('on'); });
-      toggleMeasurements.addEventListener('click', () => { state.measurementsVisible = !state.measurementsVisible; if(measurementGroup) measurementGroup.visible = state.measurementsVisible; toggleMeasurements.classList.toggle('on'); });
-      fullscreen3d.addEventListener('click', () => { if(!document.fullscreenElement) stageWrap.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); });
-      interact3d.addEventListener('click', () => { interact3d.classList.toggle('on'); });
-      function animate(){ requestAnimationFrame(animate); controls.update(); renderer.render(scene, camera); }
-      animate();
-      update3DScene();
-    } catch(err){
-      is3DSupported = false;
-      fallback3d.classList.add('show');
-      stageNote.textContent = 'WebGL is unavailable; the planner continues with your selections.';
-    }
-  }
-
-  function updateWindowSize(){
-    if(!camera || !renderer) return;
-    const width = canvas.clientWidth || 900;
-    const height = canvas.clientHeight || 600;
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-    renderer.setSize(width, height, false);
-  }
-
-  function handleSceneClick(event){
-    if(!scene || !camera || !renderer) return;
-    const rect = renderer.domElement.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(new THREE.Vector2(x, y), camera);
-    const intersects = raycaster.intersectObjects(roomGroup.children, true);
-    if(intersects.length){
-      const object = intersects[0].object;
-      selectedMesh = object;
-      selectedObjectName = object.userData.label || 'Selected item';
-      state.selectedObject = selectedObjectName;
-      object.material.emissive = new THREE.Color(0x8A6136);
-      object.material.emissiveIntensity = 0.35;
-      if(selectedMesh && selectedMesh !== object){
-        selectedMesh.material.emissive = new THREE.Color(0x000000);
-        selectedMesh.material.emissiveIntensity = 0;
+      var tab=plannerView.querySelector('.mode[data-mode="'+mode+'"]');
+      if(tab) tab.click();
+    }catch(e){}
+    try{
+      if(window.__pendingPackage){
+        var pkgId=window.__pendingPackage;
+        window.__pendingPackage='';
+        if(window.MICPlanner && window.MICPlanner.setPackage){
+          window.MICPlanner.setPackage(mode, pkgId);
+        }
       }
-    }
-    render();
-  }
+    }catch(err){}
+    if(window.MICPlanner && window.MICPlanner.forceResize) window.MICPlanner.forceResize();
+    setTimeout(function(){ if(window.MICPlanner && window.MICPlanner.forceResize) window.MICPlanner.forceResize(); },150);
+    opening=false;
+  },120);
+  document.title=mode==='bathroom'?'Bathroom Design Planner | MIC NSW':'Kitchen Design Planner | MIC NSW';
+}
 
-  function openQuoteModal(){
-    qForm.reset();
-    qStatus.textContent='';
-    qStatus.className='status';
-    qTitle.textContent = `${state.mode === 'kitchen' ? 'Kitchen' : 'Bathroom'} quote request`;
-    quoteModal.classList.add('open');
-    document.getElementById('qName').focus();
-  }
+function closePlanner(hash){
+  if(!plannerView||!websiteView) return;
+  plannerView.classList.remove('is-active');
+  plannerView.setAttribute('aria-hidden','true');
+  websiteView.classList.remove('is-hidden');
+  websiteView.setAttribute('aria-hidden','false');
+  document.body.classList.remove('planner-open');
+  if(siteHeader) siteHeader.style.display='';
+  if(window.MICPlanner && window.MICPlanner.pauseRender) window.MICPlanner.pauseRender();
+  document.title=HOME_TITLE;
+  var target=hash||'#design';
+  if(target.charAt(0)!=='#') target='#'+target;
+  try{ history.replaceState(null,'',target); }catch(e){ location.hash=target; }
+  setTimeout(function(){
+    var el=document.querySelector(target);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+    else window.scrollTo(0,savedScroll||0);
+  },40);
+}
 
-  function closeQuoteModal(){
-    quoteModal.classList.remove('open');
-  }
+function scrollToId(id){
+  if(!id) return false;
+  id = id.replace(/^#/,'');
+  if(!id || id.indexOf('planner')===0) return false;
+  var el = document.getElementById(id);
+  if(!el) return false;
+  if(websiteView){websiteView.classList.remove('is-hidden');websiteView.setAttribute('aria-hidden','false');}
+  if(plannerView){plannerView.classList.remove('is-active');plannerView.setAttribute('aria-hidden','true');}
+  document.body.classList.remove('planner-open');
+  if(siteHeader) siteHeader.style.display='';
+  if(window.MICPlanner && window.MICPlanner.pauseRender) window.MICPlanner.pauseRender();
+  try{el.scrollIntoView({behavior:'smooth',block:'start'});}catch(err){try{window.location.hash='#'+id;}catch(e){}}
+  return true;
+}
 
-  function sendQuoteRequest(event){
-    event.preventDefault();
-    if(!qForm.reportValidity()) return;
-    const estimate = calculateEstimate();
-    const payload = {
-      name: document.getElementById('qName').value.trim(),
-      email: document.getElementById('qEmail').value.trim(),
-      phone: document.getElementById('qPhone').value.trim(),
-      suburb: document.getElementById('qSuburb').value.trim() || state.location.suburb, 
-      contactMethod: document.getElementById('qContactMethod').value,
-      consultationDate: document.getElementById('qConsultDate').value,
-      timeframe: document.getElementById('qTimeframe').value,
-      budget: document.getElementById('qBudget').value,
-      notes: document.getElementById('qNotes').value.trim(),
-      consent: document.getElementById('qConsent').checked,
-      projectType: state.mode === 'kitchen' ? 'Kitchen renovation' : 'Bathroom renovation',
-      estimateRange: `${formatCurrency(estimate.low)} – ${formatCurrency(estimate.high)}`,
-      selections: JSON.stringify(state),
-      generatedAt: new Date().toISOString(),
-      projectReference: `MIC-${Date.now().toString(36).toUpperCase()}`
-    };
-    qStatus.textContent = 'Thanks — your quote request has been prepared and will be reviewed by MIC NSW.';
-    qStatus.className='status';
-    qWaFallback.href = `https://wa.me/61470640083?text=${encodeURIComponent([`MIC NSW quote request`, `Project: ${payload.projectType}`, `Range: ${payload.estimateRange}`, `Name: ${payload.name}`, `Phone: ${payload.phone}`].join('\n'))}`;
-    closeQuoteModal();
-    if(typeof CONTACT_ENDPOINT === 'string' && CONTACT_ENDPOINT){
-      fetch(CONTACT_ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)}).catch(() => {});
-    }
+function parseRoute(){
+  var raw = location.hash || '#home';
+  var h = raw.replace(/^#/,'');
+  var parts = h.split('/').filter(Boolean);
+  if(parts[0]==='planner'){
+    var mode = parts[1];
+    if(mode!=='kitchen' && mode!=='bathroom') mode='kitchen';
+    openPlanner(mode, parts[2]||'');
+    return;
   }
+  if(plannerView && plannerView.classList.contains('is-active')){
+    closePlanner(raw.indexOf('#')===0 ? raw : '#'+ (parts[0]||'home'));
+    return;
+  }
+  scrollToId(parts[0]||'home');
+}
 
-  function bindRouter(){
-    var opening=false;
-    function parseRoute(){
-      var raw = location.hash || '#home';
-      var h = raw.replace(/^#/,'');
-      var parts = h.split('/').filter(Boolean);
-      if(parts[0]==='planner'){ const mode = parts[1] === 'bathroom' ? 'bathroom' : 'kitchen'; openPlanner(mode, parts[2] || ''); return; }
-      if(plannerView && plannerView.classList.contains('is-active')){ closePlanner(raw.indexOf('#')===0 ? raw : '#'+ (parts[0]||'home')); return; }
-      if(websiteView){ websiteView.classList.remove('is-hidden'); websiteView.setAttribute('aria-hidden','false'); }
-      document.body.classList.remove('planner-open');
-      if(siteHeader) siteHeader.style.display='';
-    }
-    window.addEventListener('hashchange', parseRoute);
-    document.addEventListener('click', function(e){
-      var openEl = e.target.closest && e.target.closest('[data-open-planner]');
-      if(openEl){ e.preventDefault(); var mode=openEl.getAttribute('data-open-planner')||'kitchen'; openPlanner(mode, openEl.getAttribute('data-package')||''); return; }
-      var exitEl = e.target.closest && e.target.closest('[data-exit-planner]');
-      if(exitEl){ e.preventDefault(); closePlanner('#design'); return; }
-      var quoteEl = e.target.closest && e.target.closest('[data-exit-to-quote]');
-      if(quoteEl){ e.preventDefault(); closePlanner('#quote'); }
+window.addEventListener('hashchange', parseRoute);
+
+function bindPlannerTriggers(root){
+  (root||document).querySelectorAll('[data-open-planner]').forEach(function(el){
+    if(el.__plannerBound) return;
+    el.__plannerBound=true;
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      var mode=el.getAttribute('data-open-planner')||'kitchen';
+      openPlanner(mode);
     });
-    if((location.hash||'').indexOf('#planner')===0) parseRoute();
-  }
+  });
+  (root||document).querySelectorAll('[data-exit-planner]').forEach(function(el){
+    if(el.__exitBound) return;
+    el.__exitBound=true;
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      closePlanner('#design');
+    });
+  });
+  (root||document).querySelectorAll('[data-exit-to-quote]').forEach(function(el){
+    if(el.__exitQBound) return;
+    el.__exitQBound=true;
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      closePlanner('#quote');
+    });
+  });
+}
 
-  function bindGlobalActions(){
-    btnBack.addEventListener('click', () => { if(state.step > 0){ state.step -= 1; render(); } });
-    btnNext.addEventListener('click', () => { if(state.step < planningSteps[state.mode].length - 1){ state.step += 1; render(); } else openQuoteModal(); });
-    btnQuote.addEventListener('click', openQuoteModal);
-    qClose.addEventListener('click', closeQuoteModal);
-    qCancel.addEventListener('click', closeQuoteModal);
-    quoteModal.addEventListener('click', (event) => { if(event.target === quoteModal) closeQuoteModal(); });
-    qForm.addEventListener('submit', sendQuoteRequest);
-    qEmailFallback.addEventListener('click', () => { window.location.href = `mailto:info@mic-nsw.com.au?subject=${encodeURIComponent('MIC NSW Quote Request')}&body=${encodeURIComponent(compileQuoteSummary())}`; });
-    qCopyFallback.addEventListener('click', async () => { try{ await navigator.clipboard.writeText(compileQuoteSummary()); qStatus.textContent='Summary copied.'; qStatus.className='status'; } catch(err){ qStatus.textContent='Copy failed.'; qStatus.className='status err'; }});
-    toggSum.addEventListener('click', () => { document.getElementById('sumCol').classList.toggle('mob'); });
-    document.querySelectorAll('[data-pkg]').forEach((btn) => btn.addEventListener('click', () => { document.querySelectorAll('[data-pkg]').forEach((b) => b.classList.remove('on')); btn.classList.add('on'); renderPackages(btn.getAttribute('data-pkg')); }));
-  }
+document.addEventListener('DOMContentLoaded', function(){
+  bindPlannerTriggers(document);
+  document.addEventListener('click', function(e){
+    var openEl = e.target.closest && e.target.closest('[data-open-planner]');
+    if(openEl){
+      e.preventDefault();
+      var mode=openEl.getAttribute('data-open-planner')||'kitchen';
+      var pkg=openEl.getAttribute('data-package')||'';
+      openPlanner(mode, pkg);
+      return;
+    }
+    var exitEl = e.target.closest && e.target.closest('[data-exit-planner]');
+    if(exitEl){e.preventDefault();closePlanner('#design');return;}
+    var quoteEl = e.target.closest && e.target.closest('[data-exit-to-quote]');
+    if(quoteEl){e.preventDefault();closePlanner('#quote');}
+  });
+  if((location.hash||'').indexOf('#planner')===0) parseRoute();
+});
 
-  function compileQuoteSummary(){
-    const estimate = calculateEstimate();
-    return [
-      'MIC NSW Planner Summary',
-      `Project: ${state.mode === 'kitchen' ? 'Kitchen' : 'Bathroom'} renovation`,
-      `Estimate: ${formatCurrency(estimate.low)} – ${formatCurrency(estimate.high)}`,
-      `Location: ${state.location.suburb}`,
-      `Layout: ${state.layout}`,
-      `Cabinets: ${state.cabinetry.base}/${state.cabinetry.wall}/${state.cabinetry.tall}`,
-      `Materials: ${state.cabinetry.material} · ${state.cabinetry.finish}`,
-      `Benchtop: ${state.surfaces.benchtop}`,
-      `Notes: ${state.notes || 'No notes yet.'}`
-    ].join('\n');
-  }
+window.MICRouter={openPlanner:openPlanner,closePlanner:closePlanner,bindPlannerTriggers:bindPlannerTriggers};
 
-  function renderPackages(type){
-    const packageGrid = document.getElementById('pkgGrid');
-    if(!packageGrid) return;
-    const pkgData = {
-      kitchen:[{name:'Essential Kitchen', id:'essential', range:'$16,900 – $22,900', desc:'Best for apartments and rentals', items:['Standard cabinetry','Laminate benchtop','Waterproofing allowance','Basic lighting']},{name:'Signature Kitchen', id:'signature', range:'$24,900 – $36,900', desc:'Flexible family renovation', items:['More cabinets','Stone-look surface','Tiled splashback','Expanded power']},{name:'Luxury Kitchen', id:'luxury', range:'$39,900 – $59,900+', desc:'Premium custom joinery', items:['Dedicated pantry','Premium finishes','Designer tapware','Feature lighting'] }],
-      bathroom:[{name:'Essential Bathroom', id:'essential', range:'$19,900 – $24,900', desc:'Value-driven bathroom refresh', items:['Waterproofing','Standard vanity','Basic tile allowance','Install labour']},{name:'Signature Bathroom', id:'signature', range:'$26,900 – $34,900', desc:'Full family bathroom upgrade', items:['Porcelain tile','Frameless screen','Vanity and mirror','Lighting']},{name:'Luxury Bathroom', id:'luxury', range:'$38,900 – $59,900+', desc:'Premium spa-style bathroom', items:['Premium tile','Custom vanity','Feature tapware','Heated towel rail'] }]
-    };
-    packageGrid.innerHTML = pkgData[type].map((pkg) => `<article class="pkg-card"><h3>${pkg.name}</h3><p>${pkg.desc}</p><div style="font-family:var(--fd);font-size:1.15rem;margin:10px 0">${pkg.range}</div><ul>${pkg.items.map((entry) => `<li>• ${entry}</li>`).join('')}</ul><button type="button" class="btn btn-outline btn-block" data-open-planner="${type}" data-package="${pkg.id}">Open planner</button></article>`).join('');
-  }
-
-  function init(){
-    bindRouter();
-    bindGlobalActions();
-    loadProgress();
-    renderPackages('kitchen');
-    render();
-    init3D();
-    saveProgress();
-  }
-
-  init();
+document.addEventListener('click', function(e){
+  var a = e.target.closest && e.target.closest('a[href^="#"]');
+  if(!a) return;
+  if(a.hasAttribute('data-open-planner') || a.hasAttribute('data-exit-planner') || a.hasAttribute('data-exit-to-quote')) return;
+  var href = a.getAttribute('href') || '';
+  if(!href || href === '#' || href.indexOf('#planner') === 0) return;
+  var id = href.slice(1);
+  if(!id) return;
+  var el = document.getElementById(id);
+  if(!el) return;
+  e.preventDefault();
+  var mn = document.getElementById('mobileNav');
+  if(mn){ mn.classList.remove('open'); document.body.classList.remove('menu-open'); document.body.style.overflow=''; }
+  if(typeof scrollToId === 'function'){scrollToId(id);}
+  else {try{ el.scrollIntoView({behavior:'smooth',block:'start'}); }catch(err){}}
+  try{ history.pushState(null,'', '#'+id); }catch(err){ location.hash = '#'+id; }
+}, true);
 })();
 
-</script> hidden style="position:fixed;inset:0;z-index:3000;background:rgba(28,31,26,.55);display:none;align-items:center;justify-content:center;padding:20px;padding-top:max(20px,env(safe-area-inset-top));padding-bottom:max(20px,env(safe-area-inset-bottom))">
+(function(){
+var mobileNav=document.getElementById('mobileNav');
+var menuOpen=document.getElementById('menuOpen');
+var menuClose=document.getElementById('menuClose');
+var lastFocused=null;
+function openNav(){
+  if(!mobileNav) return;
+  lastFocused=document.activeElement;
+  mobileNav.classList.add('open');
+  mobileNav.setAttribute('aria-hidden','false');
+  document.body.classList.add('menu-open');
+  document.body.style.overflow='hidden';
+  if(menuOpen) menuOpen.setAttribute('aria-expanded','true');
+  if(menuClose) menuClose.focus();
+}
+function closeNav(){
+  if(!mobileNav) return;
+  mobileNav.classList.remove('open');
+  mobileNav.setAttribute('aria-hidden','true');
+  document.body.classList.remove('menu-open');
+  document.body.style.overflow='';
+  if(menuOpen) menuOpen.setAttribute('aria-expanded','false');
+  if(lastFocused && typeof lastFocused.focus==='function'){ lastFocused.focus(); }
+  else if(menuOpen){ menuOpen.focus(); }
+}
+if(menuOpen) menuOpen.addEventListener('click',openNav);
+if(menuClose) menuClose.addEventListener('click',closeNav);
+document.querySelectorAll('.mnav').forEach(function(a){a.addEventListener('click',closeNav);});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape' && mobileNav && mobileNav.classList.contains('open')){ closeNav(); }
+});
+
+var PKG={
+ kitchen:[
+  {name:'Essential Kitchen',id:'essential',range:'$16,900–$22,900',desc:'Best for apartments, rentals and investment kitchens',items:['Site measure & basic design','Standard laminate cabinetry','Soft-close hardware','Laminate benchtop allowance','Standard sink & mixer','Install + reconnection'],note:'Excludes appliances, structural work and flooring unless listed.',featured:false},
+  {name:'Signature Kitchen',id:'signature',range:'$24,900–$36,900',desc:'Best for family homes wanting a full upgrade',items:['Everything in Essential','Custom-sized cabinetry','Stone / premium benchtop','Feature handles','Tiled splashback','Expanded electrical & plumbing points'],note:'Excludes appliances, structural work and major electrical upgrades unless listed.',featured:true},
+  {name:'Luxury Kitchen',id:'luxury',range:'$39,900–$59,900+',desc:'Best for premium homes and architectural projects',items:['Premium custom cabinetry','Designer profiles','Premium stone benchtop','Feature splashback','Designer tapware','Pantry & feature lighting'],note:'Excludes appliances, structural work and service relocation unless listed.',featured:false}
+ ],
+ bathroom:[
+  {name:'Essential Bathroom',id:'essential',range:'$19,900–$24,900',desc:'Best for a practical, budget-conscious refresh',items:['Demolition & waste','Waterproofing','Standard tile allowance','Standard vanity & toilet','Semi-frameless screen','Install labour'],note:'Excludes structural work, floor levelling and layout changes unless listed.',featured:false},
+  {name:'Signature Bathroom',id:'signature',range:'$26,900–$34,900',desc:'Best for family bathrooms wanting a full upgrade',items:['Everything in Essential','Porcelain tiles','Wall-hung vanity','Frameless screen','Selected tapware','Niche · heated towel rail'],note:'Excludes structural work and major plumbing relocation unless listed.',featured:true},
+  {name:'Luxury Bathroom',id:'luxury',range:'$38,900–$59,900+',desc:'Best for premium spa-style bathrooms',items:['Large-format tiles','Designer vanity','Premium tapware','Custom frameless screen','Freestanding bath allowance','Feature lighting'],note:'Excludes structural work and service relocation unless listed.',featured:false}
+ ]
+};
+function renderPackages(type){
+ var grid=document.getElementById('pkgGrid'); if(!grid) return;
+ grid.innerHTML=PKG[type].map(function(p){
+  return '<article class="pkg-card'+(p.featured?' featured':'')+'">'+(p.featured?'<span class="badge">MOST POPULAR</span>':'')+
+   '<h3>'+p.name+'</h3><p style="font-size:.84rem;color:var(--ink2)">'+p.desc+'</p>'+
+   '<div style="font-family:var(--fd);font-size:1.2rem;margin:10px 0;overflow-wrap:anywhere">'+p.range+' <small style="font-size:.7rem;font-family:var(--fb);color:var(--ink2)">AUD incl. GST</small></div>'+
+   '<ul style="list-style:none;margin:10px 0 12px;font-size:.82rem;color:var(--ink2)">'+p.items.map(function(i){return '<li style="padding-left:12px;position:relative;margin:6px 0"><span style="position:absolute;left:0;color:var(--brass)">·</span>'+i+'</li>';}).join('')+'</ul>'+
+   '<p style="font-size:.7rem;color:var(--ink2);margin-bottom:14px">'+p.note+'</p>'+
+   '<div style="display:flex;flex-direction:column;gap:8px;margin-top:auto">'+
+   '<button type="button" class="btn '+(p.featured?'btn-brass':'btn-outline')+' btn-block" data-open-planner="'+type+'" data-package="'+p.id+'">Design This Package</button>'+
+   '<a href="#quote" class="btn btn-outline btn-block" data-request-quote="'+type+'" data-package-name="'+p.name+'">Request a Quote</a>'+
+   '</div></article>';
+ }).join('');
+ if(window.MICRouter&&window.MICRouter.bindPlannerTriggers){window.MICRouter.bindPlannerTriggers(grid);}
+ grid.querySelectorAll('[data-request-quote]').forEach(function(el){el.addEventListener('click',function(){
+  var cPackage=document.getElementById('cPackage');
+  if(cPackage){
+   var opt=Array.prototype.find.call(cPackage.options,function(o){return o.value && el.getAttribute('data-package-name').indexOf(o.value)===0;});
+   if(opt) cPackage.value=opt.value;
+  }
+ });});
+}
+renderPackages('kitchen');
+document.querySelectorAll('[data-pkg]').forEach(function(btn){
+ btn.addEventListener('click',function(){
+  document.querySelectorAll('[data-pkg]').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  renderPackages(btn.getAttribute('data-pkg'));
+ });
+});
+
+var form=document.getElementById('contactForm');
+if(form) form.addEventListener('submit',function(e){
+ e.preventDefault();
+ if(!this.reportValidity()) return;
+ var f=this;
+ var btn=f.querySelector('[type="submit"]');
+ var statusEl=document.getElementById('contactStatus');
+ var phone = String(f.phone.value || '').replace(/\s+/g, '').replace(/[-()]/g, '');
+ var phoneOk = /^(\+?61|0)4\d{8}$/.test(phone) || /^(\+?61|0)[2378]\d{8}$/.test(phone);
+ if (!phoneOk) {
+  statusEl.textContent = 'Please enter a valid Australian phone number.';
+  statusEl.style.color = '#8B2E2E';
+  f.phone.setAttribute('aria-invalid', 'true');
+  return;
+ }
+ f.phone.removeAttribute('aria-invalid');
+ var payload={name:f.name.value.trim(),email:f.email.value.trim(),phone:f.phone.value.trim(),suburb:f.suburb.value.trim(),project_type:f.project_type.value,package:f.package?f.package.value:'',message:f.message?f.message.value.trim():'',consent:!!(f.consent&&f.consent.checked),source:'mic-nsw-website',submitted_at:new Date().toISOString()};
+ if(btn){btn.disabled=true;btn.textContent='Sending…';}
+ statusEl.textContent='';statusEl.style.color='';
+ function fail(msg){statusEl.textContent=msg;statusEl.style.color='#8B2E2E';if(btn){btn.disabled=false;btn.textContent='Send message';}}
+ function ok(msg){statusEl.textContent=msg;statusEl.style.color='#2D6A4F';if(btn){btn.disabled=false;btn.textContent='Send message';}f.reset();}
+ if(typeof CONTACT_ENDPOINT==='string' && CONTACT_ENDPOINT){
+  fetch(CONTACT_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)})
+   .then(function(r){ if(!r.ok) throw new Error('Network'); return r.json().catch(function(){return {};}); })
+   .then(function(){ ok('Thank you. Your enquiry has been sent. MIC NSW will review the details and contact you.'); })
+   .catch(function(){ fail('We could not send your enquiry online. Please call +61 470 640 083, email info@mic-nsw.com.au, or use WhatsApp.'); });
+ } else {
+  fail('Online form submission has not been connected yet. Please contact MIC NSW by phone, email or WhatsApp.');
+  if(btn){btn.disabled=false;btn.textContent='Send message';}
+ }
+});
+})();
+
+(function () {
+'use strict';
+const AU = {baseH:0.72,baseD:0.56,wallH:0.72,wallD:0.30,kickH:0.15,singleW:0.60,doubleW:0.90,tallH:2.10,fridgeGap:0.08};
+const P = {
+  base:249,wall:179,tall:549,pantry:699,corner:449,drawerBank:189,drawerExtra:49,bulkhead:39,kickboard:0,hinge:12,
+  doorFlat:0,doorShaker:55,doorPoly:95,doorHandleless:120,handleBar:18,handleKnob:32,handleNone:0,
+  benchLam:95,benchEng:380,benchNat:520,benchDek:580,waterfall:0.85,
+  splashNone:0,splashTile:75,splashGlass:140,splashStone:190,
+  sinkSingle:389,sinkDouble:549,sinkComposite:849,mixChrome:189,mixBrass:420,mixBlack:329,
+  oven:799,cook:899,hood:449,mw:599,lightLed:55,lightPend:420
+};
+const PKG_LABEL = {essential:'Essential',signature:'Signature',luxury:'Luxury'};
+const BASE_KITCHEN = {essential:16900,signature:24900,luxury:39900};
+const BASE_BATHROOM = {essential:19900,signature:26900,luxury:38900};
+
+const KITCHEN_ALLOWANCE = {
+  essential:{base:4,wall:3,tall:1,pantry:0,corner:0,drawerBanks:1,drawersPer:2,door:'flat',handle:'bar-black',hinge:'soft',bench:'lam',splash:'tile',sink:'abey1',mixer:'caroma',light:'none',oven:'none',cook:'none',hood:'none',mw:'none',fridge:'f600'},
+  signature:{base:5,wall:4,tall:1,pantry:1,corner:0,drawerBanks:2,drawersPer:3,door:'shaker',handle:'bar-brass',hinge:'soft',bench:'eng',splash:'tile',sink:'abey2',mixer:'phoenix',light:'led',oven:'none',cook:'none',hood:'none',mw:'none',fridge:'f600'},
+  luxury:{base:6,wall:5,tall:1,pantry:1,corner:1,drawerBanks:3,drawersPer:4,door:'poly',handle:'bar-brass',hinge:'soft',bench:'taj',splash:'stone',sink:'blanco',mixer:'sussex',light:'full',oven:'none',cook:'none',hood:'none',mw:'none',fridge:'f900'}
+};
+const BATHROOM_ALLOWANCE = {
+  essential:{vanity:'wall',tap:'caroma',screen:'semi',bath:'none',basin:'integrated',cabinet:'single',mirror:'std',showerHead:'basic',storage:'none',vColor:'white'},
+  signature:{vanity:'wall',tap:'phoenix',screen:'frame',bath:'none',basin:'under',cabinet:'double',mirror:'led',showerHead:'rain',storage:'cab',vColor:'white'},
+  luxury:{vanity:'free',tap:'sussex',screen:'frame',bath:'free',basin:'vessel',cabinet:'linen',mirror:'full',showerHead:'dual',storage:'bench',vColor:'oak'}
+};
+
+const AppConfig = {
+  kitchenSteps:[
+    {id:1,t:'Layout',s:'Shape',d:'Pick a layout — the 3D plan rebuilds like a professional kitchen planner.'},
+    {id:2,t:'Room & cabinets',s:'Size & modules',d:'Room size plus base, wall, tall, pantry and corner units (AU sizes).'},
+    {id:3,t:'Doors & colour',s:'Style',d:'Door profile and finish — preview updates on every cabinet.'},
+    {id:4,t:'Handles & storage',s:'Hardware',d:'Handles, hinges and drawer layout.'},
+    {id:5,t:'Benchtop & splash',s:'Surfaces',d:'Stone or laminate, waterfall, splashback and kickboard.'},
+    {id:6,t:'Sink & appliances',s:'Fit-out',d:'Sink, mixer, fridge, oven, cooktop, rangehood and lighting.'},
+    {id:7,t:'Review',s:'Quote',d:'Itemised estimate indicative — request your MIC NSW quote.'}
+  ],
+  bathroomSteps:[
+    {id:1,t:'Layout',s:'Plan',d:'Pick a floor plan that suits your bathroom flow and plumbing.'},
+    {id:2,t:'Room Size',s:'Dimensions',d:'Set the overall footprint before choosing products.'},
+    {id:3,t:'Vanity & Basin',s:'Storage',d:'Choose the vanity profile, basin shape and cabinet storage.'},
+    {id:4,t:'Colour & Mirror',s:'Finish',d:'Select vanity colour, mirror style and a cohesive finish.'},
+    {id:5,t:'Tapware',s:'Fixtures',d:'Choose tapware and shower head options.'},
+    {id:6,t:'Shower & Storage',s:'Enclosure',d:'Pick the shower screen and extra storage add-ons.'},
+    {id:7,t:'Bath & Extras',s:'Optional',d:'Add a bath or keep the room streamlined.'},
+    {id:8,t:'Tiles',s:'Surfaces',d:'Choose wall and floor tiles for the full look.'},
+    {id:9,t:'Review',s:'Quote',d:'Review your full bathroom design and request a quote.'}
+  ],
+  layoutsK:[{id:'straight',name:'Straight Line',desc:'Single run'},{id:'galley',name:'Galley',desc:'Two parallel runs'},{id:'lshape',name:'L-Shape',desc:'Two walls'},{id:'corner',name:'L + Corner Tall',desc:'L with tall corner'},{id:'ushape',name:'U-Shape',desc:'Three walls'},{id:'island',name:'Island',desc:'Run + island'}],
+  layoutsB:[{id:'standard',name:'Standard'},{id:'wetroom',name:'Wet Room'},{id:'ensuite',name:'Ensuite'}],
+  islandSizes:[{id:'small',name:'Small island',desc:'1.2m · compact',w:1.2,d:0.8},{id:'medium',name:'Medium island',desc:'1.8m · standard',w:1.8,d:0.95},{id:'large',name:'Large island',desc:'2.4m · family',w:2.4,d:1.05},{id:'xl',name:'XL island',desc:'3.0m · entertaining',w:3.0,d:1.1}],
+  doors:[{id:'flat',name:'Flat / Melamine',mod:P.doorFlat,desc:'Standard'},{id:'shaker',name:'Shaker',mod:P.doorShaker,desc:'Per door'},{id:'poly',name:'Polyurethane',mod:P.doorPoly,desc:'Per door'},{id:'handleless',name:'Handleless Gola',mod:P.doorHandleless,desc:'Per door'}],
+  colors:[{id:'white',name:'Classic White',hex:'#F5F2EB',desc:'Most popular Sydney'},{id:'warmwhite',name:'Warm White',hex:'#EFE8DC',desc:'Soft coastal'},{id:'black',name:'Matte Black',hex:'#2A2C2E',desc:'Modern contrast'},{id:'polywhite',name:'Poly White Gloss',hex:'#FAFAFA',desc:'High gloss'},{id:'sage',name:'Sage Green',hex:'#8A9A80',desc:'Hamptons / coastal'},{id:'navy',name:'Navy',hex:'#1C2B33',desc:'Classic Sydney'},{id:'oak',name:'Natural Oak',hex:'#C9A876',desc:'Timber look'},{id:'walnut',name:'Walnut',hex:'#5C4033',desc:'Rich timber'},{id:'charcoal',name:'Charcoal',hex:'#4A4E52',desc:'Soft dark'},{id:'greige',name:'Greige',hex:'#B8B0A4',desc:'Neutral trend'},{id:'custom',name:'Custom Colour',hex:'#D4C4A8',desc:'Your paint code'}],
+  handles:[{id:'none',name:'Handleless / Gola',brand:'Blum',mod:P.handleNone,show:false,hColor:'#222',desc:'No visible handle'},{id:'bar-black',name:'Bar Pull 160mm',brand:'Häfele',mod:P.handleBar,show:true,hColor:'#1a1a1a',desc:'Matte black · popular Sydney'},{id:'bar-brass',name:'Bar Pull Brass',brand:'Castella',mod:22,show:true,hColor:'#C9A24B',desc:'Brushed brass'},{id:'bar-chrome',name:'Bar Pull Chrome',brand:'Häfele',mod:16,show:true,hColor:'#C7CBCE',desc:'Polished chrome'},{id:'knob-brass',name:'Knob · Brass',brand:'Castella',mod:P.handleKnob,show:true,hColor:'#B8914A',desc:'Classic knob'},{id:'rail-black',name:'D-Rail Black',brand:'Kethy',mod:18,show:true,hColor:'#222',desc:'Sydney favourite'},{id:'rail-ss',name:'D-Rail Stainless',brand:'Kethy',mod:18,show:true,hColor:'#A8B0B5',desc:'Stainless steel'}],
+  benches:[{id:'none',brand:'—',name:'No benchtop',hex:'#E8E4DC',mod:0,mat:'—'},{id:'lam',brand:'Laminex',name:'Natural White',hex:'#F0EDE6',mod:P.benchLam,mat:'Laminate'},{id:'eng',brand:'Caesarstone',name:'Calacatta Nuvo',hex:'#EDE7DD',mod:P.benchEng,mat:'Quartz'},{id:'taj',brand:'Rex Marble',name:'Taj Mahal Quartzite',hex:'#F2EDE3',mod:680,mat:'Quartzite · Sydney stock'},{id:'super',brand:'Rex Marble',name:'Super White',hex:'#F7F5F0',mod:720,mat:'Dolomite'},{id:'carrara',brand:'Rex Marble',name:'Carrara Marble',hex:'#E8E6E1',mod:650,mat:'Marble'},{id:'calacatta',brand:'Rex Marble',name:'Calacatta',hex:'#F5F0E6',mod:780,mat:'Marble'},{id:'statuario',brand:'Rex Marble',name:'Statuario',hex:'#F0EBE3',mod:820,mat:'Marble'},{id:'dek',brand:'Dekton',name:'Sirocco',hex:'#8C8378',mod:P.benchDek,mat:'Ultra-compact'},{id:'custom-stone',brand:'Custom',name:'Specify your stone',hex:'#E5DFD4',mod:0,mat:'Client specified',desc:'Type the stone name below'}],
+  splash:[{id:'none',name:'No Splashback',mod:0,hex:'#E5E0D4'},{id:'tile',name:'Subway Ceramic',mod:P.splashTile,hex:'#F7F6F2'},{id:'glass',name:'Painted Glass',mod:P.splashGlass,hex:'#D0D8E0'},{id:'stone',name:'Stone Match',mod:P.splashStone,hex:'#EDE7DD'}],
+  sinks:[{id:'none',brand:'—',name:'Select later',mod:0},{id:'abey1',brand:'Abey',name:'Single Bowl SS',mod:P.sinkSingle},{id:'abey2',brand:'Abey',name:'Double Bowl',mod:P.sinkDouble},{id:'blanco',brand:'Blanco',name:'Silgranit',mod:P.sinkComposite},{id:'oliveri',brand:'Oliveri',name:'Professional',mod:679}],
+  mixers:[{id:'none',brand:'—',name:'Select later',hex:'#ccc',mod:0},{id:'caroma',brand:'Caroma',name:'Chrome',hex:'#C7CBCE',mod:P.mixChrome},{id:'phoenix',brand:'Phoenix',name:'Matte Black',hex:'#26282A',mod:P.mixBlack},{id:'sussex',brand:'Sussex',name:'Brushed Brass',hex:'#C9A24B',mod:P.mixBrass}],
+  ovens:[{id:'none',brand:'—',name:'None',mod:0},{id:'west',brand:'Westinghouse',name:'60cm pyrolytic',mod:P.oven},{id:'bosch',brand:'Bosch',name:'Series 6 60cm',mod:1699},{id:'fp',brand:'Fisher & Paykel',name:'60cm',mod:1899},{id:'miele',brand:'Miele',name:'H 2265',mod:2899},{id:'specific-oven',brand:'Specific brand',name:'Client specified',mod:0,desc:'Final price on quote'}],
+  cooks:[{id:'none',brand:'—',name:'None',mod:0},{id:'ind',brand:'Westinghouse',name:'60cm induction',mod:P.cook},{id:'ind90',brand:'Bosch',name:'90cm induction',mod:1899},{id:'gas',brand:'Fisher & Paykel',name:'90cm gas',mod:2199},{id:'ilve',brand:'ILVE',name:'90cm dual fuel',mod:4200},{id:'specific-cook',brand:'Specific brand',name:'Client specified',mod:0,desc:'Final price on quote'}],
+  hoods:[{id:'none',brand:'—',name:'None',mod:0},{id:'can',brand:'Westinghouse',name:'Canopy 60',mod:P.hood},{id:'fp',brand:'Fisher & Paykel',name:'Canopy 90',mod:1299},{id:'qasair',brand:'Qasair',name:'Undermount',mod:1599},{id:'specific-hood',brand:'Specific brand',name:'Client specified',mod:0,desc:'Final price on quote'}],
+  mws:[{id:'none',brand:'—',name:'None',mod:0},{id:'built',brand:'Westinghouse',name:'Built-in MW',mod:P.mw},{id:'bosch-mw',brand:'Bosch',name:'Built-in combi',mod:1299},{id:'specific-mw',brand:'Specific brand',name:'Client specified',mod:0,desc:'Final price on quote'}],
+  fridgesFull:[{id:'none',name:'No fridge',mod:0},{id:'f600',name:'Fridge 600mm integrated',mod:0,desc:'Panel-ready'},{id:'f900',name:'Fridge 900mm French door',mod:0,desc:'Panel-ready'},{id:'fp-fridge',brand:'Fisher & Paykel',name:'Integrated 600',mod:0},{id:'specific-fridge',brand:'Specific brand',name:'Client specified',mod:0,desc:'Final price on quote'}],
+  lights:[{id:'none',name:'None',mod:0},{id:'led',name:'LED under-cab /lm',mod:P.lightLed},{id:'pend',name:'Pendants (set 3)',mod:P.lightPend},{id:'full',name:'LED + Pendants',mod:650}],
+  hinges:[{id:'std',name:'Standard hinges',mod:0,desc:'Included'},{id:'soft',name:'Soft-close hinges',mod:12,desc:'Per door'},{id:'push',name:'Push-to-open',mod:28,desc:'Per door · handleless'}],
+  drawerOpts:[{id:0,name:'Doors only'},{id:1,name:'1 drawer bank'},{id:2,name:'2 drawer banks'},{id:3,name:'3 drawer banks'}],
+  vanS:[{id:'wall',name:'Wall-Hung',mod:0},{id:'free',name:'Freestanding',mod:900}],
+  vanC:[{id:'white',name:'White',hex:'#F4F2ED'},{id:'oak',name:'Oak',hex:'#C9A876'},{id:'black',name:'Black',hex:'#26282A'}],
+  screens:[{id:'semi',name:'Semi-frameless',mod:0},{id:'frame',name:'Frameless',mod:620}],
+  baths:[{id:'none',name:'No Bath',mod:0},{id:'free',name:'Freestanding',mod:1800}],
+  basins:[{id:'integrated',brand:'Caroma',name:'Integrated Basin',mod:420},{id:'under',brand:'Roca',name:'Undermount Basin',mod:560},{id:'counter',brand:'Roca',name:'Countertop Basin',mod:690},{id:'vessel',brand:'Duravit',name:'Vessel Basin',mod:780}],
+  cabinets:[{id:'none',name:'No extra cabinet',mod:0},{id:'single',name:'Single vanity cabinet',mod:620},{id:'double',name:'Double vanity cabinet',mod:900},{id:'linen',name:'Linen storage cabinet',mod:980}],
+  mirrors:[{id:'none',name:'No mirror',mod:0},{id:'std',name:'Framed mirror',mod:240},{id:'led',name:'LED mirror',mod:560},{id:'full',name:'Full-height mirror',mod:780}],
+  showerHeads:[{id:'basic',name:'Standard shower mixer',mod:0},{id:'rain',name:'Rain shower head',mod:420},{id:'dual',name:'Dual outlet shower',mod:780}],
+  storage:[{id:'none',name:'No extra storage',mod:0},{id:'cab',name:'Wall cabinet',mod:640},{id:'niche',name:'Recessed niche',mod:340},{id:'bench',name:'Storage bench',mod:920}],
+  wTiles:[{id:'sub',name:'Subway',hex:'#F7F6F2'},{id:'mar',name:'Marble-look',hex:'#EAE6DC'}],
+  fTiles:[{id:'gry',name:'Grey',hex:'#D8D2C4'},{id:'stn',name:'Stone',hex:'#C8C2B4'}]
+};
+
+const $ = id => document.getElementById(id);
+const clamp = (v,a,c) => Math.max(a, Math.min(c, v));
+const money = v => '$' + Math.round(v || 0).toLocaleString('en-AU');
+const find = (list, id) => (list || []).find(x => x.id === id) || (list && list[0]) || {};
+
+let renderScheduled = false;
+function scheduleRender() {
+  if (renderScheduled) return;
+  renderScheduled = true;
+  requestAnimationFrame(() => { renderScheduled = false; render(); });
+}
+function reactive(obj) {
+  return new Proxy(obj, {
+    set(target, prop, value) {
+      if (target[prop] === value) return true;
+      target[prop] = value;
+      scheduleRender();
+      return true;
+    }
+  });
+}
+
+const kitchen = reactive({
+  step:1, done:{}, pkg:'essential',
+  layout:'lshape', w:3.6, d:3.0, h:2.7, benchLm:4.2,
+  base:4, wall:3, tall:1, pantry:0, corner:0,
+  pantrySide:'right', tallSide:'left', drawerOn:'first', islandSeating:true, islandCook:false, islandSize:'medium', baseDoors:'auto', wallDoors:'auto', pantryStyle:'standard', fridgePanel:'both',
+  drawerBanks:1, drawersPer:2,
+  door:'flat', color:'white', customHex:'#C4B5A0', customStone:'',
+  handle:'bar-black', bench:'lam', waterfall:false,
+  splash:'tile', bulkhead:false, kickboard:true, hinge:'soft',
+  sink:'abey1', mixer:'caroma',
+  fridge:'f600', oven:'none', cook:'none', hood:'none', mw:'none',
+  light:'none'
+});
+const bathroom = reactive({
+  step:1, done:{}, pkg:'essential',
+  layout:'standard', w:2.4, d:2.0, h:2.4,
+  vanity:'wall', vColor:'white', basin:'integrated', cabinet:'single', mirror:'std',
+  tap:'caroma', screen:'semi', bath:'none', showerHead:'basic', storage:'none',
+  wTile:'sub', fTile:'gry'
+});
+const app = reactive({ mode:'kitchen', ready:false });
+
+window.MICPlanner = window.MICPlanner || {};
+window.MICPlanner.setPackage = function(mode, pkgId){
+  pkgId = (pkgId||'').toLowerCase();
+  if(pkgId!=='essential' && pkgId!=='signature' && pkgId!=='luxury') return;
+  if(mode==='bathroom'){
+    bathroom.pkg = pkgId;
+    const a = BATHROOM_ALLOWANCE[pkgId];
+    if(a){ bathroom.vanity=a.vanity; bathroom.tap=a.tap; bathroom.screen=a.screen; bathroom.bath=a.bath; bathroom.basin=a.basin; bathroom.cabinet=a.cabinet; bathroom.mirror=a.mirror; bathroom.showerHead=a.showerHead; bathroom.storage=a.storage; bathroom.vColor=a.vColor; }
+  } else {
+    kitchen.pkg = pkgId;
+    const a = KITCHEN_ALLOWANCE[pkgId];
+    if(a){
+      kitchen.base=a.base; kitchen.wall=a.wall; kitchen.tall=a.tall; kitchen.pantry=a.pantry; kitchen.corner=a.corner;
+      kitchen.drawerBanks=a.drawerBanks; kitchen.drawersPer=a.drawersPer;
+      kitchen.door=a.door; kitchen.handle=a.handle; kitchen.hinge=a.hinge;
+      kitchen.bench=a.bench; kitchen.splash=a.splash; kitchen.sink=a.sink; kitchen.mixer=a.mixer;
+      kitchen.light=a.light; kitchen.oven=a.oven; kitchen.cook=a.cook; kitchen.hood=a.hood; kitchen.mw=a.mw;
+      kitchen.fridge=a.fridge;
+    }
+  }
+};
+
+function st() { return app.mode === 'kitchen' ? kitchen : bathroom; }
+function steps() { return app.mode === 'kitchen' ? AppConfig.kitchenSteps : AppConfig.bathroomSteps; }
+function nSteps() { return steps().length; }
+function cabHex() { return kitchen.color === 'custom' ? kitchen.customHex : find(AppConfig.colors, kitchen.color).hex; }
+function markDone() { const s = st(); s.done = { ...s.done, [s.step]: 1 }; }
+
+function calcKitchen() {
+  const k = kitchen;
+  const allow = KITCHEN_ALLOWANCE[k.pkg] || KITCHEN_ALLOWANCE.essential;
+  const nDoors = k.base + k.wall + k.tall + k.pantry + k.corner;
+  const extraBase = Math.max(0, k.base - allow.base);
+  const extraWall = Math.max(0, k.wall - allow.wall);
+  const extraTall = Math.max(0, k.tall - allow.tall);
+  const extraPantry = Math.max(0, k.pantry - allow.pantry);
+  const extraCorner = Math.max(0, k.corner - allow.corner);
+  const cab = extraBase*P.base + extraWall*P.wall + extraTall*P.tall + extraPantry*P.pantry + extraCorner*P.corner;
+  const extraBanks = Math.max(0, k.drawerBanks - allow.drawerBanks);
+  const extraPer = Math.max(0, k.drawersPer - allow.drawersPer);
+  const drawers = extraBanks*P.drawerBank + extraPer * Math.max(k.drawerBanks,1) * P.drawerExtra;
+  const doorMod = find(AppConfig.doors, k.door).mod;
+  const allowDoorMod = find(AppConfig.doors, allow.door).mod;
+  const doorUp = Math.max(0, doorMod - allowDoorMod) * nDoors;
+  const handleMod = find(AppConfig.handles, k.handle).mod;
+  const allowHandleMod = find(AppConfig.handles, allow.handle).mod;
+  const handleUp = Math.max(0, handleMod - allowHandleMod) * nDoors;
+  const hingeUp = (find(AppConfig.hinges, k.hinge).mod || 0) * nDoors;
+  const br = find(AppConfig.benches, k.bench).mod;
+  const allowBr = find(AppConfig.benches, allow.bench).mod;
+  const bench = Math.max(0, br - allowBr) * k.benchLm + (k.waterfall ? br * P.waterfall : 0);
+  const spMod = find(AppConfig.splash, k.splash).mod;
+  const allowSp = find(AppConfig.splash, allow.splash).mod;
+  const sp = Math.max(0, spMod - allowSp) * k.benchLm;
+  const bulk = k.bulkhead ? P.bulkhead * k.benchLm : 0;
+  const kick = k.kickboard ? 0 : 0;
+  const sinkMod = find(AppConfig.sinks, k.sink).mod;
+  const allowSink = find(AppConfig.sinks, allow.sink).mod;
+  const sink = Math.max(0, sinkMod - allowSink);
+  const mixerMod = find(AppConfig.mixers, k.mixer).mod;
+  const allowMixer = find(AppConfig.mixers, allow.mixer).mod;
+  const mixer = Math.max(0, mixerMod - allowMixer);
+  const apps = find(AppConfig.ovens, k.oven).mod + find(AppConfig.cooks, k.cook).mod + find(AppConfig.hoods, k.hood).mod + find(AppConfig.mws, k.mw).mod;
+  let light = 0;
+  if (k.light === 'led') light = P.lightLed * k.benchLm;
+  else light = find(AppConfig.lights, k.light).mod;
+  const allowLight = allow.light === 'led' ? P.lightLed * k.benchLm : find(AppConfig.lights, allow.light).mod;
+  light = Math.max(0, light - allowLight);
+  const base = 3000;
+  const upgrades = cab + drawers + doorUp + handleUp + hingeUp + bench + sp + bulk + sink + mixer + apps + light;
+  const total = base + upgrades;
+  return { total, base, upgrades, cab, drawers, doorUp, handleUp, hingeUp, bench, sp, bulk, kick, sink, mixer, apps, light, nDoors };
+}
+function calcBathroom() {
+  const base = 3000;
+  const allow = BATHROOM_ALLOWANCE[bathroom.pkg] || BATHROOM_ALLOWANCE.essential;
+  let t = 0;
+  const vanMod = find(AppConfig.vanS, bathroom.vanity).mod;
+  const allowVan = find(AppConfig.vanS, allow.vanity).mod;
+  t += Math.max(0, vanMod - allowVan);
+  const basinMod = find(AppConfig.basins, bathroom.basin).mod;
+  const allowBasin = find(AppConfig.basins, allow.basin).mod;
+  t += Math.max(0, basinMod - allowBasin);
+  const cabinetMod = find(AppConfig.cabinets, bathroom.cabinet).mod;
+  const allowCabinet = find(AppConfig.cabinets, allow.cabinet).mod;
+  t += Math.max(0, cabinetMod - allowCabinet);
+  const mirrorMod = find(AppConfig.mirrors, bathroom.mirror).mod;
+  const allowMirror = find(AppConfig.mirrors, allow.mirror).mod;
+  t += Math.max(0, mirrorMod - allowMirror);
+  const tapMod = find(AppConfig.mixers, bathroom.tap).mod;
+  const allowTap = find(AppConfig.mixers, allow.tap).mod;
+  t += Math.max(0, tapMod - allowTap);
+  const showerHeadMod = find(AppConfig.showerHeads, bathroom.showerHead).mod;
+  const allowShowerHead = find(AppConfig.showerHeads, allow.showerHead).mod;
+  t += Math.max(0, showerHeadMod - allowShowerHead);
+  const scrMod = find(AppConfig.screens, bathroom.screen).mod;
+  const allowScr = find(AppConfig.screens, allow.screen).mod;
+  t += Math.max(0, scrMod - allowScr);
+  const storageMod = find(AppConfig.storage, bathroom.storage).mod;
+  const allowStorage = find(AppConfig.storage, allow.storage).mod;
+  t += Math.max(0, storageMod - allowStorage);
+  const bathMod = find(AppConfig.baths, bathroom.bath).mod;
+  const allowBath = find(AppConfig.baths, allow.bath).mod;
+  t += Math.max(0, bathMod - allowBath);
+  const total = base + t;
+  return { total, base, upgrades: t };
+}
+
+let scene, camera, renderer, controls, root, threeReady = false;
+let lastKitchenTargetKey = null, lastBathTargetKey = null;
+const MeshPool = {
+  map: new Map(),
+  hideAll() { this.map.forEach(m => { m.visible = false; }); },
+  get(key) {
+    let mesh = this.map.get(key);
+    if (!mesh) {
+      const g = new THREE.BoxGeometry(1,1,1);
+      const m = new THREE.MeshStandardMaterial({color:0xcccccc,roughness:0.55,metalness:0.05});
+      mesh = new THREE.Mesh(g,m); mesh.castShadow=true; mesh.receiveShadow=true;
+      this.map.set(key,mesh); root.add(mesh);
+    }
+    mesh.visible=true; return mesh;
+  },
+  box(key,w,h,d,hex,x,y,z,style) {
+    const mesh=this.get(key);
+    mesh.scale.set(Math.max(w,0.001),Math.max(h,0.001),Math.max(d,0.001));
+    mesh.position.set(x,y,z);
+    const mat=mesh.material; mat.color.set(hex); mat.transparent=false; mat.opacity=1;
+    if(style==='metal'){mat.roughness=0.28;mat.metalness=0.85;}
+    else if(style==='stone'){mat.roughness=0.72;mat.metalness=0.02;}
+    else if(style==='glass'){mat.roughness=0.15;mat.metalness=0.1;mat.transparent=true;mat.opacity=0.55;}
+    else if(style==='appliance'){mat.roughness=0.35;mat.metalness=0.65;}
+    else if(style==='floor'){mat.roughness=0.9;mat.metalness=0;}
+    else{mat.roughness=0.52;mat.metalness=0.04;}
+    mat.needsUpdate=true; return mesh;
+  }
+};
+
+function init3D() {
+  if (typeof THREE === 'undefined' || !THREE.WebGLRenderer) {
+    threeReady = false;
+    const fb = $('fallback3d'); if(fb) fb.classList.add('show');
+    const c = $('c3d'); if(c) c.style.display='none';
+    return;
+  }
+  try {
+    const canvas = $('c3d');
+    const wrap = canvas.parentElement;
+    const w = wrap.clientWidth || 600, h = wrap.clientHeight || 260;
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xece8df);
+    scene.fog = new THREE.Fog(0xece8df, 9, 24);
+    camera = new THREE.PerspectiveCamera(42, w/h, 0.1, 60);
+    camera.position.set(4.6, 3.3, 5.6);
+    renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:false, powerPreference:'high-performance'});
+    renderer.setSize(w, h, false);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    if (renderer.outputEncoding !== undefined) renderer.outputEncoding = THREE.sRGBEncoding;
+    if (THREE.OrbitControls) {
+      controls = new THREE.OrbitControls(camera, canvas);
+      controls.enableDamping = true; controls.dampingFactor = 0.07;
+      controls.minDistance = 1.8; controls.maxDistance = 16;
+      controls.maxPolarAngle = Math.PI/2.02;
+      controls.target.set(1.9, 0.95, 1.15);
+      controls.enablePan = true; controls.screenSpacePanning = false;
+    }
+    scene.add(new THREE.AmbientLight(0xfff8f0, 0.48));
+    const key = new THREE.DirectionalLight(0xfff5e6, 0.9);
+    key.position.set(5.5,9,4.5); key.castShadow=true;
+    key.shadow.mapSize.set(1024,1024); scene.add(key);
+    const fill = new THREE.DirectionalLight(0xc8d8e8, 0.32);
+    fill.position.set(-4,5,-3); scene.add(fill);
+    root = new THREE.Group(); scene.add(root);
+    let animFrameId=null, loopRunning=false;
+    function loop(){ animFrameId=requestAnimationFrame(loop); if(controls) controls.update(); renderer.render(scene,camera); }
+    function startLoop(){ if(loopRunning) return; loopRunning=true; loop(); }
+    function stopLoop(){ loopRunning=false; if(animFrameId) cancelAnimationFrame(animFrameId); animFrameId=null; }
+    startLoop();
+    window.MICPlanner = window.MICPlanner || {};
+    window.MICPlanner.pauseRender = stopLoop;
+    window.MICPlanner.resumeRender = startLoop;
+    function resize3D(){
+      const ww=wrap.clientWidth, hh=wrap.clientHeight;
+      if(!ww||!hh||!camera||!renderer) return;
+      camera.aspect=ww/hh; camera.updateProjectionMatrix();
+      renderer.setSize(ww,hh,false);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+    }
+    window.MICPlanner.forceResize = resize3D;
+    window.addEventListener('resize', resize3D);
+    window.addEventListener('orientationchange', function(){ setTimeout(resize3D, 200); });
+    if(window.ResizeObserver){ try{ new ResizeObserver(resize3D).observe(wrap); }catch(e){} }
+    threeReady = true;
+  } catch(err) {
+    console.warn('Three.js init failed', err);
+    threeReady = false;
+    const fb = $('fallback3d'); if(fb) fb.classList.add('show');
+    const c = $('c3d'); if(c) c.style.display='none';
+  }
+}
+
+function buildKitchen3D() {
+  if(!threeReady) return;
+  MeshPool.hideAll();
+  const k=kitchen, hex=cabHex(), H=find(AppConfig.handles,k.handle);
+  const bh=k.bench!=='none'?(find(AppConfig.benches,k.bench).hex||'#EDE7DD'):null;
+  const L=k.layout;
+  const baseW=k.baseDoors==='double'?AU.doubleW:AU.singleW;
+  const wallW=k.wallDoors==='double'?AU.doubleW:(k.wallDoors==='single'?AU.singleW:baseW);
+  const baseH=AU.baseH,baseD=AU.baseD,wallH=AU.wallH,wallD=AU.wallD,kickH=AU.kickH;
+  const doorsPerBase=(k.baseDoors==='single'||(k.baseDoors==='auto'&&baseW<=0.65))?1:2;
+  const doorsPerWall=(k.wallDoors==='single'||(k.wallDoors==='auto'&&wallW<=0.65))?1:2;
+  const fw=Math.max(k.w,3.6), fd=Math.max(k.d,3.0), roomH=k.h||2.7;
+  MeshPool.box('floor',fw+1.2,0.02,fd+1.2,'#d4cbb8',fw/2,0.01,fd/2,'floor');
+  MeshPool.box('skirt-b',fw+0.3,0.08,0.03,'#c2b8a4',fw/2,0.04,0.04);
+  const splashHex=k.splash==='none'?'#e5e0d4':find(AppConfig.splash,k.splash).hex;
+  MeshPool.box('wall-back',fw+0.4,roomH,0.04,splashHex,fw/2,roomH/2,0.02);
+  if(L==='lshape'||L==='corner'||L==='ushape') MeshPool.box('wall-left',0.04,roomH,fd+0.2,'#e8e4da',0.02,roomH/2,fd/2);
+  if(L==='ushape') MeshPool.box('wall-right',0.04,roomH,fd+0.2,'#e8e4da',fw-0.02,roomH/2,fd/2);
+  const baseN=Math.max(1,k.base|0), wallN=Math.max(0,k.wall|0);
+  const tallN=Math.max(0,Math.min(k.tall|0,2)), pantryN=Math.max(0,Math.min(k.pantry|0,2));
+  const hasCorner=L==='corner'||(k.corner>0&&(L==='lshape'||L==='ushape'));
+  const hasFridge=k.fridge&&k.fridge!=='none';
+  const fridgeW=k.fridge==='f900'?0.9:0.7;
+  const tallW=AU.singleW, pantryW=AU.singleW;
+  let x=0.15; const z0=0.12;
+  function drawDoors(key,cx,y,zFront,w,h,nDoors,handleY){
+    if(nDoors>=2) MeshPool.box(key+'-seam',0.012,h*0.92,0.012,'#00000030',cx,y,zFront,'matte');
+    if(H&&H.show){
+      if(nDoors>=2){MeshPool.box(key+'-ha',0.09,0.014,0.014,H.hColor,cx-w*0.22,handleY,zFront+0.01,'metal');MeshPool.box(key+'-hb',0.09,0.014,0.014,H.hColor,cx+w*0.22,handleY,zFront+0.01,'metal');}
+      else MeshPool.box(key+'-ha',0.09,0.014,0.014,H.hColor,cx+w*0.28,handleY,zFront+0.01,'metal');
+    }
+  }
+  function placeBase(i,bx){
+    const w=baseW,cx=bx+w/2,cy=kickH+baseH/2;
+    MeshPool.box('base-'+i,w*0.98,baseH,baseD,hex,cx,cy,z0+baseD/2);
+    if(bh) MeshPool.box('bench-'+i,w*0.98+0.02,0.04,baseD+0.03,bh,cx,kickH+baseH+0.02,z0+baseD/2,'stone');
+    if(k.kickboard) MeshPool.box('kick-'+i,w*0.98,kickH,baseD-0.05,'#2a2a2a',cx,kickH/2,z0+baseD/2-0.02);
+    drawDoors('bd-'+i,cx,cy,z0+baseD,w,baseH,doorsPerBase,kickH+baseH*0.55);
+    let showDr=k.drawerBanks>0;
+    const sinkIdx=Math.round(baseN*0.65);
+    if(k.drawerOn==='first') showDr=showDr&&i<k.drawerBanks;
+    else if(k.drawerOn==='sink-avoid') showDr=showDr&&i!==sinkIdx;
+    if(showDr){const rows=Math.min(k.drawersPer||3,4);for(let r=0;r<rows;r++) MeshPool.box('dr-'+i+'-'+r,w*0.85,0.012,0.01,'#00000022',cx,kickH+0.15+r*(baseH*0.7/rows),z0+baseD+0.01);}
+    return w;
+  }
+  function placeWall(i,bx){
+    const w=wallW,cx=bx+w/2,topY=roomH-0.05-wallH/2;
+    MeshPool.box('wall-'+i,w*0.98,wallH,wallD,hex,cx,topY,z0+wallD/2);
+    drawDoors('wd-'+i,cx,topY,z0+wallD,w,wallH,doorsPerWall,topY-wallH*0.15);
+    return w;
+  }
+  function placeTall(prefix,bx,count,appliances){
+    let used=0;
+    for(let i=0;i<count;i++){
+      const w=prefix==='pantry'?pantryW:tallW,cx=bx+used+w/2,h=AU.tallH;
+      MeshPool.box(prefix+'-'+i,w*0.98,h,baseD,hex,cx,h/2,z0+baseD/2);
+      drawDoors(prefix+'d-'+i,cx,h/2,z0+baseD,w,h,2,h*0.55);
+      if(k.kickboard) MeshPool.box(prefix+'-k-'+i,w*0.98,kickH,baseD-0.05,'#2a2a2a',cx,kickH/2,z0+baseD/2-0.02);
+      if(appliances&&i===0){
+        if(k.oven!=='none'){MeshPool.box('oven',0.52,0.55,0.5,'#1a1a1a',cx,kickH+0.85,z0+0.3,'appliance');MeshPool.box('oven-g',0.38,0.32,0.02,'#333',cx,kickH+0.85,z0+baseD-0.02);}
+        if(k.mw!=='none') MeshPool.box('mw',0.48,0.32,0.38,'#2c2c2c',cx,kickH+1.4,z0+0.28);
+      }
+      used+=w;
+    }
+    return used;
+  }
+  if(pantryN>0&&k.pantrySide==='left') x+=placeTall('pantry',x,pantryN,false)+0.03;
+  if(tallN>0&&k.tallSide==='left') x+=placeTall('tall',x,tallN,true)+0.03;
+  const cornerReserve=(L==='lshape'||L==='corner'||L==='ushape')?baseW:0;
+  const runStart=x+cornerReserve;
+  const baseStartIndex=cornerReserve?1:0;
+  for(let i=baseStartIndex;i<baseN;i++) placeBase(i,runStart+(i-baseStartIndex)*baseW);
+  for(let i=0;i<wallN;i++) placeWall(i,runStart+i*wallW);
+  if(k.bulkhead&&wallN>0){const bw=wallN*wallW;MeshPool.box('bulk',bw,0.16,wallD,hex,runStart+bw/2,roomH-0.08,z0+wallD/2);}
+  x=runStart+Math.max(0,baseN-baseStartIndex)*baseW;
+  if(tallN>0&&k.tallSide==='right'){x+=0.03;x+=placeTall('tall',x,tallN,true);}
+  if(pantryN>0&&k.pantrySide==='right'){x+=0.03;x+=placeTall('pantry',x,pantryN,false);}
+  /* Fridge on main run for non-U layouts; for U-shape place on right return */
+  if(hasFridge && L !== 'ushape'){
+    x+=AU.fridgeGap; const fx=x,fH=AU.tallH-0.32;
+    MeshPool.box('fridge-body',fridgeW,fH,0.66,'#c5ccd2',fx+fridgeW/2,fH/2,z0+0.33,'appliance');
+    MeshPool.box('fridge-div',fridgeW*0.94,0.01,0.02,'#00000020',fx+fridgeW/2,fH*0.55,z0+0.66);
+    if(k.fridgePanel==='right'||k.fridgePanel==='both') MeshPool.box('fridge-pr',0.02,fH,0.66,hex,fx+fridgeW+0.015,fH/2,z0+0.33);
+    if(k.fridgePanel==='both') MeshPool.box('fridge-pl',0.02,fH,0.66,hex,fx-0.015,fH/2,z0+0.33);
+    MeshPool.box('fridge-top',fridgeW+0.04,0.38,wallD+0.02,hex,fx+fridgeW/2,AU.tallH-0.12,z0+wallD/2);
+    drawDoors('ft',fx+fridgeW/2,AU.tallH-0.12,z0+wallD,fridgeW,0.38,2,AU.tallH-0.18);
+    if(k.kickboard) MeshPool.box('fridge-kick',fridgeW,kickH,0.6,'#2a2a2a',fx+fridgeW/2,kickH/2,z0+0.3);
+    x+=fridgeW;
+  }
+  if(L==='lshape'||L==='corner'||L==='ushape'){
+    const cornerX=0.15,cornerZ=z0;
+    if(hasCorner||L==='lshape'||L==='ushape'){
+      MeshPool.box('cn-back',baseW,baseH,baseD,hex,cornerX+baseW/2,kickH+baseH/2,cornerZ+baseD/2);
+      MeshPool.box('cn-left',baseD,baseH,baseW,hex,cornerX+baseD/2,kickH+baseH/2,cornerZ+baseD+baseW/2);
+      if(bh){MeshPool.box('cn-top-b',baseW+0.02,0.04,baseD+0.03,bh,cornerX+baseW/2,kickH+baseH+0.02,cornerZ+baseD/2,'stone');MeshPool.box('cn-top-l',baseD+0.03,0.04,baseW+0.02,bh,cornerX+baseD/2,kickH+baseH+0.02,cornerZ+baseD+baseW/2,'stone');}
+      if(k.kickboard){MeshPool.box('cn-kb',baseW*0.98,kickH,baseD-0.05,'#2a2a2a',cornerX+baseW/2,kickH/2,cornerZ+baseD/2-0.02);MeshPool.box('cn-kl',baseD-0.05,kickH,baseW*0.98,'#2a2a2a',cornerX+baseD/2-0.02,kickH/2,cornerZ+baseD+baseW/2);}
+      drawDoors('cn-db',cornerX+baseW/2,kickH+baseH/2,cornerZ+baseD,baseW,baseH,1,kickH+baseH*0.55);
+      drawDoors('cn-dl',cornerX+baseD,kickH+baseH/2,cornerZ+baseD+baseW/2,baseD,baseH,1,kickH+baseH*0.55);
+      if(hasCorner){MeshPool.box('cn-tall',baseW*0.95,AU.tallH,baseD*0.95,hex,cornerX+baseW/2,AU.tallH/2,cornerZ+baseD/2);drawDoors('cn-td',cornerX+baseW/2,AU.tallH/2,cornerZ+baseD,baseW,AU.tallH,2,AU.tallH*0.55);}
+    }
+    const retN=Math.max(1,Math.floor(baseN/2));
+    const zStart=cornerZ+baseD+baseW;
+    for(let i=0;i<retN;i++){
+      const cz=zStart+i*baseW+baseW/2,cx=cornerX+baseD/2;
+      MeshPool.box('ret-l-'+i,baseD,baseH,baseW*0.98,hex,cx,kickH+baseH/2,cz);
+      if(bh) MeshPool.box('ret-lb-'+i,baseD+0.03,0.04,baseW*0.98,bh,cx,kickH+baseH+0.02,cz);
+      if(k.kickboard) MeshPool.box('ret-lk-'+i,baseD-0.05,kickH,baseW*0.98,'#2a2a2a',cx-0.02,kickH/2,cz);
+      drawDoors('rdl-'+i,cx+baseD/2,kickH+baseH/2,cz+baseW/2,baseD,baseH,doorsPerBase,kickH+baseH*0.55);
+      if(i<wallN){const topY=roomH-0.05-wallH/2;MeshPool.box('ret-w-'+i,wallD,wallH,baseW*0.98,hex,cornerX+wallD/2,topY,cz);}
+    }
+  }
+  if(L==='ushape'){
+    const retN=Math.max(1,Math.floor(baseN/3));
+    const rx=Math.min(x-baseD-0.1,fw-0.9),zStart=z0+baseD+0.08;
+    for(let i=0;i<retN;i++){
+      const cz=zStart+i*baseW+baseW/2;
+      MeshPool.box('ret-r-'+i,baseD,baseH,baseW*0.98,hex,rx+baseD/2,kickH+baseH/2,cz);
+      if(bh) MeshPool.box('ret-rb-'+i,baseD+0.02,0.04,baseW*0.98,bh,rx+baseD/2,kickH+baseH+0.02,cz);
+      if(k.kickboard) MeshPool.box('ret-rk-'+i,baseD-0.05,kickH,baseW*0.98,'#2a2a2a',rx+baseD/2+0.02,kickH/2,cz);
+      drawDoors('rdr-'+i,rx,kickH+baseH/2,cz,baseD,baseH,doorsPerBase,kickH+baseH*0.55);
+    }
+    /* U-shape: place fridge + overhead cabinet on the right return end */
+    if(hasFridge){
+      const fH=AU.tallH-0.32;
+      const fz=zStart+retN*baseW+fridgeW/2+0.05;
+      const fcx=rx+baseD/2;
+      MeshPool.box('fridge-body',baseD*0.95,fH,fridgeW,'#c5ccd2',fcx,fH/2,fz,'appliance');
+      MeshPool.box('fridge-div',0.02,0.01,fridgeW*0.94,'#00000020',rx+baseD-0.02,fH*0.55,fz);
+      if(k.fridgePanel==='right'||k.fridgePanel==='both') MeshPool.box('fridge-pr',baseD*0.95,fH,0.02,hex,fcx,fH/2,fz+fridgeW/2+0.015);
+      if(k.fridgePanel==='both') MeshPool.box('fridge-pl',baseD*0.95,fH,0.02,hex,fcx,fH/2,fz-fridgeW/2-0.015);
+      MeshPool.box('fridge-top',wallD+0.02,0.38,fridgeW+0.04,hex,rx+wallD/2,AU.tallH-0.12,fz);
+      drawDoors('ft',rx+wallD,AU.tallH-0.12,fz,wallD,0.38,2,AU.tallH-0.18);
+      if(k.kickboard) MeshPool.box('fridge-kick',baseD*0.9,kickH,fridgeW,'#2a2a2a',fcx,kickH/2,fz);
+    }
+  }
+  if(L==='galley'){
+    const gz=fd-0.7,gN=Math.max(2,Math.floor(baseN*0.75));
+    for(let i=0;i<gN;i++){const cx=runStart+i*baseW+baseW/2;MeshPool.box('gal-'+i,baseW*0.98,baseH,baseD,hex,cx,kickH+baseH/2,gz);if(bh)MeshPool.box('gal-b-'+i,baseW*0.98,0.04,baseD+0.02,bh,cx,kickH+baseH+0.02,gz);}
+  }
+  if(L==='island'){
+    const sizes={small:[1.2,0.8],medium:[1.8,0.95],large:[2.4,1.05],xl:[3.0,1.1]};
+    const sz=sizes[k.islandSize]||sizes.medium;
+    let iw=sz[0],idp=sz[1]; const seat=k.islandSeating?0.3:0; const topD=idp+seat;
+    const aisle=1.05,ix=runStart+Math.max(0,(baseN*baseW-iw)/2),iz=z0+baseD+aisle,cx=ix+iw/2;
+    const modules=Math.max(2,Math.round(iw/baseW)),modW=iw/modules;
+    for(let i=0;i<modules;i++){const mx=ix+i*modW+modW/2;MeshPool.box('isl-'+i,modW*0.98,baseH,idp*0.96,hex,mx,kickH+baseH/2,iz+idp/2);drawDoors('isl-d-'+i,mx,kickH+baseH/2,iz+idp,modW,baseH,2,kickH+baseH*0.55);}
+    if(k.kickboard) MeshPool.box('isl-k',iw*0.98,kickH,idp*0.9,'#2a2a2a',cx,kickH/2,iz+idp/2);
+    if(bh){MeshPool.box('isl-top',iw+0.06,0.04,topD+0.04,bh,cx,kickH+baseH+0.02,iz+topD/2);if(k.waterfall){MeshPool.box('wf-l',0.04,baseH+kickH,topD,bh,ix+0.02,(baseH+kickH)/2,iz+topD/2);MeshPool.box('wf-r',0.04,baseH+kickH,topD,bh,ix+iw-0.02,(baseH+kickH)/2,iz+topD/2);}}
+    if(k.islandCook) MeshPool.box('isl-cook',0.56,0.03,0.48,'#1a1a1a',cx,kickH+baseH+0.05,iz+idp/2);
+    if(k.islandSeating){const stoolN=Math.min(4,Math.max(2,Math.round(iw/0.7)));for(let i=0;i<stoolN;i++){const sx=ix+0.35+i*((iw-0.5)/Math.max(1,stoolN-1));MeshPool.box('stool-'+i,0.28,0.04,0.28,'#5c4033',sx,0.72,iz+idp+seat*0.5);MeshPool.box('stool-l-'+i,0.04,0.7,0.04,'#3a3a3a',sx,0.35,iz+idp+seat*0.5);}}
+    if(k.light==='pend'||k.light==='full'||k.islandCook){for(let i=0;i<3;i++){MeshPool.box('isl-pc-'+i,0.014,0.4,0.014,'#888',cx-0.4+i*0.4,2.05,iz+idp/2);MeshPool.box('isl-pb-'+i,0.12,0.12,0.12,'#f5e6a8',cx-0.4+i*0.4,1.82,iz+idp/2);}}
+  }
+  if(k.sink!=='none'){
+    const sx=runStart+baseN*baseW*0.65,sz=z0+0.28,topY=kickH+baseH+0.03;
+    if(k.sink==='abey2'||k.sink==='oliveri'){MeshPool.box('sink-l',0.26,0.05,0.34,'#9aadb8',sx-0.15,topY,sz);MeshPool.box('sink-r',0.26,0.05,0.34,'#9aadb8',sx+0.15,topY,sz);}
+    else if(k.sink==='blanco') MeshPool.box('sink-o',0.48,0.05,0.4,'#3d3f42',sx,topY,sz);
+    else MeshPool.box('sink-o',0.44,0.05,0.38,'#9aadb8',sx,topY,sz);
+    if(k.mixer!=='none'){const mx=find(AppConfig.mixers,k.mixer).hex||'#C7CBCE';MeshPool.box('mix-b',0.05,0.03,0.05,mx,sx-0.02,topY+0.04,sz-0.1);MeshPool.box('mix-s',0.025,0.18,0.025,mx,sx-0.02,topY+0.13,sz-0.1);MeshPool.box('mix-p',0.14,0.025,0.025,mx,sx+0.05,topY+0.2,sz-0.05);}
+  }
+  if(k.cook!=='none'&&!k.islandCook){const cx=runStart+baseN*baseW*0.35;MeshPool.box('cook',0.56,0.03,0.48,'#1a1a1a',cx,kickH+baseH+0.04,z0+0.26);}
+  if(k.hood!=='none'){const cx=runStart+baseN*baseW*0.35;MeshPool.box('hood',0.66,0.07,0.36,'#3a4046',cx,1.55,z0+0.2);}
+  if(k.light==='led'||k.light==='full') MeshPool.box('led',baseN*baseW*0.85,0.02,0.03,'#ffe9ae',runStart+baseN*baseW/2,1.4,z0+0.35);
+  if((k.light==='pend'||k.light==='full')&&L!=='island'){const px=runStart+baseN*baseW/2;for(let i=0;i<3;i++){MeshPool.box('pc-'+i,0.014,0.35,0.014,'#888',px-0.35+i*0.35,2.0,z0+0.9);MeshPool.box('pb-'+i,0.11,0.11,0.11,'#f5e6a8',px-0.35+i*0.35,1.8,z0+0.9);}}
+  const kTargetKey=Math.min(x,fw)/2+','+fw;
+  if(controls&&kTargetKey!==lastKitchenTargetKey){lastKitchenTargetKey=kTargetKey;controls.target.set(Math.min(x,fw)/2,0.95,0.85);}
+}
+
+function buildBath3D() {
+  if(!threeReady) return;
+  MeshPool.hideAll();
+  const b=bathroom,fw=b.w,fd=b.d,wallH=b.h;
+  MeshPool.box('bfloor',fw+0.6,0.02,fd+0.6,find(AppConfig.fTiles,b.fTile).hex,fw/2,0.01,fd/2);
+  MeshPool.box('bwall',fw,wallH,0.04,find(AppConfig.wTiles,b.wTile).hex,fw/2,wallH/2,0.02);
+  const vc=find(AppConfig.vanC,b.vColor).hex;
+  MeshPool.box('vanity',1.0,0.55,0.45,vc,0.7,0.35,0.35);
+  MeshPool.box('vtop',1.05,0.03,0.48,'#fff',0.7,0.64,0.35);
+  const basinW=b.basin==='counter'?0.36:b.basin==='vessel'?0.28:0.32;
+  const basinD=b.basin==='counter'?0.36:0.32;
+  MeshPool.box('basin',basinW,0.05,basinD,'#fff',0.7,0.68,0.35);
+  if(b.cabinet!=='none'){MeshPool.box('cabinet',0.72,0.7,0.45,vc,1.28,0.36,0.35);} 
+  if(b.mirror!=='none'){MeshPool.box('mirror',0.72,0.9,0.02,'#f7f4ea',0.7,1.1,0.14,'stone');}
+  const th=find(AppConfig.mixers,b.tap).hex||'#ccc';
+  MeshPool.box('tap',0.03,0.18,0.03,th,0.7,0.78,0.22);
+  const showerFrameHex=vc;
+  MeshPool.box('shower-base',1.1,0.03,1.0,'#e7e2d3',fw-0.85,0.05,fd-0.55);
+  if(b.screen==='semi'){
+    MeshPool.box('screen',0.03,1.5,0.9,'#f7fbff',fw-0.72,0.8,fd-0.55,'glass');
+    MeshPool.box('screen-frame',0.04,1.5,0.02,showerFrameHex,fw-0.63,0.8,fd-0.55,'metal');
+  } else {
+    MeshPool.box('screen',0.03,1.5,0.9,showerFrameHex,fw-0.72,0.8,fd-0.55,'metal');
+    MeshPool.box('screen-glass',0.02,1.4,0.84,'#f7fbff',fw-0.70,0.8,fd-0.55,'glass');
+  }
+  const showerHeadHex=b.showerHead==='dual'?th:b.showerHead==='rain'?showerFrameHex:'#c8b8a4';
+  if(b.showerHead==='basic'){
+    MeshPool.box('shower-head',0.07,0.07,0.07,showerHeadHex,fw-0.52,1.2,fd-0.72,'metal');
+  } else if(b.showerHead==='rain'){
+    MeshPool.box('shower-head',0.16,0.06,0.16,showerHeadHex,fw-0.52,1.18,fd-0.72,'metal');
+    MeshPool.box('shower-arm',0.04,0.22,0.04,showerHeadHex,fw-0.52,1.02,fd-0.72,'metal');
+  } else if(b.showerHead==='dual'){
+    MeshPool.box('shower-head-a',0.07,0.07,0.07,showerHeadHex,fw-0.58,1.2,fd-0.68,'metal');
+    MeshPool.box('shower-head-b',0.07,0.07,0.07,showerHeadHex,fw-0.46,1.2,fd-0.68,'metal');
+    MeshPool.box('shower-arm',0.12,0.04,0.04,showerHeadHex,fw-0.52,1.16,fd-0.68,'metal');
+  }
+  if(b.bath!=='none') MeshPool.box('bath',1.5,0.45,0.7,'#fff',fw/2,0.25,fd-0.5);
+  const bTargetKey=fw+','+fd;
+  if(controls&&bTargetKey!==lastBathTargetKey){lastBathTargetKey=bTargetKey;controls.target.set(fw/2,0.8,fd/2);}
+}
+
+function layoutSVG(id){
+  const s='viewBox="0 0 48 48"';
+  if(id==='straight') return `<svg ${s}><rect x="6" y="28" width="36" height="10" rx="1"/><rect x="6" y="12" width="36" height="8" rx="1"/></svg>`;
+  if(id==='galley') return `<svg ${s}><rect x="6" y="8" width="36" height="8" rx="1"/><rect x="6" y="32" width="36" height="8" rx="1"/></svg>`;
+  if(id==='lshape') return `<svg ${s}><rect x="6" y="10" width="10" height="28" rx="1"/><rect x="6" y="30" width="36" height="10" rx="1"/></svg>`;
+  if(id==='corner') return `<svg ${s}><rect x="6" y="10" width="10" height="28" rx="1"/><rect x="6" y="30" width="36" height="10" rx="1"/><rect x="32" y="8" width="10" height="22" rx="1"/></svg>`;
+  if(id==='ushape') return `<svg ${s}><rect x="6" y="10" width="8" height="28" rx="1"/><rect x="34" y="10" width="8" height="28" rx="1"/><rect x="6" y="30" width="36" height="10" rx="1"/></svg>`;
+  if(id==='island') return `<svg ${s}><rect x="6" y="30" width="36" height="10" rx="1"/><rect x="14" y="12" width="20" height="12" rx="1"/></svg>`;
+  return `<svg ${s}><rect x="10" y="14" width="28" height="20" rx="2"/></svg>`;
+}
+function card(item,sel,attrs){
+  const isLayout=item.id&&['straight','galley','lshape','corner','ushape','island'].includes(item.id);
+  const isColor=!!item.hex;
+  const cls=`card ${sel?'sel':''} ${isColor||isLayout?'style-card':''}`;
+  let visual='';
+  if(isLayout) visual=`<div class="layout-icon">${layoutSVG(item.id)}</div>`;
+  else if(item.hex) visual=`<div class="swatch" style="background:${item.hex}"></div>`;
+  const br=item.brand?`<div class="brand">${item.brand}</div>`:'';
+  const pr='mod' in item?`<div class="price">${item.mod?money(item.mod):'Included'}</div>`:'';
+  const meta=item.mat?`<div class="meta">${item.mat}</div>`:item.desc?`<div class="meta">${item.desc}</div>`:'';
+  return `<article class="${cls}" ${attrs} role="button" tabindex="0"><span class="card-check" aria-hidden="true"></span><div class="card-content">${visual}${br}<h4>${item.name||item.brand||''}</h4>${meta}${pr}</div></article>`;
+}
+function qtyHTML(label,key,val,min,max,unit){
+  return `<div class="dim"><label>${label}</label><div class="dim-r">
+    <button type="button" class="qty-btn" data-qty="${key}" data-dir="-1" data-min="${min}" data-max="${max}">−</button>
+    <span>${val}</span>
+    <button type="button" class="qty-btn" data-qty="${key}" data-dir="1" data-min="${min}" data-max="${max}">+</button>
+  </div><u>${unit!=null?money(unit)+' ea · '+money(val*unit):''}</u></div>`;
+}
+function dimHTML(label,key,val,min,max,step){
+  return `<div class="dim"><label>${label}</label><div class="dim-r">
+    <button type="button" class="dim-btn" data-dim="${key}" data-dir="-1" data-step="${step}" data-min="${min}" data-max="${max}">−</button>
+    <span>${typeof val==='number'&&val%1?val.toFixed(1):val}</span>
+    <button type="button" class="dim-btn" data-dim="${key}" data-dir="1" data-step="${step}" data-min="${min}" data-max="${max}">+</button>
+  </div><u>metres</u></div>`;
+}
+
+function renderSide(){
+  const s=st(),list=steps();
+  const keys=Object.keys(s.done).map(Number);
+  const maxR=keys.length?Math.max(...keys,s.step):s.step;
+  $('stepList').innerHTML=list.map(x=>{
+    const done=!!s.done[x.id],on=s.step===x.id,lock=x.id>maxR+1&&!done;
+    return `<div class="step ${on?'on':''} ${done?'done':''} ${lock?'lock':''}" data-go="${x.id}" role="listitem">
+      <div class="num">${done?'✓':x.id}</div><div><div style="font-weight:600;font-size:.76rem">${x.t}</div>
+      <div style="font-size:.58rem;color:var(--ink2)">${x.s}</div></div></div>`;
+  }).join('');
+  $('progFill').style.width=Math.round(s.step/list.length*100)+'%';
+  $('progLabel').textContent=`Step ${s.step} of ${list.length}`;
+  $('sideTitle').textContent=app.mode==='kitchen'?'Kitchen Project':'Bathroom Project';
+}
+
+function getDesignSummaryData(){
+  if(app.mode==='kitchen'){
+    const k=kitchen;
+    const selectedProducts=[];
+    if(k.door!=='flat') selectedProducts.push(find(AppConfig.doors,k.door).name);
+    if(k.bench!=='lam') selectedProducts.push(find(AppConfig.benches,k.bench).name);
+    if(k.splash!=='tile') selectedProducts.push(find(AppConfig.splash,k.splash).name);
+    if(k.sink!=='abey1') selectedProducts.push(find(AppConfig.sinks,k.sink).name);
+    if(k.mixer!=='caroma') selectedProducts.push(find(AppConfig.mixers,k.mixer).name);
+    if(k.oven!=='none') selectedProducts.push(find(AppConfig.ovens,k.oven).name);
+    if(k.cook!=='none') selectedProducts.push(find(AppConfig.cooks,k.cook).name);
+    if(k.hood!=='none') selectedProducts.push(find(AppConfig.hoods,k.hood).name);
+    if(k.mw!=='none') selectedProducts.push(find(AppConfig.mws,k.mw).name);
+    const colourLabel=k.color==='custom'?`Custom ${k.customHex}`:find(AppConfig.colors,k.color).name;
+    const cabinetPieces=`${k.base} base · ${k.wall} wall · ${k.tall} tall · ${k.pantry} pantry · ${k.corner} corner`;
+    const doorCount=k.base+k.wall+k.tall+k.pantry+k.corner;
+    const drawerCount=k.drawerBanks*Math.max(k.drawersPer,1);
+    return {
+      packageLabel:PKG_LABEL[k.pkg]||'Essential',
+      layoutLabel:find(AppConfig.layoutsK,k.layout).name,
+      colourLabel,
+      selectedProductsLabel:selectedProducts.length?selectedProducts.slice(0,3).join(' · '):'No upgrades selected',
+      selectedProductsCount:selectedProducts.length,
+      pricingHighlights:[
+        {label:'Cabinet pieces', value:cabinetPieces},
+        {label:'Door count', value:`${doorCount} doors`},
+        {label:'Drawer count', value:`${drawerCount} drawer fronts`},
+        {label:'Benchtop sizing', value:`${k.benchLm.toFixed(1)} lm · ${k.waterfall?'waterfall':'plain edge'}`},
+        {label:'Selected finish', value:colourLabel}
+      ],
+      quickSummary:[
+        {label:'Base Cabinets', value:k.base},
+        {label:'Wall Cabinets', value:k.wall},
+        {label:'Tall Cabinets', value:k.tall},
+        {label:'Pantry Cabinets', value:k.pantry},
+        {label:'Corner Cabinets', value:k.corner},
+        {label:'Benchtop Length', value:`${k.benchLm.toFixed(1)} lm`},
+        {label:'Selected Products', value:`${selectedProducts.length} saved`},
+        {label:'Selected Colours', value:colourLabel},
+        {label:'Selected Package', value:PKG_LABEL[k.pkg]||'Essential'}
+      ]
+    };
+  }
+  const b=bathroom;
+  const selectedProducts=[];
+  if(b.vanity!=='wall') selectedProducts.push(find(AppConfig.vanS,b.vanity).name);
+  if(b.basin!=='integrated') selectedProducts.push(find(AppConfig.basins,b.basin).name);
+  if(b.cabinet!=='single') selectedProducts.push(find(AppConfig.cabinets,b.cabinet).name);
+  if(b.mirror!=='std') selectedProducts.push(find(AppConfig.mirrors,b.mirror).name);
+  if(b.tap!=='caroma') selectedProducts.push(find(AppConfig.mixers,b.tap).name);
+  if(b.showerHead!=='basic') selectedProducts.push(find(AppConfig.showerHeads,b.showerHead).name);
+  if(b.screen!=='semi') selectedProducts.push(find(AppConfig.screens,b.screen).name);
+  if(b.storage!=='none') selectedProducts.push(find(AppConfig.storage,b.storage).name);
+  if(b.bath!=='none') selectedProducts.push(find(AppConfig.baths,b.bath).name);
+  const colourLabel=find(AppConfig.vanC,b.vColor).name;
+  return {
+    packageLabel:PKG_LABEL[b.pkg]||'Essential',
+    layoutLabel:find(AppConfig.layoutsB,b.layout).name,
+    colourLabel,
+    selectedProductsLabel:selectedProducts.length?selectedProducts.slice(0,3).join(' · '):'No upgrades selected',
+    selectedProductsCount:selectedProducts.length,
+    pricingHighlights:[
+      {label:'Vanity & basin', value:`${find(AppConfig.vanS,b.vanity).name} · ${find(AppConfig.basins,b.basin).name}`},
+      {label:'Cabinet & mirror', value:`${find(AppConfig.cabinets,b.cabinet).name} · ${find(AppConfig.mirrors,b.mirror).name}`},
+      {label:'Fixtures', value:`${find(AppConfig.mixers,b.tap).name} · ${find(AppConfig.showerHeads,b.showerHead).name}`},
+      {label:'Shower & storage', value:`${find(AppConfig.screens,b.screen).name} · ${find(AppConfig.storage,b.storage).name}`},
+      {label:'Tiles', value:`${find(AppConfig.wTiles,b.wTile).name}/${find(AppConfig.fTiles,b.fTile).name}`}
+    ],
+    quickSummary:[
+      {label:'Layout', value:find(AppConfig.layoutsB,b.layout).name},
+      {label:'Vanity', value:find(AppConfig.vanS,b.vanity).name},
+      {label:'Basin', value:find(AppConfig.basins,b.basin).name},
+      {label:'Cabinet', value:find(AppConfig.cabinets,b.cabinet).name},
+      {label:'Mirror', value:find(AppConfig.mirrors,b.mirror).name},
+      {label:'Tapware', value:find(AppConfig.mixers,b.tap).name},
+      {label:'Shower Head', value:find(AppConfig.showerHeads,b.showerHead).name},
+      {label:'Shower Screen', value:find(AppConfig.screens,b.screen).name},
+      {label:'Storage', value:find(AppConfig.storage,b.storage).name},
+      {label:'Bath', value:find(AppConfig.baths,b.bath).name},
+      {label:'Tiles', value:`${find(AppConfig.wTiles,b.wTile).name}/${find(AppConfig.fTiles,b.fTile).name}`},
+      {label:'Selected Products', value:`${selectedProducts.length} saved`},
+      {label:'Selected Colours', value:colourLabel},
+      {label:'Selected Package', value:PKG_LABEL[b.pkg]||'Essential'}
+    ]
+  };
+}
+
+function getKitchenServiceBreakdown(){
+  const k=kitchen;
+  const allow=KITCHEN_ALLOWANCE[k.pkg]||KITCHEN_ALLOWANCE.essential;
+  const items=[];
+  const addLine=(label,amount)=>{ if(amount>0) items.push({label,amount}); };
+  const extraBase=Math.max(0,k.base-allow.base);
+  const extraWall=Math.max(0,k.wall-allow.wall);
+  const extraTall=Math.max(0,k.tall-allow.tall);
+  const extraPantry=Math.max(0,k.pantry-allow.pantry);
+  const extraCorner=Math.max(0,k.corner-allow.corner);
+  addLine(`Cabinet modules`, extraBase*P.base + extraWall*P.wall + extraTall*P.tall + extraPantry*P.pantry + extraCorner*P.corner);
+  const extraBanks=Math.max(0,k.drawerBanks-allow.drawerBanks);
+  const extraPer=Math.max(0,k.drawersPer-allow.drawersPer);
+  addLine(`Drawer storage`, extraBanks*P.drawerBank + extraPer*Math.max(k.drawerBanks,1)*P.drawerExtra);
+  const doorMod=find(AppConfig.doors,k.door).mod;
+  const allowDoorMod=find(AppConfig.doors,allow.door).mod;
+  addLine(`Door profile · ${find(AppConfig.doors,k.door).name}`, Math.max(0,doorMod-allowDoorMod)*(k.base+k.wall+k.tall+k.pantry+k.corner));
+  const handleMod=find(AppConfig.handles,k.handle).mod;
+  const allowHandleMod=find(AppConfig.handles,allow.handle).mod;
+  addLine(`Handle finish · ${find(AppConfig.handles,k.handle).name}`, Math.max(0,handleMod-allowHandleMod)*(k.base+k.wall+k.tall+k.pantry+k.corner));
+  const hingeUp=(find(AppConfig.hinges,k.hinge).mod||0)*(k.base+k.wall+k.tall+k.pantry+k.corner);
+  if(hingeUp>0) items.push({label:`Hinge upgrade · ${find(AppConfig.hinges,k.hinge).name}`,amount:hingeUp});
+  const benchMod=find(AppConfig.benches,k.bench).mod;
+  const allowBenchMod=find(AppConfig.benches,allow.bench).mod;
+  const bench=Math.max(0,benchMod-allowBenchMod)*k.benchLm + (k.waterfall?benchMod*P.waterfall:0);
+  if(bench>0) items.push({label:`Benchtop · ${find(AppConfig.benches,k.bench).name}`,amount:bench});
+  const splashMod=find(AppConfig.splash,k.splash).mod;
+  const allowSplashMod=find(AppConfig.splash,allow.splash).mod;
+  const splash=Math.max(0,splashMod-allowSplashMod)*k.benchLm;
+  if(splash>0) items.push({label:`Splashback · ${find(AppConfig.splash,k.splash).name}`,amount:splash});
+  if(k.bulkhead) items.push({label:'Bulkhead upgrade',amount:P.bulkhead*k.benchLm});
+  const sinkMod=find(AppConfig.sinks,k.sink).mod;
+  const allowSinkMod=find(AppConfig.sinks,allow.sink).mod;
+  const sink=Math.max(0,sinkMod-allowSinkMod);
+  if(sink>0) items.push({label:`Sink · ${find(AppConfig.sinks,k.sink).name}`,amount:sink});
+  const mixerMod=find(AppConfig.mixers,k.mixer).mod;
+  const allowMixerMod=find(AppConfig.mixers,allow.mixer).mod;
+  const mixer=Math.max(0,mixerMod-allowMixerMod);
+  if(mixer>0) items.push({label:`Mixer · ${find(AppConfig.mixers,k.mixer).name}`,amount:mixer});
+  const apps=find(AppConfig.ovens,k.oven).mod + find(AppConfig.cooks,k.cook).mod + find(AppConfig.hoods,k.hood).mod + find(AppConfig.mws,k.mw).mod;
+  if(apps>0) items.push({label:'Appliance fit-out',amount:apps});
+  let light=0;
+  if (k.light==='led') light=P.lightLed*k.benchLm;
+  else light=find(AppConfig.lights,k.light).mod;
+  const allowLight=allow.light==='led'?P.lightLed*k.benchLm:find(AppConfig.lights,allow.light).mod;
+  light=Math.max(0,light-allowLight);
+  if(light>0) items.push({label:`Lighting · ${find(AppConfig.lights,k.light).name}`,amount:light});
+  return items;
+}
+function getBathroomServiceBreakdown(){
+  const b=bathroom;
+  const allow=BATHROOM_ALLOWANCE[b.pkg]||BATHROOM_ALLOWANCE.essential;
+  const items=[];
+  const addLine=(label,amount)=>{ if(amount>0) items.push({label,amount}); };
+  const vanMod=find(AppConfig.vanS,b.vanity).mod;
+  const allowVan=find(AppConfig.vanS,allow.vanity).mod;
+  addLine(`Vanity · ${find(AppConfig.vanS,b.vanity).name}`, Math.max(0,vanMod-allowVan));
+  const basinMod=find(AppConfig.basins,b.basin).mod;
+  const allowBasin=find(AppConfig.basins,allow.basin).mod;
+  addLine(`Basin · ${find(AppConfig.basins,b.basin).name}`, Math.max(0,basinMod-allowBasin));
+  const cabinetMod=find(AppConfig.cabinets,b.cabinet).mod;
+  const allowCabinet=find(AppConfig.cabinets,allow.cabinet).mod;
+  addLine(`Cabinet · ${find(AppConfig.cabinets,b.cabinet).name}`, Math.max(0,cabinetMod-allowCabinet));
+  const mirrorMod=find(AppConfig.mirrors,b.mirror).mod;
+  const allowMirror=find(AppConfig.mirrors,allow.mirror).mod;
+  addLine(`Mirror · ${find(AppConfig.mirrors,b.mirror).name}`, Math.max(0,mirrorMod-allowMirror));
+  const tapMod=find(AppConfig.mixers,b.tap).mod;
+  const allowTap=find(AppConfig.mixers,allow.tap).mod;
+  addLine(`Tapware · ${find(AppConfig.mixers,b.tap).name}`, Math.max(0,tapMod-allowTap));
+  const showerMod=find(AppConfig.showerHeads,b.showerHead).mod;
+  const allowShower=find(AppConfig.showerHeads,allow.showerHead).mod;
+  addLine(`Shower head · ${find(AppConfig.showerHeads,b.showerHead).name}`, Math.max(0,showerMod-allowShower));
+  const screenMod=find(AppConfig.screens,b.screen).mod;
+  const allowScreen=find(AppConfig.screens,allow.screen).mod;
+  addLine(`Shower screen · ${find(AppConfig.screens,b.screen).name}`, Math.max(0,screenMod-allowScreen));
+  const storageMod=find(AppConfig.storage,b.storage).mod;
+  const allowStorage=find(AppConfig.storage,allow.storage).mod;
+  addLine(`Storage · ${find(AppConfig.storage,b.storage).name}`, Math.max(0,storageMod-allowStorage));
+  const bathMod=find(AppConfig.baths,b.bath).mod;
+  const allowBath=find(AppConfig.baths,allow.bath).mod;
+  addLine(`Bath · ${find(AppConfig.baths,b.bath).name}`, Math.max(0,bathMod-allowBath));
+  return items;
+}
+function getLiveEstimateBreakdown(){
+  const base=[{label:'Base estimate',amount:3000}];
+  const items=app.mode==='kitchen'?getKitchenServiceBreakdown():getBathroomServiceBreakdown();
+  return base.concat(items);
+}
+function renderSummary(){
+  const data=getDesignSummaryData();
+  const estimate = app.mode==='kitchen' ? calcKitchen().total : calcBathroom().total;
+  const breakdown=getLiveEstimateBreakdown();
+  $('sumPrice').textContent=money(estimate);
+  $('sumBody').innerHTML=`<div class="quote-card">
+    <div class="quote-chip">Indicative Sydney pricing</div>
+    <h4>Design estimate ready</h4>
+    <p>Based on your selected products, finishes and scope, this estimate updates live as you refine the design.</p>
+    <ul class="quote-list">
+      ${breakdown.map(item=>`<li style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span>${item.label}</span><strong>${money(item.amount)}</strong></li>`).join('')}
+    </ul>
+    <div class="quote-highlights">
+      ${(data.pricingHighlights||[]).map(item=>`<div class="quote-highlight"><span class="quote-highlight__label">${item.label}</span><span class="quote-highlight__value">${item.value}</span></div>`).join('')}
+    </div>
+    <div class="quote-info">Indicative pricing for Sydney supply and installation planning. Final pricing is confirmed after site review, measurements, product availability and trade scope.</div>
+  </div>
+  <div class="quick-summary">
+    <div class="quick-summary__head">
+      <span>Quick Design Summary</span>
+      <span>${data.packageLabel}</span>
+    </div>
+    <div class="quick-summary__grid">
+      ${data.quickSummary.map(item=>`<div class="quick-summary__item"><span class="quick-summary__label">${item.label}</span><span class="quick-summary__value">${item.value}</span></div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function renderContent(){
+  const s=st(),list=steps(),step=list.find(x=>x.id===s.step);
+  if(!step) return;
+  $('stepTitle').textContent=`Step ${step.id}: ${step.t}`;
+  $('stepDesc').textContent=step.d;
+  $('doneTag').style.display=s.done[step.id]?'inline-flex':'none';
+  let h=''; const k=kitchen,b=bathroom,C=AppConfig;
+  if(app.mode==='kitchen'){
+    if(s.step===1){
+      h=`<div class="grid">${C.layoutsK.map(l=>card(l,k.layout===l.id,`data-k="layout" data-v="${l.id}"`)).join('')}</div>`;
+      if(k.layout==='island'){
+        h+=`<p style="font-size:.6rem;font-weight:700;margin:12px 0 6px;text-transform:uppercase;color:var(--ink2)">Island size</p>
+        <div class="grid">${(C.islandSizes||[]).map(x=>card(x,k.islandSize===x.id,`data-k="islandSize" data-v="${x.id}"`)).join('')}</div>
+        <div class="toggles" style="margin-top:10px">
+          <div class="tog ${k.islandSeating?'on':''}" data-bool="islandSeating" role="button" tabindex="0"><div><h4>Breakfast bar</h4><p>Overhang + stools</p></div><div class="chk">${k.islandSeating?'✓':''}</div></div>
+          <div class="tog ${k.islandCook?'on':''}" data-bool="islandCook" role="button" tabindex="0"><div><h4>Cooktop on island</h4><p>With pendant lights</p></div><div class="chk">${k.islandCook?'✓':''}</div></div>
+        </div>`;
+      }
+      h+=`<div class="tip"><strong>Tip:</strong> choose a shape first — cabinets, stone and appliances stay editable next.</div>`;
+    }
+    if(s.step===2){
+      h=`<div class="dims">${dimHTML('Width','w',k.w,2.4,7,.1)}${dimHTML('Depth','d',k.d,2,5,.1)}${dimHTML('Ceiling','h',k.h,2.4,3.2,.1)}</div>
+      <div class="dims" style="margin-top:8px">${qtyHTML('Benchtop length (lm)','benchLm',k.benchLm,2,12,null)}</div>
+      <p style="font-size:.6rem;font-weight:700;margin:12px 0 6px;text-transform:uppercase;color:var(--ink2)">Cabinet modules</p>
+      <div class="dims">${qtyHTML('Base','base',k.base,0,12,P.base)}${qtyHTML('Wall','wall',k.wall,0,12,P.wall)}${qtyHTML('Tall','tall',k.tall,0,3,P.tall)}${qtyHTML('Pantry','pantry',k.pantry,0,2,P.pantry)}${qtyHTML('Corner','corner',k.corner,0,1,P.corner)}</div>
+      <div class="grid" style="margin-top:10px">${[{id:'left',name:'Pantry left'},{id:'right',name:'Pantry right'}].map(x=>card(x,k.pantrySide===x.id,`data-k="pantrySide" data-v="${x.id}"`)).join('')}${[{id:'left',name:'Tall left'},{id:'right',name:'Tall right'}].map(x=>card(x,k.tallSide===x.id,`data-k="tallSide" data-v="${x.id}"`)).join('')}</div>
+      <div class="grid" style="margin-top:8px">${[{id:'auto',name:'Doors auto'},{id:'single',name:'Single doors'},{id:'double',name:'Double doors'}].map(x=>card(x,k.baseDoors===x.id,`data-k="baseDoors" data-v="${x.id}"`)).join('')}</div>
+      <div class="tip">AU sizes · zones never overlap · 3D updates live.</div>`;
+    }
+    if(s.step===3){
+      const nDoors=k.base+k.wall+k.tall+k.pantry+k.corner;
+      h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Door profile</p>
+      <div class="grid">${C.doors.map(d=>card({...d,desc:(d.mod?money(d.mod)+' × '+nDoors+' doors':'Included')},k.door===d.id,`data-k="door" data-v="${d.id}"`)).join('')}</div>
+      <p style="font-size:.6rem;font-weight:700;margin:12px 0 6px;text-transform:uppercase;color:var(--ink2)">Colour / finish</p>
+      <div class="grid">${C.colors.map(c=>card(c,k.color===c.id,`data-k="color" data-v="${c.id}"`)).join('')}</div>`;
+      if(k.color==='custom') h+=`<div class="color-row"><label style="font-size:.68rem;font-weight:700;color:var(--ink2)">Custom</label><input type="color" id="customColor" value="${k.customHex}"><input type="text" id="customHex" value="${k.customHex}" maxlength="7"></div>`;
+      h+=`<div class="tip">Finish applies live on every door in 3D.</div>`;
+    }
+    if(s.step===4){
+      const nDoors=k.base+k.wall+k.tall+k.pantry+k.corner;
+      h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Handles</p>
+      <div class="grid">${C.handles.map(x=>card({...x,desc:(x.mod?money(x.mod)+' × '+nDoors:'Included')},k.handle===x.id,`data-k="handle" data-v="${x.id}"`)).join('')}</div>
+      <p style="font-size:.6rem;font-weight:700;margin:12px 0 6px;text-transform:uppercase;color:var(--ink2)">Hinges · × ${nDoors} doors</p>
+      <div class="grid">${C.hinges.map(x=>card({...x,desc:(x.mod?money(x.mod*nDoors):x.desc)},k.hinge===x.id,`data-k="hinge" data-v="${x.id}"`)).join('')}</div>
+      <p style="font-size:.6rem;font-weight:700;margin:12px 0 6px;text-transform:uppercase;color:var(--ink2)">Drawers</p>
+      <div class="grid">${[{id:'first',name:'First banks'},{id:'all',name:'All base'},{id:'sink-avoid',name:'Skip sink bay'}].map(x=>card(x,k.drawerOn===x.id,`data-k="drawerOn" data-v="${x.id}"`)).join('')}</div>
+      <div class="grid" style="margin-top:8px">${C.drawerOpts.map(d=>card({...d,mod:d.id*P.drawerBank},k.drawerBanks===d.id,`data-num="drawerBanks" data-v="${d.id}"`)).join('')}</div>`;
+    }
+    if(s.step===5){
+      h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Benchtop</p>
+      <div class="grid wide">${C.benches.map(x=>card(x,k.bench===x.id,`data-k="bench" data-v="${x.id}"`)).join('')}</div>`;
+      if(k.bench==='custom-stone') h+=`<div class="color-row" style="margin-top:10px"><label style="font-size:.68rem;font-weight:700;color:var(--ink2)">Stone name</label><input type="text" id="customStone" value="${k.customStone||''}" placeholder="e.g. Taj Mahal Quartzite" style="flex:1;min-width:140px"></div>`;
+      h+=`<p style="font-size:.6rem;font-weight:700;margin:12px 0 6px;text-transform:uppercase;color:var(--ink2)">Splashback</p>
+      <div class="grid">${C.splash.map(x=>card(x,k.splash===x.id,`data-k="splash" data-v="${x.id}"`)).join('')}</div>
+      <div class="toggles" style="margin-top:10px">
+        <div class="tog ${k.waterfall?'on':''}" data-bool="waterfall" role="button" tabindex="0"><div><h4>Waterfall</h4><p>Stone end panel</p></div><div class="chk">${k.waterfall?'✓':''}</div></div>
+        <div class="tog ${k.kickboard?'on':''}" data-bool="kickboard" role="button" tabindex="0"><div><h4>Kickboard</h4><p>150mm plinth (included)</p></div><div class="chk">${k.kickboard?'✓':''}</div></div>
+        <div class="tog ${k.bulkhead?'on':''}" data-bool="bulkhead" role="button" tabindex="0"><div><h4>Bulkhead</h4><p>Above wall cabs</p></div><div class="chk">${k.bulkhead?'✓':''}</div></div>
+      </div>`;
+    }
+    if(s.step===6){
+      h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Sink & mixer</p>
+      <div class="grid">${C.sinks.map(x=>card(x,k.sink===x.id,`data-k="sink" data-v="${x.id}"`)).join('')}</div>
+      <div class="grid" style="margin-top:6px">${C.mixers.map(x=>card(x,k.mixer===x.id,`data-k="mixer" data-v="${x.id}"`)).join('')}</div>
+      <p style="font-size:.6rem;font-weight:700;margin:10px 0 6px;text-transform:uppercase;color:var(--ink2)">Appliances</p>
+      <div class="grid">${(C.fridgesFull||[]).map(x=>card(x,k.fridge===x.id,`data-k="fridge" data-v="${x.id}"`)).join('')}</div>
+      <div class="grid" style="margin-top:6px">${C.ovens.map(x=>card(x,k.oven===x.id,`data-k="oven" data-v="${x.id}"`)).join('')}</div>
+      <div class="grid" style="margin-top:6px">${C.cooks.map(x=>card(x,k.cook===x.id,`data-k="cook" data-v="${x.id}"`)).join('')}</div>
+      <div class="grid" style="margin-top:6px">${C.hoods.map(x=>card(x,k.hood===x.id,`data-k="hood" data-v="${x.id}"`)).join('')}</div>
+      <div class="grid" style="margin-top:6px">${C.mws.map(x=>card(x,k.mw===x.id,`data-k="mw" data-v="${x.id}"`)).join('')}</div>
+      <p style="font-size:.6rem;font-weight:700;margin:10px 0 6px;text-transform:uppercase;color:var(--ink2)">Lighting</p>
+      <div class="grid">${C.lights.map(x=>card(x,k.light===x.id,`data-k="light" data-v="${x.id}"`)).join('')}</div>`;
+    }
+    if(s.step===7){
+      h=`<div class="tip"><strong>Your kitchen design is ready.</strong></div>
+        <div style="font-size:.78rem;line-height:1.7;margin-top:8px">
+          ${find(C.layoutsK,k.layout).name} · ${k.w}×${k.d}m<br>
+          ${k.base} base · ${k.wall} wall · ${k.tall} tall · ${k.pantry} pantry<br>
+          ${k.color==='custom'?'Custom '+k.customHex:find(C.colors,k.color).name} · ${find(C.benches,k.bench).brand}<br>
+          <strong style="font-size:1.05rem">Indicative estimate · ${money(calcKitchen().total)}</strong>
+        </div>
+        <div class="tip" style="margin-top:10px">Submit your design for a fixed quotation after our review.</div>`;
+    }
+  } else {
+    if(s.step===1) h=`<div class="grid">${C.layoutsB.map(l=>card(l,b.layout===l.id,`data-b="layout" data-v="${l.id}"`)).join('')}</div>`;
+    if(s.step===2) h=`<div class="dims">${dimHTML('Width','w',b.w,1.8,4,.1)}${dimHTML('Depth','d',b.d,1.5,3.5,.1)}</div>`;
+    if(s.step===3) h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Vanity & basin</p><div class="grid">${C.vanS.map(x=>card(x,b.vanity===x.id,`data-b="vanity" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:6px">${C.basins.map(x=>card(x,b.basin===x.id,`data-b="basin" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:6px">${C.cabinets.map(x=>card(x,b.cabinet===x.id,`data-b="cabinet" data-v="${x.id}"`)).join('')}</div>`;
+    if(s.step===4) h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Colour & mirror</p><div class="grid">${C.vanC.map(x=>card(x,b.vColor===x.id,`data-b="vColor" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:6px">${C.mirrors.map(x=>card(x,b.mirror===x.id,`data-b="mirror" data-v="${x.id}"`)).join('')}</div>`;
+    if(s.step===5) h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Tapware & shower</p><div class="grid">${C.mixers.map(x=>card(x,b.tap===x.id,`data-b="tap" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:6px">${C.showerHeads.map(x=>card(x,b.showerHead===x.id,`data-b="showerHead" data-v="${x.id}"`)).join('')}</div>`;
+    if(s.step===6) h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Shower & storage</p><div class="grid">${C.screens.map(x=>card(x,b.screen===x.id,`data-b="screen" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:6px">${C.storage.map(x=>card(x,b.storage===x.id,`data-b="storage" data-v="${x.id}"`)).join('')}</div>`;
+    if(s.step===7) h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Bath & extras</p><div class="grid">${C.baths.map(x=>card(x,b.bath===x.id,`data-b="bath" data-v="${x.id}"`)).join('')}</div>`;
+    if(s.step===8) h=`<p style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--ink2);margin-bottom:6px">Wall & floor tiles</p><div class="grid">${C.wTiles.map(x=>card(x,b.wTile===x.id,`data-b="wTile" data-v="${x.id}"`)).join('')}</div><div class="grid" style="margin-top:8px">${C.fTiles.map(x=>card(x,b.fTile===x.id,`data-b="fTile" data-v="${x.id}"`)).join('')}</div>`;
+    if(s.step===9){h=`<div class="tip"><strong>Your bathroom design is ready.</strong> Indicative Sydney estimate <strong>${money(calcBathroom().total)}</strong> based on the selections below.</div>`;}
+  }
+  $('content').innerHTML=h;
+  $('btnBack').disabled=s.step===1;
+  const isLast=s.step===nSteps();
+  $('btnNext').textContent=isLast?'Request This Quote':'Next →';
+  $('btnNext').disabled=false;
+  const cp=$('customColor'),hx=$('customHex'),cs=$('customStone');
+  if(cp) cp.oninput=()=>{kitchen.customHex=cp.value;if(hx)hx.value=cp.value;markDone();};
+  if(hx) hx.onchange=()=>{if(/^#[0-9A-Fa-f]{6}$/.test(hx.value)){kitchen.customHex=hx.value;if(cp)cp.value=hx.value;markDone();}};
+  if(cs) cs.oninput=()=>{kitchen.customStone=cs.value;markDone();};
+}
+
+function render(){
+  if(!app.ready) return;
+  const max=nSteps();
+  if(st().step>max) st().step=max;
+  if(st().step<1) st().step=1;
+  renderSide(); renderContent(); renderSummary();
+  if(threeReady){ if(app.mode==='kitchen') buildKitchen3D(); else buildBath3D(); }
+}
+
+function go(n){st().step=clamp(n,1,nSteps());}
+function next(){markDone();if(st().step<nSteps()) st().step++;}
+function prev(){if(st().step>1) st().step--;}
+
+function bind(){
+  document.querySelectorAll('.mode').forEach(tab=>{
+    tab.onclick=()=>{document.querySelectorAll('.mode').forEach(t=>t.classList.remove('on'));tab.classList.add('on');app.mode=tab.dataset.mode;};
+  });
+  $('zIn').onclick=()=>{if(!camera)return;camera.position.multiplyScalar(0.88);if(controls)controls.update();};
+  $('zOut').onclick=()=>{if(!camera)return;camera.position.multiplyScalar(1.14);if(controls)controls.update();};
+  $('zReset').onclick=()=>{if(!camera)return;camera.position.set(4.6,3.3,5.6);if(controls){controls.target.set(1.9,0.95,1.15);controls.update();}};
+  $('btnBack').onclick=prev;
+  $('btnNext').onclick=()=>{if(st().step===nSteps()){markDone();if(typeof openQ==='function')openQ();}else{next();}};
+  $('stepList').onclick=e=>{const i=e.target.closest('[data-go]');if(!i||i.classList.contains('lock'))return;go(+i.dataset.go);};
+  $('content').onclick=e=>{
+    const t=e.target;
+    const qty=t.closest('.qty-btn');
+    if(qty&&qty.dataset.qty){e.preventDefault();const key=qty.dataset.qty,dir=+qty.dataset.dir,mn=+qty.dataset.min,mx=+qty.dataset.max;
+      if(key==='benchLm') kitchen.benchLm=clamp(+(kitchen.benchLm+dir*0.5).toFixed(1),mn,mx);
+      else kitchen[key]=clamp((Number(kitchen[key])||0)+dir,mn,mx);markDone();return;}
+    const dim=t.closest('.dim-btn');
+    if(dim&&dim.dataset.dim){e.preventDefault();const key=dim.dataset.dim,dir=+dim.dataset.dir,step=+dim.dataset.step;const cur=st();cur[key]=clamp(+(Number(cur[key])+dir*step).toFixed(1),+dim.dataset.min,+dim.dataset.max);markDone();return;}
+    const dk=t.closest('[data-k]');if(dk){kitchen[dk.dataset.k]=dk.dataset.v;markDone();return;}
+    const db=t.closest('[data-b]');if(db){bathroom[db.dataset.b]=db.dataset.v;markDone();return;}
+    const dn=t.closest('[data-num]');if(dn){kitchen[dn.dataset.num]=+dn.dataset.v;markDone();return;}
+    const bool=t.closest('[data-bool]');if(bool){kitchen[bool.dataset.bool]=!kitchen[bool.dataset.bool];markDone();}
+  };
+  $('content').onkeydown=e=>{if(e.key!=='Enter'&&e.key!==' ')return;const c=e.target.closest('.card,.tog,.qty-btn');if(c){e.preventDefault();c.click();}};
+  const mq=matchMedia('(max-width:1100px)');
+  function checkMob(){$('togSum').style.display=mq.matches?'grid':'none';}
+  mq.addEventListener('change',checkMob);checkMob();
+  $('togSum').onclick=()=>$('sumCol').classList.toggle('mob');
+  const touchMq=matchMedia('(pointer:coarse)');
+  const interactBtn=$('interact3d'),stageWrap=$('stageWrap'),stageNote=$('stageNote');
+  let interacting=false;
+  function setInteracting(on){
+    interacting=on;
+    if(stageWrap) stageWrap.classList.toggle('interacting',on);
+    if(interactBtn){interactBtn.classList.toggle('on',on);interactBtn.textContent=on?'✋ Release':'✋ Interact';}
+    if(controls) controls.enabled=on||!touchMq.matches;
+    if(stageNote) stageNote.textContent=on?'Drag to rotate · Pinch to zoom · Tap to release':(touchMq.matches?'Tap Interact to rotate':'Drag to rotate · Scroll to zoom');
+  }
+  function checkTouch(){if(interactBtn) interactBtn.style.display=touchMq.matches?'inline-flex':'none';setInteracting(!touchMq.matches);}
+  touchMq.addEventListener('change',checkTouch);checkTouch();
+  if(interactBtn) interactBtn.onclick=()=>setInteracting(!interacting);
+  const EMAIL='info@mic-nsw.com.au';
+  let pending=null;
+  function openQ(){pending={m:quoteMsg()};$('qTitle').textContent=`Request ${app.mode==='kitchen'?'Kitchen':'Bathroom'} Quote`;$('qForm').reset();$('qStatus').textContent='';$('quoteModal').classList.add('open');$('qName').focus();}
+  function closeQ(){$('quoteModal').classList.remove('open');pending=null;$('qFallback').hidden=true;}
+  $('btnQuote').onclick=openQ;$('qClose').onclick=closeQ;$('qCancel').onclick=closeQ;
+  $('quoteModal').onclick=e=>{if(e.target===$('quoteModal')) closeQ();};
+  $('qEmailFallback').onclick=()=>{const p=pending||{m:quoteMsg()};const body=encodeURIComponent(p.m+'\n\nFrom: '+($('qName').value.trim()||'')+'\nEmail: '+($('qEmail').value.trim()||'')+'\nPhone: '+($('qPhone').value.trim()||''));window.location.href='mailto:'+EMAIL+'?subject='+encodeURIComponent('MIC NSW Quote Request')+'&body='+body;};
+  $('qCopyFallback').onclick=async()=>{const p=pending||{m:quoteMsg()};try{await navigator.clipboard.writeText(p.m);$('qStatus').textContent='Project summary copied to clipboard.';}catch(err){$('qStatus').textContent='Could not copy automatically.';}};
+  $('qForm').onsubmit=async e=>{
+    e.preventDefault();if(!$('qForm').reportValidity())return;
+    const payload={from_name:$('qName').value.trim(),email:$('qEmail').value.trim(),phone:$('qPhone').value.trim(),message:pending?.m||quoteMsg()};
+    const btn=$('qSubmit');btn.disabled=true;btn.textContent='Sending…';
+    const endpoint=(typeof QUOTE_ENDPOINT==='string'&&QUOTE_ENDPOINT)||(window.__ENV&&window.__ENV.QUOTE_ENDPOINT)||'';
+    try{
+      if(!endpoint) throw new Error('NO_ENDPOINT');
+      const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)});
+      if(!res.ok) throw new Error('FAIL');
+      $('qStatus').textContent=`Thanks ${payload.from_name}! Sent to MIC NSW.`;$('qStatus').className='status';
+      setTimeout(()=>{btn.disabled=false;btn.textContent='Send Request';closeQ();},2000);
+    }catch(err){
+      const waText=encodeURIComponent(payload.message+'\n\nFrom: '+payload.from_name+'\nEmail: '+payload.email+'\nPhone: '+payload.phone);
+      $('qWaFallback').href='https://wa.me/61470640083?text='+waText;
+      $('qFallback').hidden=false;
+      $('qStatus').textContent='Online quote submission is not connected yet. Please use one of the options below.';
+      $('qStatus').className='status err';btn.disabled=false;btn.textContent='Send Request';
+    }
+  };
+  window.openQ=openQ;
+}
+
+function quoteMsg(){
+  if(app.mode==='kitchen'){
+    const k=kitchen;
+    const packageLabel=PKG_LABEL[k.pkg]||'Essential';
+    const colourLabel=k.color==='custom'?`Custom ${k.customHex}`:find(AppConfig.colors,k.color).name;
+    const selections=[find(AppConfig.layoutsK,k.layout).name,`${k.base} base / ${k.wall} wall / ${k.tall} tall / ${k.pantry} pantry / ${k.corner} corner`,`${k.benchLm.toFixed(1)} lm benchtop`,colourLabel,packageLabel].join(' · ');
+    return ['Kitchen design request — MIC NSW','Design total: '+money(calcKitchen().total),'Package: '+packageLabel,'Selections: '+selections].join('\n');
+  }
+  const b=bathroom;
+  const packageLabel=PKG_LABEL[b.pkg]||'Essential';
+  const selections=[find(AppConfig.layoutsB,b.layout).name,find(AppConfig.vanS,b.vanity).name,find(AppConfig.basins,b.basin).name,find(AppConfig.cabinets,b.cabinet).name,find(AppConfig.mixers,b.tap).name,find(AppConfig.showerHeads,b.showerHead).name,find(AppConfig.screens,b.screen).name,find(AppConfig.storage,b.storage).name,find(AppConfig.baths,b.bath).name,find(AppConfig.vanC,b.vColor).name].join(' · ');
+  return ['Bathroom design request — MIC NSW','Design total: '+money(calcBathroom().total),'Package: '+packageLabel,'Selections: '+selections].join('\n');
+}
+
+function init(){
+  init3D();
+  bind();
+  app.ready=true;
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
+else init();
+})();
+
+(function(){
+ document.querySelectorAll('.faq-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+   var expanded=btn.getAttribute('aria-expanded')==='true';
+   var panel=document.getElementById(btn.getAttribute('aria-controls'));
+   btn.setAttribute('aria-expanded',expanded?'false':'true');
+   if(panel) panel.hidden=expanded;
+   var icon=btn.querySelector('[aria-hidden]');
+   if(icon) icon.textContent=expanded?'+':'−';
+  });
+ });
+})();
+</script>
+
+<div id="legalModal" hidden style="position:fixed;inset:0;z-index:3000;background:rgba(28,31,26,.55);display:none;align-items:center;justify-content:center;padding:20px;padding-top:max(20px,env(safe-area-inset-top));padding-bottom:max(20px,env(safe-area-inset-bottom))">
   <div role="dialog" aria-modal="true" aria-labelledby="legalTitle" style="background:#fff;max-width:560px;width:100%;max-height:80vh;overflow:auto;border-radius:10px;padding:28px;position:relative">
     <button type="button" id="closeLegal" aria-label="Close" style="position:absolute;top:12px;right:12px;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:#fff;cursor:pointer">✕</button>
     <h2 id="legalTitle" style="font-family:var(--fd);margin-bottom:12px">Privacy Policy</h2>
