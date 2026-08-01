@@ -1155,7 +1155,6 @@ section.section,.hero,.trust-bar,.reassure-strip,footer{opacity:1}
 </div>
 
 <script>
-const CONTACT_ENDPOINT = '';
 const QUOTE_ENDPOINT = '';
 
 (function(){
@@ -1406,35 +1405,47 @@ document.querySelectorAll('[data-pkg]').forEach(function(btn){
 });
 
 var form=document.getElementById('contactForm');
+function getFormValue(f,n){var el=f.elements[n];return el?String(el.value||'').trim():'';}
+function buildWhatsAppQuoteMessage(f){
+ return [
+  'New MIC NSW Website Quote Request',
+  '',
+  'Full name: '+getFormValue(f,'name'),
+  'Email: '+getFormValue(f,'email'),
+  'Phone: '+getFormValue(f,'phone'),
+  'Project suburb: '+getFormValue(f,'suburb'),
+  'Project type: '+getFormValue(f,'project_type'),
+  'Preferred contact method: '+getFormValue(f,'contact_method'),
+  'Preferred package: '+(getFormValue(f,'package')||'Not specified'),
+  'Estimated budget: '+(getFormValue(f,'budget')||'Not specified'),
+  'Preferred consultation date: '+(getFormValue(f,'preferred_date')||'Not specified'),
+  '',
+  'Project details:',
+  getFormValue(f,'message')||'No additional message provided.',
+  '',
+  'Source: MIC NSW Website'
+ ].join('\n');
+}
 if(form) form.addEventListener('submit',function(e){
  e.preventDefault();
  if(!this.reportValidity()) return;
  var f=this;
- var btn=f.querySelector('[type="submit"]');
  var statusEl=document.getElementById('contactStatus');
- var phone = String(f.phone.value || '').replace(/\s+/g, '').replace(/[-()]/g, '');
- var phoneOk = /^(\+?61|0)4\d{8}$/.test(phone) || /^(\+?61|0)[2378]\d{8}$/.test(phone);
- if (!phoneOk) {
-  statusEl.textContent = 'Please enter a valid Australian phone number.';
-  statusEl.style.color = '#8B2E2E';
-  f.phone.setAttribute('aria-invalid', 'true');
+ var phone=String(f.phone.value||'').replace(/\s+/g,'').replace(/[-()]/g,'');
+ var phoneOk=/^(\+?61|0)4\d{8}$/.test(phone)||/^(\+?61|0)[2378]\d{8}$/.test(phone);
+ if(!phoneOk){
+  statusEl.textContent='Please enter a valid Australian phone number.';
+  statusEl.style.color='#8B2E2E';
+  f.phone.setAttribute('aria-invalid','true');
+  f.phone.focus();
   return;
  }
  f.phone.removeAttribute('aria-invalid');
- var payload={name:f.name.value.trim(),email:f.email.value.trim(),phone:f.phone.value.trim(),suburb:f.suburb.value.trim(),project_type:f.project_type.value,package:f.package?f.package.value:'',message:f.message?f.message.value.trim():'',consent:!!(f.consent&&f.consent.checked),source:'mic-nsw-website',submitted_at:new Date().toISOString()};
- if(btn){btn.disabled=true;btn.textContent='Sending…';}
- statusEl.textContent='';statusEl.style.color='';
- function fail(msg){statusEl.textContent=msg;statusEl.style.color='#8B2E2E';if(btn){btn.disabled=false;btn.textContent='Send message';}}
- function ok(msg){statusEl.textContent=msg;statusEl.style.color='#2D6A4F';if(btn){btn.disabled=false;btn.textContent='Send message';}f.reset();}
- if(typeof CONTACT_ENDPOINT==='string' && CONTACT_ENDPOINT){
-  fetch(CONTACT_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)})
-   .then(function(r){ if(!r.ok) throw new Error('Network'); return r.json().catch(function(){return {};}); })
-   .then(function(){ ok('Thank you. Your enquiry has been sent. MIC NSW will review the details and contact you.'); })
-   .catch(function(){ fail('We could not send your enquiry online. Please call +61 470 640 083, email info@mic-nsw.com.au, or use WhatsApp.'); });
- } else {
-  fail('Online form submission has not been connected yet. Please contact MIC NSW by phone, email or WhatsApp.');
-  if(btn){btn.disabled=false;btn.textContent='Send message';}
- }
+ var message=buildWhatsAppQuoteMessage(f);
+ var whatsappUrl='https://wa.me/61470640083?text='+encodeURIComponent(message);
+ window.open(whatsappUrl,'_blank','noopener,noreferrer');
+ statusEl.textContent='WhatsApp has been opened with your quote request ready to send.';
+ statusEl.style.color='#2D6A4F';
 });
 })();
 
