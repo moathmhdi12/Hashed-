@@ -2205,18 +2205,30 @@ function next(){markDone();if(st().step<nSteps()) st().step++;}
 function prev(){if(st().step>1) st().step--;}
 
 function bind(){
-  document.querySelectorAll('.mode').forEach(tab=>{
-    tab.addEventListener('click', function(){
-      document.querySelectorAll('.mode').forEach(t=>t.classList.remove('on'));
-      tab.classList.add('on');
-      app.mode = tab.dataset.mode === 'bathroom' ? 'bathroom' : 'kitchen';
+  const plannerRoot = document.getElementById('planner-view');
+  if(plannerRoot){
+    plannerRoot.addEventListener('click', function(event){
+      const modeTab = event.target.closest && event.target.closest('.mode');
+      if(!modeTab) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const nextMode = modeTab.getAttribute('data-mode') === 'bathroom' ? 'bathroom' : 'kitchen';
+      app.mode = nextMode;
+      document.querySelectorAll('.mode').forEach(function(tab){
+        tab.classList.toggle('on', tab.getAttribute('data-mode') === nextMode);
+      });
+      const targetHash = '#planner/' + nextMode;
+      if(location.hash === targetHash){
+        render();
+        return;
+      }
       if(window.MICRouter && window.MICRouter.switchPlannerType){
-        window.MICRouter.switchPlannerType(app.mode);
+        window.MICRouter.switchPlannerType(nextMode);
       } else {
-        switchPlannerType(app.mode);
+        switchPlannerType(nextMode);
       }
     });
-  });
+  }
   $('zIn').onclick=()=>{if(!camera)return;camera.position.multiplyScalar(0.88);if(controls)controls.update();};
   $('zOut').onclick=()=>{if(!camera)return;camera.position.multiplyScalar(1.14);if(controls)controls.update();};
   $('zReset').onclick=()=>{if(!camera)return;camera.position.set(4.6,3.3,5.6);if(controls){controls.target.set(1.9,0.95,1.15);controls.update();}};
